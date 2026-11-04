@@ -26,6 +26,17 @@
         ar: 'جزيرة أورانج باي وسنوركلينج اليخت'
       }
     },
+    'hula-hula': {
+      productId: 'hula-hula',
+      price: '€32',
+      names: {
+        en: 'Hula Hula Island & Snorkeling Cruise',
+        de: 'Hula Hula Insel & Schnorchelausflug',
+        ru: 'Остров Хула Хула и снорклинг',
+        pl: 'Wyspa Hula Hula & Snorkeling',
+        ar: 'رحلة جزيرة هولا هولا وسنوركلينج'
+      }
+    },
     'dolphin-house': {
       productId: 'dolphin-house',
       price: '€25',
@@ -150,6 +161,7 @@
     detectPageTour() {
       const path = window.location.pathname.toLowerCase();
       if (path.includes('orange-bay')) return 'orange-bay';
+      if (path.includes('hula-hula')) return 'hula-hula';
       if (path.includes('dolphin-house')) return 'dolphin-house';
       if (path.includes('snorkeling-coral-reef')) return 'snorkeling-coral-reef';
       if (path.includes('semi-submarine')) return 'semi-submarine';

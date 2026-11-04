@@ -670,6 +670,10 @@
               <select id="prod_orange-bay" class="ctrl-select prod-route-select" data-product="orange-bay"></select>
             </div>
             <div style="display:grid; grid-template-columns: 170px 1fr; align-items:center;">
+              <span style="font-weight:600; font-size:0.85rem;">🏖️ Hula Hula Island:</span>
+              <select id="prod_hula-hula" class="ctrl-select prod-route-select" data-product="hula-hula"></select>
+            </div>
+            <div style="display:grid; grid-template-columns: 170px 1fr; align-items:center;">
               <span style="font-weight:600; font-size:0.85rem;">🐬 Dolphin House:</span>
               <select id="prod_dolphin-house" class="ctrl-select prod-route-select" data-product="dolphin-house"></select>
             </div>
@@ -715,6 +719,7 @@
             <label style="font-size:0.82rem; font-weight:700; color:var(--text-main); display:block; margin-bottom:6px;">Select Tour / Product:</label>
             <select id="simProduct" class="ctrl-select" onchange="runSimulation()">
               <option value="orange-bay" data-price="€30" data-name="جزيرة أورانج باي وسنوركلينج اليخت" selected>Orange Bay Island Cruise (€30)</option>
+              <option value="hula-hula" data-price="€32" data-name="رحلة جزيرة هولا هولا وسنوركلينج">Hula Hula Island Cruise (€32)</option>
               <option value="dolphin-house" data-price="€25" data-name="مغامرة بيت الدلافين والسباحة المفتوحة">Dolphin House Adventure (€25)</option>
               <option value="snorkeling-coral-reef" data-price="€35" data-name="سنوركلينج المحميات والشعاب المرجانية">Snorkeling &amp; Coral Reef (€35)</option>
               <option value="semi-submarine" data-price="€20" data-name="المرصد البحري والغواصة (سيمي سبمارين)">Semi-Submarine Tour (€20)</option>
@@ -842,9 +847,12 @@
     <section class="dash-section" id="leads">
       <div class="dash-section-head">
         <h2>Live WhatsApp Inquiries &amp; Booking Pipeline (bookings.csv)</h2>
-        <span class="badge-status badge-active">Real-time Pipeline</span>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button type="button" class="btn btn-outline btn-sm" onclick="exportBookingsCSV()" style="background:#fff; border:1.5px solid var(--primary-navy); color:var(--primary-navy); padding:6px 14px; border-radius:6px; font-weight:700; cursor:pointer;">📥 Export bookings.csv</button>
+          <span class="badge-status badge-active">Real-time Pipeline</span>
+        </div>
       </div>
-      <table class="data-table">
+      <table class="data-table" id="bookingsTable">
         <thead>
           <tr>
             <th>Lead ID</th>
@@ -891,6 +899,17 @@
             <td><strong>€140</strong></td>
             <td><span class="badge-status badge-active">Confirmed</span></td>
             <td><a href="https://wa.me/201091705805?text=Booking%20HST-1044%20Confirmed" target="_blank" class="btn btn-whatsapp btn-sm">Open WhatsApp</a></td>
+          </tr>
+          <tr>
+            <td>#HST-1045</td>
+            <td><strong>Nadia Mansour</strong></td>
+            <td>🇪🇬 AR (Arabic)</td>
+            <td>Hula Hula Island Cruise</td>
+            <td>2 Adults</td>
+            <td>Marriott Hurghada Beach Resort</td>
+            <td><strong>€64</strong></td>
+            <td><span class="badge-status badge-active">Confirmed</span></td>
+            <td><a href="https://wa.me/201091705805?text=Booking%20HST-1045%20Hula%20Hula%20Confirmed" target="_blank" class="btn btn-whatsapp btn-sm">Open WhatsApp</a></td>
           </tr>
         </tbody>
       </table>
@@ -1182,7 +1201,7 @@ function renderRoutingDropdowns() {
     }
   });
 
-  ['private-yacht', 'orange-bay', 'dolphin-house', 'snorkeling-coral-reef', 'semi-submarine'].forEach(prod => {
+  ['private-yacht', 'orange-bay', 'hula-hula', 'dolphin-house', 'snorkeling-coral-reef', 'semi-submarine'].forEach(prod => {
     const sel = document.getElementById(`prod_${prod}`);
     if (sel) {
       const curr = currentSettings.productRouting[prod];
@@ -1368,6 +1387,33 @@ async function saveTranslations() {
   } catch (e) {}
 
   showToast(`✓ تم حفظ الترجمات بنجاح${serverStatus}!`);
+}
+
+function exportBookingsCSV() {
+  const table = document.getElementById('bookingsTable');
+  if (!table) return;
+  const rows = [];
+  const trs = table.querySelectorAll('tr');
+  trs.forEach(tr => {
+    const row = [];
+    const cells = tr.querySelectorAll('th, td');
+    // omit direct action column (last column)
+    for (let i = 0; i < cells.length - 1; i++) {
+      let text = cells[i].innerText.replace(/"/g, '""').trim();
+      row.push(`"${text}"`);
+    }
+    rows.push(row.join(','));
+  });
+  const csvContent = "\uFEFF" + rows.join('\r\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'hurghada_bookings.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast('📥 تم تحميل ملف bookings.csv بنجاح!');
 }
 
 // Start with Authentication Check
