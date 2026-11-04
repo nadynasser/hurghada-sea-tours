@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hurghada Sea Tours | Operations &amp; WhatsApp Management Dashboard</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    :root {
+      --dash-bg: #F1F5F9;
+      --dash-sidebar: #052646;
+      --dash-card: #FFFFFF;
+      --dash-border: #E2E8F0;
+    }
+    body {
+      background: var(--dash-bg);
+      font-family: var(--ff-body);
+      color: var(--text-main);
+      padding-bottom: 0;
+    }
+    .dash-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+    /* Sidebar */
+    .dash-sidebar {
+      background: var(--dash-sidebar);
+      color: #FFFFFF;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      z-index: 10;
+    }
+    .dash-sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .dash-sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+    .dash-menu-item a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      color: #94A3B8;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+    .dash-menu-item a:hover, .dash-menu-item.active a {
+      background: rgba(0, 180, 219, 0.15);
+      color: var(--cyan-turquoise);
+    }
+    .dash-sidebar-footer {
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    /* Main Content */
+    .dash-main {
+      padding: 30px 40px;
+      overflow-y: auto;
+    }
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .dash-header h1 {
+      font-family: var(--ff-headings);
+      font-size: 1.8rem;
+      color: var(--primary-navy);
+      margin: 0;
+    }
+    .dash-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .kpi-card {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .kpi-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .kpi-value {
+      font-family: var(--ff-headings);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-navy);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .kpi-trend {
+      font-size: 0.82rem;
+      color: var(--wa-green);
+      font-weight: 600;
+    }
+    /* Sections & Tables */
+    .dash-section {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: var(--radius-md);
+      padding: 26px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 30px;
+    }
+    .dash-section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--dash-border);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .dash-section-head h2 {
+      font-family: var(--ff-headings);
+      font-size: 1.25rem;
+      color: var(--primary-navy);
+      margin: 0;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .data-table th {
+      text-align: left;
+      padding: 12px 14px;
+      background: #F8FAFC;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      border-bottom: 1.5px solid var(--dash-border);
+    }
+    .data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--dash-border);
+      vertical-align: middle;
+    }
+    .data-table tr:hover {
+      background: #F8FAFC;
+    }
+    .badge-status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .badge-active { background: #DCFCE7; color: #15803D; }
+    .badge-pending { background: #FEF3C7; color: #B45309; }
+    .badge-vip { background: #E0E7FF; color: #4338CA; }
+    .badge-rule { background: #E0F2FE; color: #0369A1; font-weight:700; padding:4px 8px; border-radius:4px; font-size:0.75rem; }
+
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 24px;
+    }
+
+    /* Form Controls */
+    .ctrl-input, .ctrl-select {
+      width: 100%;
+      height: 38px;
+      padding: 0 12px;
+      border: 1px solid var(--dash-border);
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-family: inherit;
+    }
+    .ctrl-input:focus, .ctrl-select:focus {
+      outline: none;
+      border-color: var(--cyan-turquoise);
+    }
+    .btn-action-save {
+      background: var(--wa-green);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    .btn-action-save:hover {
+      background: var(--wa-green-hover);
+    }
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #052646;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+      font-size: 0.9rem;
+      z-index: 1000;
+      display: none;
+      border-left: 4px solid var(--wa-green);
+    }
+
+    /* Simulator Box */
+    .sim-card {
+      background: #F8FAFC;
+      border: 1.5px dashed var(--cyan-turquoise);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .sim-result-box {
+      background: #FFFFFF;
+      border: 1px solid var(--dash-border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    /* ==========================================================================
+       Authentication Gatekeeper Modal / Screen
+       ========================================================================== */
+    .login-gate-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 25%, #085EA8 0%, #052646 100%);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-card {
+      background: #FFFFFF;
+      border-radius: 18px;
+      width: 100%;
+      max-width: 430px;
+      padding: 38px 32px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+      text-align: center;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .login-logo-circle {
+      width: 76px;
+      height: 76px;
+      background: #FFFFFF url('assets/images/logo-icon.svg') no-repeat center center / 85%;
+      color: transparent;
+      font-size: 0;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 24px rgba(8, 94, 168, 0.16);
+      border: 1.5px solid rgba(0, 180, 219, 0.3);
+    }
+    .login-card h2 {
+      font-family: var(--ff-headings);
+      font-size: 1.5rem;
+      color: var(--primary-navy);
+      margin-bottom: 4px;
+    }
+    .login-card h2 span {
+      color: var(--cyan-turquoise);
+    }
+    .login-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .login-badge-lock {
+      display: inline-block;
+      background: #F1F5F9;
+      color: #475569;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 22px;
+    }
+    .login-field {
+      text-align: right;
+      margin-bottom: 16px;
+    }
+    .login-field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .input-with-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .icon-prefix {
+      position: absolute;
+      right: 12px;
+      font-size: 0.95rem;
+      pointer-events: none;
+      color: var(--text-muted);
+    }
+    .login-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 38px 0 38px;
+      border: 1.5px solid var(--dash-border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: var(--transition);
+      direction: ltr;
+    }
+    .login-input:focus {
+      outline: none;
+      border-color: var(--cyan-turquoise);
+      box-shadow: 0 0 0 3px rgba(0, 180, 219, 0.15);
+    }
+    .btn-toggle-eye {
+      position: absolute;
+      left: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.05rem;
+      opacity: 0.6;
+      padding: 4px;
+    }
+    .btn-toggle-eye:hover {
+      opacity: 1;
+    }
+    .login-remember-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      direction: rtl;
+    }
+    .remember-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .login-error-alert {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: #DC2626;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      animation: shake 0.35s ease-in-out;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+    .btn-login-submit {
+      width: 100%;
+      height: 46px;
+      background: linear-gradient(135deg, #085EA8, #00B4DB);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(8, 94, 168, 0.3);
+      transition: var(--transition);
+    }
+    .btn-login-submit:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 1024px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .two-col-grid { grid-template-columns: 1fr; }
+      .dash-layout { grid-template-columns: 1fr; }
+      .dash-sidebar { display: none; }
+      .dash-main { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======================================================================
+     1. Authentication Gatekeeper Screen (Requires nadynasser / Nady@015)
+     ====================================================================== -->
+<div id="dashLoginGate" class="login-gate-overlay">
+  <div class="login-card">
+    <div class="login-logo-circle">⛵</div>
+    <h2>HURGHADA <span>SEA TOURS</span></h2>
+    <p class="login-subtitle">لوحة التحكم الإدارية والتشغيلية (Operations Hub)</p>
+    
+    <div class="login-badge-lock">🔒 منطقة إدارة العمليات | يرجى تسجيل الدخول</div>
+    
+    <form id="dashLoginForm" onsubmit="handleDashboardLogin(event)" autocomplete="on">
+      <div class="login-field">
+        <label for="loginUser">اسم المستخدم (Username)</label>
+        <div class="input-with-icon">
+          <span class="icon-prefix">👤</span>
+          <input type="text" id="loginUser" class="login-input" placeholder="nadynasser" required autofocus autocomplete="username">
+        </div>
+      </div>
+
+      <div class="login-field">
+        <label for="loginPass">كلمة المرور (Password)</label>
+        <div class="input-with-icon">
+          <span class="icon-prefix">🔑</span>
+          <input type="password" id="loginPass" class="login-input" placeholder="••••••••" required autocomplete="current-password">
+          <button type="button" class="btn-toggle-eye" onclick="togglePassVisibility()" title="إظهار/إخفاء كلمة المرور">👁️</button>
+        </div>
+      </div>
+
+      <div class="login-remember-row">
+        <label class="remember-label">
+          <input type="checkbox" id="loginRemember" checked>
+          <span>تذكرني في هذه الجلسة</span>
+        </label>
+        <span style="font-size:0.75rem; color:var(--text-muted);">Protected Access</span>
+      </div>
+
+      <div id="loginErrorMsg" class="login-error-alert" style="display:none;">
+        ⚠️ اسم المستخدم أو كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.
+      </div>
+
+      <button type="submit" class="btn-login-submit">
+        <span>تسجيل الدخول →</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ======================================================================
+     2. Dashboard Main Layout (Hidden until authenticated)
+     ====================================================================== -->
+<div class="dash-layout" id="dashLayout" style="display:none;">
+  <!-- Sidebar -->
+  <aside class="dash-sidebar">
+    <div class="dash-sidebar-logo">
+      <div class="brand-logo-icon" style="width:40px; height:40px;"></div>
+      <div>
+        <h3 style="font-family:var(--ff-headings); font-size:1.1rem; line-height:1.1; margin:0; color:#fff;">Hurghada Sea Tours</h3>
+        <span style="font-size:0.75rem; color:var(--cyan-turquoise);">Operations &amp; Admin</span>
+      </div>
+    </div>
+
+    <ul class="dash-sidebar-menu">
+      <li class="dash-menu-item active"><a href="#overview">📊 Business Overview</a></li>
+      <li class="dash-menu-item"><a href="#wa-routing">📲 WhatsApp Routing Hub</a></li>
+      <li class="dash-menu-item"><a href="#simulator">⚡ Routing Simulator</a></li>
+      <li class="dash-menu-item"><a href="#translations-mgr">🌐 Content &amp; Translations</a></li>
+      <li class="dash-menu-item"><a href="#tours-matrix">🚤 Tours &amp; Pricing Catalog</a></li>
+      <li class="dash-menu-item"><a href="#leads">💬 Inquiries &amp; Bookings</a></li>
+      <li class="dash-menu-item"><a href="#suppliers">⚓ Fleet &amp; Boat Suppliers</a></li>
+    </ul>
+
+    <div class="dash-sidebar-footer">
+      <a href="index.html" target="_blank" class="btn btn-primary" style="width:100%; font-size:0.85rem; padding:10px;">
+        <span>🌐 Open Customer Site →</span>
+      </a>
+      <button onclick="logoutDashboard()" class="btn btn-outline" style="width:100%; font-size:0.82rem; padding:8px; margin-top:8px; color:#F87171; border-color:rgba(248,113,113,0.3); cursor:pointer;">
+        <span>🔒 تسجيل الخروج (Logout)</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="dash-main">
+    <!-- Top Header -->
+    <header class="dash-header">
+      <div>
+        <h1>Hurghada Sea Tours — Operations &amp; WhatsApp Hub</h1>
+        <p style="color:var(--text-muted); font-size:0.9rem; margin-top:4px;">
+          Multi-Language Dispatch · WhatsApp Hotline (+20 109 170 5805) · Persistent Management
+        </p>
+      </div>
+      <div class="dash-header-actions">
+        <span style="background:#DCFCE7; color:#15803D; padding:6px 14px; border-radius:var(--radius-pill); font-size:0.85rem; font-weight:700;">
+          ● WhatsApp: +20 109 170 5805
+        </span>
+        <span style="background:#E0F2FE; color:#0369A1; padding:6px 14px; border-radius:var(--radius-pill); font-size:0.85rem; font-weight:700;">
+          👤 nadynasser
+        </span>
+        <a href="index.html" target="_blank" class="btn btn-outline btn-sm">Preview Site</a>
+        <button onclick="logoutDashboard()" class="btn btn-outline btn-sm" style="color:#DC2626; border-color:#FECACA;" title="تسجيل الخروج">
+          🔒 Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- KPI Summary Grid -->
+    <section class="kpi-grid" id="overview">
+      <div class="kpi-card">
+        <span class="kpi-label">Active Languages</span>
+        <span class="kpi-value">5 Languages</span>
+        <span class="kpi-trend">🇬🇧 EN · 🇩🇪 DE · 🇷🇺 RU · 🇵🇱 PL · 🇸🇦 AR</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Live WhatsApp Endpoints</span>
+        <span class="kpi-value" id="kpiActiveNumbers">6 Desks</span>
+        <span class="kpi-trend">Active: +20 109 170 5805</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Routing Rules Status</span>
+        <span class="kpi-value">7 / 7 Rules</span>
+        <span class="kpi-trend">✓ Context-Aware Booking Inquiries</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Target Commission Margin</span>
+        <span class="kpi-value">20.5%</span>
+        <span class="kpi-trend">Approved Middleman Margin (15-25%)</span>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         WhatsApp Routing Management Section
+         ====================================================================== -->
+    <section class="dash-section" id="wa-routing">
+      <div class="dash-section-head">
+        <div>
+          <h2>📲 WhatsApp Routing Manager &amp; Phone Directory</h2>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">
+            Configure dispatcher numbers, assign language desks, set product overrides, and manage fallback rules. Saved changes persist across restarts.
+          </p>
+        </div>
+        <div>
+          <button class="btn-action-save" onclick="saveWhatsAppSettings()">💾 Save WhatsApp Configuration</button>
+        </div>
+      </div>
+
+      <!-- Numbers Table -->
+      <h3 style="font-size:1rem; color:var(--primary-navy); margin-bottom:12px;">1. Configured WhatsApp Numbers Directory</h3>
+      <table class="data-table" id="numbersTable">
+        <thead>
+          <tr>
+            <th>Desk ID</th>
+            <th>Label / Department</th>
+            <th>WhatsApp Phone (Intl. Digits)</th>
+            <th style="text-align:center;">Status</th>
+            <th>Primary Default</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="numbersTableBody">
+          <!-- Populated by JavaScript -->
+        </tbody>
+      </table>
+
+      <!-- Add Number Form -->
+      <div style="background:#F8FAFC; border:1px solid var(--dash-border); border-radius:8px; padding:16px; margin-top:16px; display:grid; grid-template-columns: 1fr 1.5fr 1.5fr auto; gap:12px; align-items:end;">
+        <div>
+          <label style="font-size:0.78rem; font-weight:700; color:var(--text-muted); display:block; margin-bottom:4px;">Desk ID</label>
+          <input type="text" id="newDeskId" class="ctrl-input" placeholder="e.g. vip_charter">
+        </div>
+        <div>
+          <label style="font-size:0.78rem; font-weight:700; color:var(--text-muted); display:block; margin-bottom:4px;">Department Label</label>
+          <input type="text" id="newDeskLabel" class="ctrl-input" placeholder="e.g. VIP Yacht Specialist">
+        </div>
+        <div>
+          <label style="font-size:0.78rem; font-weight:700; color:var(--text-muted); display:block; margin-bottom:4px;">Phone Number (Digits only)</label>
+          <input type="text" id="newDeskNumber" class="ctrl-input" placeholder="e.g. 201091705805">
+        </div>
+        <div>
+          <button type="button" class="btn btn-outline btn-sm" onclick="addNewNumberRow()" style="height:38px;">+ Add Number</button>
+        </div>
+      </div>
+
+      <!-- Routing Rules Mapping Grid -->
+      <div class="two-col-grid" style="margin-top:30px;">
+        <!-- Left: Language-Based Routing (Rule 2 & 3) -->
+        <div style="background:#FFFFFF; border:1px solid var(--dash-border); border-radius:8px; padding:20px;">
+          <h3 style="font-size:1rem; color:var(--primary-navy); margin-bottom:14px;">
+            2. Language-Based Routing (Rule 2 &amp; 3)
+          </h3>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:16px;">
+            Assigns visitor browsing language to dedicated language support desks. If unassigned, defaults to primary hotline.
+          </p>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="display:grid; grid-template-columns: 140px 1fr; align-items:center;">
+              <span style="font-weight:600; font-size:0.9rem;">🇬🇧 English (en):</span>
+              <select id="route_en" class="ctrl-select lang-route-select" data-lang="en"></select>
+            </div>
+            <div style="display:grid; grid-template-columns: 140px 1fr; align-items:center;">
+              <span style="font-weight:600; font-size:0.9rem;">🇩🇪 German (de):</span>
+              <select id="route_de" class="ctrl-select lang-route-select" data-lang="de"></select>
+            </div>
+            <div style="display:grid; grid-template-columns: 140px 1fr; align-items:center;">
+              <span style="font-weight:600; font-size:0.9rem;">🇷🇺 Russian (ru):</span>
+              <select id="route_ru" class="ctrl-select lang-route-select" data-lang="ru"></select>
+            </div>
+            <div style="display:grid; grid-template-columns: 140px 1fr; align-items:center;">
+              <span style="font-weight:600; font-size:0.9rem;">🇵🇱 Polish (pl):</span>
+              <select id="route_pl" class="ctrl-select lang-route-select" data-lang="pl"></select>
+            </div>
+            <div style="display:grid; grid-template-columns: 140px 1fr; align-items:center;">
+              <span style="font-weight:600; font-size:0.9rem;">🇸🇦 Arabic (ar):</span>
+              <select id="route_ar" class="ctrl-select lang-route-select" data-lang="ar"></select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Product-Specific Overrides (Rule 4) -->
+        <div style="background:#FFFFFF; border:1px solid var(--dash-border); border-radius:8px; padding:20px;">
+          <h3 style="font-size:1rem; color:var(--primary-navy); margin-bottom:14px;">
+            3. Product Routing Overrides (Rule 4)
+          </h3>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:16px;">
+            If configured, a product-specific desk overrides the visitor's language desk (e.g. VIP Charters).
+          </p>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="display:grid; grid-template-columns: 170px 1fr; align-items:center;">
+              <span style="font-weight:600; font-size:0.85rem;">⛵ VIP Private Yacht:</span>
+              <select id="prod_private-yacht" class="ctrl-select prod-route-select" data-product="private-yacht"></select>
+            </div>
+            <div style="display:grid; grid-template-columns: 170px 1fr; align-items:center;">
+              <span style="font-weight:600; font-size:0.85rem;">🏝️ Orange Bay Cruise:</span>
+              <select id="prod_orange-bay" class="ctrl-select prod-route-select" data-product="orange-bay"></select>
+            </div>
+            <div style="display:grid; grid-template-columns: 170px 1fr; align-items:center;">
+              <span style="font-weight:600; font-size:0.85rem;">🐬 Dolphin House:</span>
+              <select id="prod_dolphin-house" class="ctrl-select prod-route-select" data-product="dolphin-house"></select>
+            </div>
+            <div style="display:grid; grid-template-columns: 170px 1fr; align-items:center;">
+              <span style="font-weight:600; font-size:0.85rem;">🤿 Snorkeling Sanctuary:</span>
+              <select id="prod_snorkeling-coral-reef" class="ctrl-select prod-route-select" data-product="snorkeling-coral-reef"></select>
+            </div>
+            <div style="display:grid; grid-template-columns: 170px 1fr; align-items:center;">
+              <span style="font-weight:600; font-size:0.85rem;">🚢 Semi-Submarine:</span>
+              <select id="prod_semi-submarine" class="ctrl-select prod-route-select" data-product="semi-submarine"></select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Live WhatsApp Routing Simulator
+         ====================================================================== -->
+    <section class="dash-section" id="simulator">
+      <div class="dash-section-head">
+        <div>
+          <h2>⚡ Live WhatsApp Routing Simulator (Rule Verification)</h2>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">
+            Test the live routing logic instantly against any combination of language and product. Validates all 7 rules.
+          </p>
+        </div>
+      </div>
+
+      <div class="sim-card">
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+          <div>
+            <label style="font-size:0.82rem; font-weight:700; color:var(--text-main); display:block; margin-bottom:6px;">Select Visitor Language:</label>
+            <select id="simLang" class="ctrl-select" onchange="runSimulation()">
+              <option value="en">🇬🇧 English (en)</option>
+              <option value="de">🇩🇪 German (de)</option>
+              <option value="ru">🇷🇺 Russian (ru)</option>
+              <option value="pl">🇵🇱 Polish (pl)</option>
+              <option value="ar" selected>🇸🇦 Arabic (ar)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.82rem; font-weight:700; color:var(--text-main); display:block; margin-bottom:6px;">Select Tour / Product:</label>
+            <select id="simProduct" class="ctrl-select" onchange="runSimulation()">
+              <option value="orange-bay" data-price="€30" data-name="جزيرة أورانج باي وسنوركلينج اليخت" selected>Orange Bay Island Cruise (€30)</option>
+              <option value="dolphin-house" data-price="€25" data-name="مغامرة بيت الدلافين والسباحة المفتوحة">Dolphin House Adventure (€25)</option>
+              <option value="snorkeling-coral-reef" data-price="€35" data-name="سنوركلينج المحميات والشعاب المرجانية">Snorkeling &amp; Coral Reef (€35)</option>
+              <option value="semi-submarine" data-price="€20" data-name="المرصد البحري والغواصة (سيمي سبمارين)">Semi-Submarine Tour (€20)</option>
+              <option value="private-yacht" data-price="€150" data-name="تأجير اليخوت واللانشات السريعة الخاصة VIP">VIP Private Yacht Charter (€150)</option>
+              <option value="">General Inquiry (No Product)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.82rem; font-weight:700; color:var(--text-main); display:block; margin-bottom:6px;">Run Routing Logic:</label>
+            <button type="button" class="btn btn-primary btn-sm" style="width:100%; height:38px;" onclick="runSimulation()">
+              ⚡ Compute Route
+            </button>
+          </div>
+        </div>
+
+        <div class="sim-result-box" id="simOutput">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Content & Translation Manager Section
+         ====================================================================== -->
+    <section class="dash-section" id="translations-mgr">
+      <div class="dash-section-head">
+        <div>
+          <h2>🌐 Content &amp; Multi-Language Translation Editor</h2>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">
+            Edit website copy across all 5 languages without altering source files. Changes persist in LocalStorage and JSON.
+          </p>
+        </div>
+        <div>
+          <button class="btn-action-save" onclick="saveTranslations()">💾 Save Translations</button>
+        </div>
+      </div>
+
+      <!-- Language Tabs -->
+      <div style="display:flex; gap:8px; margin-bottom:20px;" id="transTabs">
+        <button class="btn btn-outline btn-sm active" onclick="switchTransTab('ar')" id="tab_ar">🇸🇦 العربية</button>
+        <button class="btn btn-outline btn-sm" onclick="switchTransTab('en')" id="tab_en">🇬🇧 English</button>
+        <button class="btn btn-outline btn-sm" onclick="switchTransTab('de')" id="tab_de">🇩🇪 Deutsch</button>
+        <button class="btn btn-outline btn-sm" onclick="switchTransTab('ru')" id="tab_ru">🇷🇺 Русский</button>
+        <button class="btn btn-outline btn-sm" onclick="switchTransTab('pl')" id="tab_pl">🇵🇱 Polski</button>
+      </div>
+
+      <div id="transFormFields" style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+        <!-- Dynamically filled by JS -->
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Tours Catalog Matrix
+         ====================================================================== -->
+    <section class="dash-section" id="tours-matrix">
+      <div class="dash-section-head">
+        <h2>Tours Catalog &amp; Pricing Architecture (tours.csv)</h2>
+        <span class="badge-status badge-active">Live Sync</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Tour Name</th>
+              <th>Category</th>
+              <th>Duration</th>
+              <th>Customer Price</th>
+              <th>Est. Margin (20%)</th>
+              <th>Status</th>
+              <th>Supplier</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Orange Bay Island Cruise</strong></td>
+              <td>Island Trip</td>
+              <td>7 Hours</td>
+              <td>€30 / Person</td>
+              <td>€6 (20%)</td>
+              <td><span class="badge-status badge-active">Live</span></td>
+              <td>Red Sea Safari Fleet #1</td>
+            </tr>
+            <tr>
+              <td><strong>Dolphin House Adventure</strong></td>
+              <td>Diving / Snorkel</td>
+              <td>4 Hours</td>
+              <td>€25 / Person</td>
+              <td>€5 (20%)</td>
+              <td><span class="badge-status badge-active">Live</span></td>
+              <td>Dolphin Explorer Speedboats</td>
+            </tr>
+            <tr>
+              <td><strong>Living Coral Reef Snorkeling</strong></td>
+              <td>Snorkeling</td>
+              <td>5 Hours</td>
+              <td>€35 / Person</td>
+              <td>€7 (20%)</td>
+              <td><span class="badge-status badge-active">Live</span></td>
+              <td>Giftun Marine Fleet</td>
+            </tr>
+            <tr>
+              <td><strong>Semi-Submarine Tour</strong></td>
+              <td>Submarine</td>
+              <td>2 Hours</td>
+              <td>€20 / Person</td>
+              <td>€4 (20%)</td>
+              <td><span class="badge-status badge-active">Live</span></td>
+              <td>Sea Scope Submarines</td>
+            </tr>
+            <tr>
+              <td><strong>Private Yacht Charter</strong></td>
+              <td>Private Charter</td>
+              <td>Full Day</td>
+              <td>€150 / Boat</td>
+              <td>€37.50 (25%)</td>
+              <td><span class="badge-status badge-vip">VIP Live</span></td>
+              <td>Marina Luxury Fleet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Inquiries & Bookings Pipeline -->
+    <section class="dash-section" id="leads">
+      <div class="dash-section-head">
+        <h2>Live WhatsApp Inquiries &amp; Booking Pipeline (bookings.csv)</h2>
+        <span class="badge-status badge-active">Real-time Pipeline</span>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Lead ID</th>
+            <th>Guest Name</th>
+            <th>Market</th>
+            <th>Requested Tour</th>
+            <th>Pax</th>
+            <th>Hotel</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Direct Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#HST-1042</td>
+            <td><strong>Lukas Schneider</strong></td>
+            <td>🇩🇪 DE (German)</td>
+            <td>Orange Bay Island Cruise</td>
+            <td>2 Adults</td>
+            <td>Steigenberger ALDAU Beach</td>
+            <td><strong>€60</strong></td>
+            <td><span class="badge-status badge-active">Confirmed</span></td>
+            <td><a href="https://wa.me/201091705805?text=Booking%20HST-1042%20Confirmed" target="_blank" class="btn btn-whatsapp btn-sm">Open WhatsApp</a></td>
+          </tr>
+          <tr>
+            <td>#HST-1043</td>
+            <td><strong>Emma Watson</strong></td>
+            <td>🇬🇧 UK (English)</td>
+            <td>Dolphin House Swimming</td>
+            <td>2 Adults, 1 Child</td>
+            <td>Jaz Aquaviva (Makadi)</td>
+            <td><strong>€62</strong></td>
+            <td><span class="badge-status badge-pending">Pending Dispatch</span></td>
+            <td><a href="https://wa.me/201091705805?text=Booking%20HST-1043%20Review" target="_blank" class="btn btn-whatsapp btn-sm">Open WhatsApp</a></td>
+          </tr>
+          <tr>
+            <td>#HST-1044</td>
+            <td><strong>Marek Wisniewski</strong></td>
+            <td>🇵🇱 PL (Polish)</td>
+            <td>Coral Reef Snorkeling</td>
+            <td>4 Adults</td>
+            <td>Desert Rose Resort</td>
+            <td><strong>€140</strong></td>
+            <td><span class="badge-status badge-active">Confirmed</span></td>
+            <td><a href="https://wa.me/201091705805?text=Booking%20HST-1044%20Confirmed" target="_blank" class="btn btn-whatsapp btn-sm">Open WhatsApp</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Suppliers Section -->
+    <section class="dash-section" id="suppliers">
+      <div class="dash-section-head">
+        <h2>Hurghada Marina Fleet &amp; Boat Suppliers (suppliers.csv)</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
+        <div style="border:1px solid var(--dash-border); padding:16px; border-radius:8px;">
+          <h4 style="color:var(--primary-navy); margin-bottom:4px;">🚤 Red Sea Safari Fleet #1</h4>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">Hurghada Marina · Pier 4</p>
+          <p style="font-size:0.85rem;"><strong>Services:</strong> Orange Bay &amp; Giftun Day Cruisers (Capacity 50 pax)</p>
+          <span class="badge-status badge-active" style="margin-top:8px;">Verified Supplier</span>
+        </div>
+        <div style="border:1px solid var(--dash-border); padding:16px; border-radius:8px;">
+          <h4 style="color:var(--primary-navy); margin-bottom:4px;">🐬 Dolphin Explorer Speedboats</h4>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">Northern Marina · Pier 2</p>
+          <p style="font-size:0.85rem;"><strong>Services:</strong> Fast speedboats for Dolphin House &amp; private charters</p>
+          <span class="badge-status badge-active" style="margin-top:8px;">Verified Supplier</span>
+        </div>
+        <div style="border:1px solid var(--dash-border); padding:16px; border-radius:8px;">
+          <h4 style="color:var(--primary-navy); margin-bottom:4px;">🚢 Sea Scope Submarines</h4>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">Old Harbor Marina</p>
+          <p style="font-size:0.85rem;"><strong>Services:</strong> Underwater semi-submarine viewing vessels</p>
+          <span class="badge-status badge-active" style="margin-top:8px;">Verified Supplier</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast-msg" id="toastMsg"></div>
+
+<!-- Scripts -->
+<script src="assets/js/whatsapp-router.js"></script>
+<script>
+// ==========================================================================
+// Authentication Gatekeeper State
+// ==========================================================================
+const AUTH_KEY = 'hst_auth_user';
+const VALID_USER = 'nadynasser';
+const VALID_PASS = 'Nady@015';
+
+function checkAuthStatus() {
+  const sessionUser = sessionStorage.getItem(AUTH_KEY);
+  const localUser = localStorage.getItem(AUTH_KEY);
+
+  if (sessionUser === VALID_USER || localUser === VALID_USER) {
+    document.getElementById('dashLoginGate').style.display = 'none';
+    document.getElementById('dashLayout').style.display = 'grid';
+    initDashboard();
+  } else {
+    document.getElementById('dashLoginGate').style.display = 'flex';
+    document.getElementById('dashLayout').style.display = 'none';
+  }
+}
+
+function handleDashboardLogin(e) {
+  e.preventDefault();
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value.trim();
+  const remember = document.getElementById('loginRemember').checked;
+  const errBox = document.getElementById('loginErrorMsg');
+
+  if (u === VALID_USER && p === VALID_PASS) {
+    sessionStorage.setItem(AUTH_KEY, VALID_USER);
+    if (remember) {
+      localStorage.setItem(AUTH_KEY, VALID_USER);
+    } else {
+      localStorage.removeItem(AUTH_KEY);
+    }
+    errBox.style.display = 'none';
+    document.getElementById('dashLoginGate').style.display = 'none';
+    document.getElementById('dashLayout').style.display = 'grid';
+    initDashboard();
+  } else {
+    errBox.style.display = 'block';
+    document.getElementById('loginPass').value = '';
+    document.getElementById('loginPass').focus();
+  }
+}
+
+function logoutDashboard() {
+  sessionStorage.removeItem(AUTH_KEY);
+  localStorage.removeItem(AUTH_KEY);
+  document.getElementById('dashLayout').style.display = 'none';
+  document.getElementById('dashLoginGate').style.display = 'flex';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginErrorMsg').style.display = 'none';
+}
+
+function togglePassVisibility() {
+  const p = document.getElementById('loginPass');
+  p.type = p.type === 'password' ? 'text' : 'password';
+}
+
+// ==========================================================================
+// Dashboard Management Logic
+// ==========================================================================
+let currentSettings = null;
+let currentTranslations = null;
+let activeTransTab = 'ar';
+
+const SETTINGS_KEY = 'hst_whatsapp_settings';
+const TRANS_KEY = 'hst_translations';
+
+// Initialize Dashboard Data
+async function initDashboard() {
+  // Load WhatsApp Settings
+  const localSet = localStorage.getItem(SETTINGS_KEY);
+  if (localSet) {
+    try { 
+      const parsed = JSON.parse(localSet);
+      if (parsed && parsed.defaultNumber === '201091705805') {
+        currentSettings = parsed; 
+      }
+    } catch (e) {}
+  }
+  if (!currentSettings) {
+    try {
+      const res = await fetch('assets/data/whatsapp-settings.json');
+      if (res.ok) currentSettings = await res.json();
+    } catch (e) {}
+  }
+  if (!currentSettings && window.HSTWhatsAppRouter) {
+    currentSettings = window.HSTWhatsAppRouter.settings;
+  }
+
+  // Load Translations
+  const localTrans = localStorage.getItem(TRANS_KEY);
+  if (localTrans) {
+    try { currentTranslations = JSON.parse(localTrans); } catch (e) {}
+  }
+  if (!currentTranslations) {
+    try {
+      const res = await fetch('assets/data/translations.json');
+      if (res.ok) currentTranslations = await res.json();
+    } catch (e) {}
+  }
+
+  renderNumbersTable();
+  renderRoutingDropdowns();
+  renderTranslationsTab(activeTransTab);
+  runSimulation();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toastMsg');
+  t.innerText = msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 4000);
+}
+
+// 1. Render Numbers Table
+function renderNumbersTable() {
+  const tbody = document.getElementById('numbersTableBody');
+  tbody.innerHTML = '';
+  const numbers = currentSettings.numbers || [];
+
+  document.getElementById('kpiActiveNumbers').innerText = `${numbers.filter(n=>n.enabled).length} Desks`;
+
+  numbers.forEach((item, idx) => {
+    const tr = document.createElement('tr');
+    const isDefault = item.id === 'main' || item.number === currentSettings.defaultNumber;
+
+    tr.innerHTML = `
+      <td><code>${item.id}</code></td>
+      <td>
+        <input type="text" class="ctrl-input" value="${item.label}" onchange="updateNumberLabel('${item.id}', this.value)" style="height:32px; font-size:0.85rem;">
+      </td>
+      <td>
+        <input type="text" class="ctrl-input" value="${item.number}" onchange="updateNumberValue('${item.id}', this.value)" style="height:32px; font-size:0.85rem; font-family:monospace;">
+      </td>
+      <td style="text-align:center;">
+        <input type="checkbox" ${item.enabled ? 'checked' : ''} onchange="toggleNumberEnabled('${item.id}', this.checked)" title="Enable/Disable number">
+      </td>
+      <td>
+        <input type="radio" name="defaultRadio" ${isDefault ? 'checked' : ''} onchange="setDefaultNumber('${item.number}')" title="Set as primary fallback">
+        <span style="font-size:0.8rem; margin-left:4px; color:var(--text-muted);">${isDefault ? 'Primary' : ''}</span>
+      </td>
+      <td>
+        ${item.id !== 'main' ? `<button type="button" class="btn btn-outline btn-sm" onclick="removeNumber('${item.id}')" style="color:#DC2626; border-color:#FECACA; padding:2px 8px; font-size:0.75rem;">Delete</button>` : '<span style="color:var(--text-muted); font-size:0.75rem;">Protected</span>'}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function updateNumberLabel(id, val) {
+  const item = currentSettings.numbers.find(n => n.id === id);
+  if (item) item.label = val;
+  renderRoutingDropdowns();
+}
+
+function updateNumberValue(id, val) {
+  const item = currentSettings.numbers.find(n => n.id === id);
+  if (item) item.number = val.replace(/[^0-9]/g, '');
+  runSimulation();
+}
+
+function toggleNumberEnabled(id, enabled) {
+  const item = currentSettings.numbers.find(n => n.id === id);
+  if (item) item.enabled = enabled;
+  renderNumbersTable();
+  renderRoutingDropdowns();
+  runSimulation();
+}
+
+function setDefaultNumber(number) {
+  currentSettings.defaultNumber = number.replace(/[^0-9]/g, '');
+  renderNumbersTable();
+  runSimulation();
+}
+
+function addNewNumberRow() {
+  const idInput = document.getElementById('newDeskId');
+  const labelInput = document.getElementById('newDeskLabel');
+  const numInput = document.getElementById('newDeskNumber');
+
+  const id = idInput.value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+  const label = labelInput.value.trim();
+  const num = numInput.value.trim().replace(/[^0-9]/g, '');
+
+  if (!id || !label || !num) {
+    alert('Please fill Desk ID, Label, and Phone Number.');
+    return;
+  }
+  if (currentSettings.numbers.some(n => n.id === id)) {
+    alert('Desk ID already exists. Please choose a unique ID.');
+    return;
+  }
+
+  currentSettings.numbers.push({
+    id: id,
+    label: label,
+    number: num,
+    enabled: true
+  });
+
+  idInput.value = '';
+  labelInput.value = '';
+  numInput.value = '';
+
+  renderNumbersTable();
+  renderRoutingDropdowns();
+  runSimulation();
+}
+
+function removeNumber(id) {
+  if (id === 'main') return;
+  if (!confirm(`Are you sure you want to delete desk "${id}"?`)) return;
+  currentSettings.numbers = currentSettings.numbers.filter(n => n.id !== id);
+  renderNumbersTable();
+  renderRoutingDropdowns();
+  runSimulation();
+}
+
+// 2. Render Routing Dropdowns
+function renderRoutingDropdowns() {
+  const activeNumbers = currentSettings.numbers || [];
+
+  const makeOptions = (selectedId, allowInherit = false) => {
+    let html = '';
+    if (allowInherit) {
+      html += `<option value="" ${!selectedId ? 'selected' : ''}>-- Inherit Language Route --</option>`;
+    }
+    activeNumbers.forEach(n => {
+      const isSel = n.id === selectedId;
+      const status = n.enabled ? '' : ' [DISABLED]';
+      html += `<option value="${n.id}" ${isSel ? 'selected' : ''}>${n.label} (+${n.number})${status}</option>`;
+    });
+    return html;
+  };
+
+  ['en', 'de', 'ru', 'pl', 'ar'].forEach(lang => {
+    const sel = document.getElementById(`route_${lang}`);
+    if (sel) {
+      const curr = currentSettings.languageRouting[lang];
+      sel.innerHTML = makeOptions(curr, false);
+      sel.onchange = (e) => {
+        currentSettings.languageRouting[lang] = e.target.value;
+        runSimulation();
+      };
+    }
+  });
+
+  ['private-yacht', 'orange-bay', 'dolphin-house', 'snorkeling-coral-reef', 'semi-submarine'].forEach(prod => {
+    const sel = document.getElementById(`prod_${prod}`);
+    if (sel) {
+      const curr = currentSettings.productRouting[prod];
+      sel.innerHTML = makeOptions(curr, true);
+      sel.onchange = (e) => {
+        currentSettings.productRouting[prod] = e.target.value || null;
+        runSimulation();
+      };
+    }
+  });
+}
+
+// 3. Save WhatsApp Configuration persistently
+async function saveWhatsAppSettings() {
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(currentSettings));
+  } catch (e) {
+    console.warn('LocalStorage save failed', e);
+  }
+
+  if (window.HSTWhatsAppRouter) {
+    window.HSTWhatsAppRouter.settings = currentSettings;
+    window.HSTWhatsAppRouter.bindAllElements();
+  }
+
+  let serverStatus = '';
+  try {
+    const res = await fetch('/api/save-whatsapp-settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(currentSettings, null, 2)
+    });
+    if (res.ok) serverStatus = ' & disk JSON';
+  } catch (e) {}
+
+  showToast(`✓ تم حفظ إعدادات واتساب بنجاح في المتصفح${serverStatus}!`);
+}
+
+// 4. Live Simulator
+function runSimulation() {
+  const lang = document.getElementById('simLang').value;
+  const prodSelect = document.getElementById('simProduct');
+  const prodId = prodSelect.value || null;
+  const selectedOpt = prodSelect.options[prodSelect.selectedIndex];
+  const prodName = prodId ? selectedOpt.getAttribute('data-name') : null;
+  const prodPrice = prodId ? selectedOpt.getAttribute('data-price') : null;
+
+  const activeNumbers = (currentSettings.numbers || []).filter(n => n.enabled && n.number && n.number.length >= 8);
+  let resolvedNumber = '';
+  let ruleApplied = '';
+  let deskLabel = '';
+
+  if (activeNumbers.length === 1) {
+    resolvedNumber = activeNumbers[0].number;
+    deskLabel = activeNumbers[0].label;
+    ruleApplied = 'Rule 1: رقم وحيد مفعل ← مستخدم لجميع اللغات والرحلات.';
+  }
+  else if (prodId && currentSettings.productRouting && currentSettings.productRouting[prodId]) {
+    const numId = currentSettings.productRouting[prodId];
+    const nObj = currentSettings.numbers.find(n => n.id === numId);
+    if (nObj && nObj.enabled) {
+      resolvedNumber = nObj.number;
+      deskLabel = nObj.label;
+      ruleApplied = `Rule 4: تخصيص خاص للرحلة "${prodName}" ← موجه إلى: ${nObj.label}.`;
+    } else {
+      ruleApplied = `Rule 5: رقم الرحلة "${numId}" معطل/غير صالح ← تحويل للأمان. `;
+    }
+  }
+
+  if (!resolvedNumber && lang && currentSettings.languageRouting && currentSettings.languageRouting[lang]) {
+    const numId = currentSettings.languageRouting[lang];
+    const nObj = currentSettings.numbers.find(n => n.id === numId);
+    if (nObj && nObj.enabled) {
+      resolvedNumber = nObj.number;
+      deskLabel = nObj.label;
+      ruleApplied += `Rule 2: توجيه حسب لغة الزائر [${lang.toUpperCase()}] ← موجه إلى: ${nObj.label}.`;
+    } else {
+      ruleApplied += `Rule 5: رقم اللغة "${numId}" معطل ← تحويل احتياطي. `;
+    }
+  }
+
+  if (!resolvedNumber) {
+    const defObj = currentSettings.numbers.find(n => n.number === currentSettings.defaultNumber || n.id === 'main');
+    resolvedNumber = defObj && defObj.enabled ? defObj.number : (currentSettings.defaultNumber || '201091705805');
+    deskLabel = defObj ? defObj.label : 'الخط الرئيسي البديل';
+    ruleApplied += `Rule 3 & 5: استخدام الخط الافتراضي العام (${resolvedNumber}).`;
+  }
+
+  // Pre-filled message with details
+  let msg = '';
+  if (window.HSTWhatsAppRouter && typeof window.HSTWhatsAppRouter.buildMessage === 'function') {
+    msg = window.HSTWhatsAppRouter.buildMessage(prodName, prodPrice, lang);
+  } else {
+    const tmpls = (currentSettings.messageTemplates && currentSettings.messageTemplates[lang]) || currentSettings.messageTemplates['ar'];
+    if (prodName) {
+      msg = (tmpls.product || '').replace('{productName}', prodName).replace('{productPrice}', prodPrice);
+    } else {
+      msg = tmpls.general || '';
+    }
+  }
+
+  const waLink = `https://wa.me/${resolvedNumber}?text=${encodeURIComponent(msg)}`;
+
+  const out = document.getElementById('simOutput');
+  out.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <div>
+        <span style="font-size:0.8rem; text-transform:uppercase; font-weight:700; color:var(--text-muted);">رقم الواتساب المستهدف (Destination Number)</span>
+        <div style="font-size:1.3rem; font-weight:800; color:var(--wa-green); font-family:monospace;">
+          +${resolvedNumber} <small style="color:var(--text-main); font-family:var(--ff-body); font-size:0.9rem;">(${deskLabel})</small>
+        </div>
+      </div>
+      <div>
+        <a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm">
+          <span>💬 تجربة الرسالة في واتساب →</span>
+        </a>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="badge-rule">${ruleApplied}</span>
+    </div>
+    <div style="background:#F1F5F9; border-radius:6px; padding:12px; font-size:0.88rem; color:#334155; border-left:3px solid var(--wa-green); text-align:right;">
+      <strong>الرسالة المجهزة تلقائياً (${lang.toUpperCase()}):</strong>
+      <p style="margin-top:4px; font-style:italic; white-space:pre-line;">${msg}</p>
+    </div>
+  `;
+}
+
+// 5. Translation Editor
+function switchTransTab(lang) {
+  activeTransTab = lang;
+  ['en', 'de', 'ru', 'pl', 'ar'].forEach(l => {
+    const b = document.getElementById(`tab_${l}`);
+    if (b) {
+      if (l === lang) b.classList.add('active');
+      else b.classList.remove('active');
+    }
+  });
+  renderTranslationsTab(lang);
+}
+
+function renderTranslationsTab(lang) {
+  const container = document.getElementById('transFormFields');
+  container.innerHTML = '';
+  if (!currentTranslations || !currentTranslations[lang]) return;
+
+  const data = currentTranslations[lang];
+  const keys = Object.keys(data);
+
+  keys.forEach(key => {
+    const fGroup = document.createElement('div');
+    fGroup.style.display = 'flex';
+    fGroup.style.flexDirection = 'column';
+    fGroup.style.gap = '4px';
+
+    fGroup.innerHTML = `
+      <label style="font-size:0.78rem; font-weight:700; color:var(--text-muted); font-family:monospace;">${key}</label>
+      <input type="text" class="ctrl-input" value="${data[key].replace(/"/g, '&quot;')}" onchange="updateTransKey('${lang}', '${key}', this.value)">
+    `;
+    container.appendChild(fGroup);
+  });
+}
+
+function updateTransKey(lang, key, value) {
+  if (currentTranslations && currentTranslations[lang]) {
+    currentTranslations[lang][key] = value;
+  }
+}
+
+async function saveTranslations() {
+  try {
+    localStorage.setItem(TRANS_KEY, JSON.stringify(currentTranslations));
+  } catch (e) {}
+
+  let serverStatus = '';
+  try {
+    const res = await fetch('/api/save-translations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(currentTranslations, null, 2)
+    });
+    if (res.ok) serverStatus = ' & disk JSON';
+  } catch (e) {}
+
+  showToast(`✓ تم حفظ الترجمات بنجاح${serverStatus}!`);
+}
+
+// Start with Authentication Check
+document.addEventListener('DOMContentLoaded', checkAuthStatus);
+</script>
+</body>
+</html>

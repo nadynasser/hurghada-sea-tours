@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 260" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sunGradFull" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#FFDD00" />
+      <stop offset="50%" stop-color="#FFAE00" />
+      <stop offset="100%" stop-color="#FF7A00" />
+    </linearGradient>
+    <linearGradient id="waveCyanFull" x1="0%" y1="30%" x2="100%" y2="70%">
+      <stop offset="0%" stop-color="#38E1FF" />
+      <stop offset="60%" stop-color="#00B4DB" />
+      <stop offset="100%" stop-color="#0083B0" />
+    </linearGradient>
+    <linearGradient id="waveNavyFull" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E73B9" />
+      <stop offset="100%" stop-color="#083E75" />
+    </linearGradient>
+    <style>
+      .title-hurghada { font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif; font-weight: 800; font-size: 38px; fill: #083E75; letter-spacing: 3px; }
+      .title-sea-tours { font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif; font-weight: 800; font-size: 26px; fill: #00B4DB; letter-spacing: 5px; }
+      .bar-line { stroke: #00B4DB; stroke-width: 3.5; stroke-linecap: round; }
+      .sub-features { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13.5px; fill: #083E75; letter-spacing: 0.8px; }
+      .tagline-cursive { font-family: 'Caveat', cursive, 'Brush Script MT', sans-serif; font-weight: 700; font-size: 27px; fill: #00B4DB; }
+    </style>
+  </defs>
+
+  <!-- Sun -->
+  <circle cx="230" cy="72" r="48" fill="url(#sunGradFull)" />
+
+  <!-- Birds -->
+  <path d="M 214 44 C 218 39, 223 39, 226 42 C 229 39, 234 39, 238 44 C 233 45, 228 46, 226 50 C 224 46, 219 45, 214 44 Z" fill="#052646" />
+  <path d="M 204 56 C 208 52, 212 52, 215 54 C 217 52, 222 52, 225 56 C 221 57, 217 58, 215 61 C 213 58, 209 57, 204 56 Z" fill="#052646" />
+
+  <!-- Yacht -->
+  <path d="M 226 66 L 244 66 C 250 66, 254 68, 258 72 L 272 72 L 269 68 C 266 64, 258 60, 250 60 L 234 60 C 230 60, 227 62, 226 66 Z" fill="#052646" />
+  <path d="M 222 72 L 285 67 C 291 70, 295 73, 296 77 L 230 95 C 226 89, 223 81, 222 72 Z" fill="#083E75" />
+
+  <!-- Turquoise Wave -->
+  <path d="M 148 100 C 175 90, 205 76, 235 96 C 260 112, 285 96, 308 106 C 280 112, 255 116, 232 104 C 205 90, 180 105, 148 100 Z" fill="url(#waveCyanFull)" />
+
+  <!-- Navy Wave -->
+  <path d="M 158 111 C 185 99, 218 93, 244 111 C 268 123, 296 115, 316 123 C 288 129, 260 133, 240 119 C 212 103, 186 117, 158 111 Z" fill="url(#waveNavyFull)" />
+
+  <!-- Text: HURGHADA -->
+  <text x="230" y="160" text-anchor="middle" class="title-hurghada">HURGHADA</text>
+
+  <!-- Line & SEA TOURS & Line -->
+  <line x1="125" y1="184" x2="160" y2="184" class="bar-line" />
+  <text x="230" y="191" text-anchor="middle" class="title-sea-tours">SEA TOURS</text>
+  <line x1="300" y1="184" x2="335" y2="184" class="bar-line" />
+
+  <!-- Sub features -->
+  <text x="230" y="214" text-anchor="middle" class="sub-features">Sea Trips &bull; Islands &bull; Snorkeling &bull; Dolphin Tours</text>
+
+  <!-- Script Tagline -->
+  <text x="230" y="246" text-anchor="middle" class="tagline-cursive">Your Sea, Your Adventure</text>
+  <!-- Underline Swoop for tagline -->
+  <path d="M 185 253 Q 230 260 275 253" stroke="#00B4DB" stroke-width="2.5" fill="none" stroke-linecap="round" />
+</svg>

@@ -1,0 +1,40 @@
+# Robots.txt for Hurghada Sea Tours (https://hurghadaseatours.com)
+# Optimized for Google SEO, Generative Engine Optimization (GEO), and AI Answer Engines
+
+User-agent: *
+Allow: /
+Allow: /de/
+Allow: /ru/
+Allow: /pl/
+Allow: /ar/
+Allow: /tours/
+Allow: /assets/
+Allow: /assets/images/
+Allow: /assets/css/
+Allow: /assets/js/
+Disallow: /dashboard.html
+Disallow: /preview-dashboard.bat
+Disallow: /server.ps1
+
+# Explicitly Allow AI Search Engines & Retrieval Bots (GEO & AEO)
+User-agent: Google-Extended
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Production XML Sitemap
+Sitemap: https://hurghadaseatours.com/sitemap.xml
+Host: https://hurghadaseatours.com

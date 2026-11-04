@@ -1,0 +1,3 @@
+@echo off
+echo Opening Hurghada Sea Tours Operations Dashboard in your default browser...
+start "" "%~dp0dashboard.html"

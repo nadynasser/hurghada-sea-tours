@@ -1,0 +1,78 @@
+{
+  "version": 2,
+  "defaultNumber": "201091705805",
+  "numbers": [
+    {
+      "id": "main",
+      "number": "201091705805",
+      "label": "Hurghada Marina Central Dispatch (Default)",
+      "enabled": true
+    },
+    {
+      "id": "de_rep",
+      "number": "201091705805",
+      "label": "German Guest Relations (Deutsch)",
+      "enabled": true
+    },
+    {
+      "id": "ru_rep",
+      "number": "201091705805",
+      "label": "Russian Support Desk (Русский)",
+      "enabled": true
+    },
+    {
+      "id": "pl_rep",
+      "number": "201091705805",
+      "label": "Polish Customer Desk (Polski)",
+      "enabled": true
+    },
+    {
+      "id": "ar_rep",
+      "number": "201091705805",
+      "label": "Arabic & Local Operations (العربية)",
+      "enabled": true
+    },
+    {
+      "id": "vip_charter",
+      "number": "201091705805",
+      "label": "VIP Yacht & Private Charter Specialist",
+      "enabled": true
+    }
+  ],
+  "languageRouting": {
+    "en": "main",
+    "de": "de_rep",
+    "ru": "ru_rep",
+    "pl": "pl_rep",
+    "ar": "ar_rep"
+  },
+  "productRouting": {
+    "private-yacht": "vip_charter",
+    "orange-bay": null,
+    "dolphin-house": null,
+    "snorkeling-coral-reef": null,
+    "semi-submarine": null
+  },
+  "messageTemplates": {
+    "en": {
+      "general": "Hi Hurghada Sea Tours! I would like to inquire about booking a sea excursion.",
+      "product": "Hi Hurghada Sea Tours! I would like to inquire about booking the \"{productName}\" ({productPrice}). Please check availability for my dates. We need hotel pickup in Hurghada."
+    },
+    "de": {
+      "general": "Hallo Hurghada Sea Tours! Ich möchte mich über Bootsausflüge im Roten Meer informieren.",
+      "product": "Hallo Hurghada Sea Tours! Ich interessiere mich für den Ausflug \"{productName}\" ({productPrice}). Bitte prüfen Sie die Verfügbarkeit für unsere Reisedaten. Hotelabholung in Hurghada erwünscht."
+    },
+    "ru": {
+      "general": "Здравствуйте, Hurghada Sea Tours! Я хочу узнать о морских экскурсиях в Хургаде.",
+      "product": "Здравствуйте, Hurghada Sea Tours! Я хочу забронировать экскурсию \"{productName}\" ({productPrice}). Пожалуйста, проверьте наличие мест на наши даты. Нужен трансфер из отеля."
+    },
+    "pl": {
+      "general": "Cześć Hurghada Sea Tours! Chciałbym zapytać o rejsy morskie i wycieczki w Hurghadzie.",
+      "product": "Cześć Hurghada Sea Tours! Chciałbym zarezerwować wycieczkę \"{productName}\" ({productPrice}). Proszę o sprawdzenie dostępności na wybrane terminy. Potrzebny transfer z hotelu w Hurghadzie."
+    },
+    "ar": {
+      "general": "مرحباً Hurghada Sea Tours! أود الاستفسار عن حجز رحلة بحرية في الغردقة.",
+      "product": "مرحباً Hurghada Sea Tours! أود حجز رحلة \"{productName}\" ({productPrice}). يرجى تأكيد الإتاحة لموعدنا مع خدمة التوصيل من الفندق."
+    }
+  }
+}

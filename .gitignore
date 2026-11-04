@@ -1,0 +1,14 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & temp files
+*.log
+*.tmp
+*.bak
+
+# Verification & scratch files
+verify-system.ps1
+test-unit-routing.ps1
+server.ps1

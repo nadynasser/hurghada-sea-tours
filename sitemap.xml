@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ======================================================================
+       Homepages (5 Languages)
+       ====================================================================== -->
+  <!-- Master Homepage (English) -->
+  <url>
+    <loc>https://hurghadaseatours.com/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/"/>
+    <image:image>
+      <image:loc>https://hurghadaseatours.com/assets/images/hero/hero-hurghada-yacht.jpg</image:loc>
+      <image:title>Hurghada Sea Tours - Red Sea Boat Trips and Snorkeling</image:title>
+    </image:image>
+  </url>
+
+  <!-- German Homepage -->
+  <url>
+    <loc>https://hurghadaseatours.com/de/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/"/>
+  </url>
+
+  <!-- Russian Homepage -->
+  <url>
+    <loc>https://hurghadaseatours.com/ru/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/"/>
+  </url>
+
+  <!-- Polish Homepage -->
+  <url>
+    <loc>https://hurghadaseatours.com/pl/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/"/>
+  </url>
+
+  <!-- Arabic Homepage -->
+  <url>
+    <loc>https://hurghadaseatours.com/ar/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/"/>
+  </url>
+
+  <!-- ======================================================================
+       Tour 1: Orange Bay Island & Snorkeling Cruise (5 Languages)
+       ====================================================================== -->
+  <url>
+    <loc>https://hurghadaseatours.com/tours/orange-bay-island.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/orange-bay-island.html"/>
+    <image:image>
+      <image:loc>https://hurghadaseatours.com/assets/images/tours/tour-orange-bay.jpg</image:loc>
+      <image:title>Orange Bay Island Boat Cruise Hurghada</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/de/tours/orange-bay-island.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/orange-bay-island.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/ru/tours/orange-bay-island.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/orange-bay-island.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/pl/tours/orange-bay-island.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/orange-bay-island.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/ar/tours/orange-bay-island.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/orange-bay-island.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/orange-bay-island.html"/>
+  </url>
+
+  <!-- ======================================================================
+       Tour 2: Dolphin House Swimming & Snorkeling (5 Languages)
+       ====================================================================== -->
+  <url>
+    <loc>https://hurghadaseatours.com/tours/dolphin-house.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/dolphin-house.html"/>
+    <image:image>
+      <image:loc>https://hurghadaseatours.com/assets/images/tours/tour-dolphin-house.jpg</image:loc>
+      <image:title>Dolphin House Swimming Adventure Hurghada</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/de/tours/dolphin-house.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/dolphin-house.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/ru/tours/dolphin-house.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/dolphin-house.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/pl/tours/dolphin-house.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/dolphin-house.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/ar/tours/dolphin-house.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/dolphin-house.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/dolphin-house.html"/>
+  </url>
+
+  <!-- ======================================================================
+       Tour 3: Living Coral Reef Snorkeling (5 Languages)
+       ====================================================================== -->
+  <url>
+    <loc>https://hurghadaseatours.com/tours/snorkeling-coral-reef.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/snorkeling-coral-reef.html"/>
+    <image:image>
+      <image:loc>https://hurghadaseatours.com/assets/images/tours/tour-snorkeling.jpg</image:loc>
+      <image:title>Living Coral Reef Snorkeling Hurghada</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/de/tours/snorkeling-coral-reef.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/snorkeling-coral-reef.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/ru/tours/snorkeling-coral-reef.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/snorkeling-coral-reef.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/pl/tours/snorkeling-coral-reef.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/snorkeling-coral-reef.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/ar/tours/snorkeling-coral-reef.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/snorkeling-coral-reef.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/snorkeling-coral-reef.html"/>
+  </url>
+
+  <!-- ======================================================================
+       Tour 4: Semi-Submarine Tour (5 Languages)
+       ====================================================================== -->
+  <url>
+    <loc>https://hurghadaseatours.com/tours/semi-submarine.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/semi-submarine.html"/>
+    <image:image>
+      <image:loc>https://hurghadaseatours.com/assets/images/tours/tour-semi-submarine.jpg</image:loc>
+      <image:title>Semi-Submarine Underwater Observatory Hurghada</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/de/tours/semi-submarine.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/semi-submarine.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/ru/tours/semi-submarine.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/semi-submarine.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/pl/tours/semi-submarine.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/semi-submarine.html"/>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/ar/tours/semi-submarine.html</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hurghadaseatours.com/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://hurghadaseatours.com/de/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://hurghadaseatours.com/ru/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://hurghadaseatours.com/pl/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://hurghadaseatours.com/ar/tours/semi-submarine.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/semi-submarine.html"/>
+  </url>
+
+</urlset>

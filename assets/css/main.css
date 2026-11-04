@@ -1,0 +1,1110 @@
+/* ==========================================================================
+   Hurghada Sea Tours - Master Stylesheet
+   Modern Responsive Red Sea Marine Aesthetic (UI/UX Specification)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+:root {
+  /* Core Brand Colors */
+  --primary-navy: #085EA8;
+  --navy-dark: #052646;
+  --cyan-turquoise: #00B4DB;
+  --cyan-hover: #0099bb;
+  --sun-yellow: #FFD166;
+  --sun-yellow-hover: #f5be38;
+  --wa-green: #25D366;
+  --wa-green-hover: #1ebd5a;
+  
+  /* Neutral & UI Colors */
+  --bg-page: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --bg-tint: #F0FDF4;
+  --text-main: #1E293B;
+  --text-muted: #64748B;
+  --border-light: #E2E8F0;
+  --border-card: #E0EFFE;
+  
+  /* Typography */
+  --ff-headings: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --ff-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --ff-script: 'Caveat', cursive;
+  
+  /* Radii & Shadows */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+  --shadow-sm: 0 2px 8px rgba(8, 94, 168, 0.06);
+  --shadow-md: 0 8px 24px rgba(8, 94, 168, 0.1);
+  --shadow-lg: 0 16px 36px rgba(8, 94, 168, 0.14);
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base & Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--ff-body);
+  color: var(--text-main);
+  background-color: var(--bg-page);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+
+/* Top Utility Trust Bar */
+.top-bar {
+  background: var(--navy-dark);
+  color: #E2E8F0;
+  font-size: 0.85rem;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.top-bar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.top-bar-license {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.top-bar-contact {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.top-bar-contact a:hover {
+  color: var(--sun-yellow);
+}
+
+.lang-switch {
+  display: flex;
+  gap: 8px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.lang-switch a.active {
+  color: var(--sun-yellow);
+}
+
+/* Main Sticky Header */
+.site-header {
+  background: #FFFFFF;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+/* Brand Logo */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #FFFFFF url('../images/logo-icon.svg') no-repeat center center / 88%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  box-shadow: 0 4px 14px rgba(8, 94, 168, 0.12);
+  border: 1.5px solid rgba(0, 180, 219, 0.25);
+  font-size: 0;
+  flex-shrink: 0;
+}
+
+.brand-logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-logo-title {
+  font-family: var(--ff-headings);
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--primary-navy);
+  letter-spacing: -0.02em;
+}
+
+.brand-logo-title span {
+  color: var(--cyan-turquoise);
+}
+
+.brand-logo-sub {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Main Navigation Links */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+}
+
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+  padding: 8px 0;
+  position: relative;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--primary-navy);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2.5px;
+  background: var(--cyan-turquoise);
+  border-radius: 2px;
+}
+
+/* Header CTAs */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Button UI Components */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--ff-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  transition: var(--transition);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--sun-yellow);
+  color: var(--navy-dark);
+  box-shadow: 0 4px 14px rgba(255, 209, 102, 0.4);
+}
+
+.btn-primary:hover {
+  background: var(--sun-yellow-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 209, 102, 0.6);
+}
+
+.btn-whatsapp {
+  background: var(--wa-green);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+}
+
+.btn-whatsapp:hover {
+  background: var(--wa-green-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+
+.btn-outline {
+  border: 1.5px solid var(--primary-navy);
+  color: var(--primary-navy);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: var(--primary-navy);
+  color: #FFFFFF;
+}
+
+.btn-cyan {
+  background: var(--cyan-turquoise);
+  color: #FFFFFF;
+}
+
+.btn-cyan:hover {
+  background: var(--cyan-hover);
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 8px 18px;
+  font-size: 0.88rem;
+}
+
+/* Mobile Toggle */
+.menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--primary-navy);
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero {
+  position: relative;
+  min-height: 580px;
+  display: flex;
+  align-items: center;
+  background-color: var(--navy-dark);
+  background-image: linear-gradient(180deg, rgba(5, 38, 70, 0.6) 0%, rgba(8, 94, 168, 0.4) 60%, rgba(5, 38, 70, 0.85) 100%), url('../images/hero/hero-hurghada-yacht.jpg');
+  background-size: cover;
+  background-position: center center;
+  color: #FFFFFF;
+  padding: 80px 0 100px;
+}
+
+.hero-content {
+  max-width: 680px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-tagline-script {
+  font-family: var(--ff-script);
+  font-size: 2.2rem;
+  color: var(--sun-yellow);
+  margin-bottom: 8px;
+  display: inline-block;
+  transform: rotate(-2deg);
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--cyan-turquoise);
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-family: var(--ff-headings);
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1.12;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.hero-title span {
+  color: var(--sun-yellow);
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Floating 4-Category Bar
+   ========================================================================== */
+.category-strip {
+  position: relative;
+  margin-top: -50px;
+  z-index: 10;
+  margin-bottom: 60px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.category-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--cyan-turquoise);
+}
+
+.cat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--bg-page);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: var(--primary-navy);
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.category-card:hover .cat-icon {
+  background: var(--primary-navy);
+  color: #FFFFFF;
+}
+
+.cat-info h3 {
+  font-family: var(--ff-headings);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.cat-info p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Trust & Peace of Mind Bar
+   ========================================================================== */
+.trust-bar {
+  background: #FFFFFF;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  padding: 30px 0;
+  margin-bottom: 60px;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.trust-item .icon {
+  font-size: 1.8rem;
+  color: var(--cyan-turquoise);
+  line-height: 1;
+}
+
+.trust-item h4 {
+  font-family: var(--ff-headings);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text-main);
+}
+
+.trust-item p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Tours Section & Cards (The Core Grid)
+   ========================================================================== */
+.section {
+  padding: 70px 0;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.section-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--cyan-turquoise);
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.section-title {
+  font-family: var(--ff-headings);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary-navy);
+  letter-spacing: -0.02em;
+}
+
+.section-title span {
+  color: var(--cyan-turquoise);
+}
+
+/* Filter Pills */
+.filter-pills {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 32px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.pill-btn {
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-light);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.pill-btn:hover, .pill-btn.active {
+  background: var(--primary-navy);
+  border-color: var(--primary-navy);
+  color: #FFFFFF;
+}
+
+/* Tours Grid */
+.tours-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+/* Tour Card Architecture */
+.tour-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.tour-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--cyan-turquoise);
+}
+
+/* Card Media */
+.tour-card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #E2E8F0;
+}
+
+.tour-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tour-card:hover .tour-card-media img {
+  transform: scale(1.06);
+}
+
+/* Card Badges */
+.card-badge-cat {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--sun-yellow);
+  color: var(--navy-dark);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card-badge-pickup {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(5, 38, 70, 0.85);
+  backdrop-filter: blur(4px);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+}
+
+/* Card Body */
+.tour-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.tour-card-title {
+  font-family: var(--ff-headings);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  color: var(--text-main);
+}
+
+.tour-card-title a:hover {
+  color: var(--primary-navy);
+}
+
+/* Quick Meta Chips */
+.tour-meta-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.tour-meta-chips span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tour-card-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+/* Card Footer */
+.tour-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-light);
+}
+
+.tour-card-price {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-from {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.price-amount {
+  font-family: var(--ff-headings);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--primary-navy);
+}
+
+.price-child {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   VIP Private Yacht Banner
+   ========================================================================== */
+.vip-banner {
+  background: var(--navy-dark);
+  background-image: linear-gradient(90deg, rgba(5, 38, 70, 0.92) 0%, rgba(5, 38, 70, 0.6) 100%), url('../images/banners/banner-private-charter.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-lg);
+  color: #FFFFFF;
+  padding: 70px 50px;
+  margin: 40px auto;
+  box-shadow: var(--shadow-lg);
+}
+
+.vip-banner-content {
+  max-width: 620px;
+}
+
+.vip-banner h2 {
+  font-family: var(--ff-headings);
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.vip-banner p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 28px;
+}
+
+/* ==========================================================================
+   What's Always Included Section
+   ========================================================================== */
+.features-section {
+  background: var(--bg-tint);
+  border-radius: var(--radius-lg);
+  padding: 60px 40px;
+  margin: 60px 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.features-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  list-style: none;
+  margin-top: 24px;
+}
+
+.features-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--navy-dark);
+}
+
+.features-list li .check-icon {
+  color: var(--wa-green);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.features-media {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   Reviews & Testimonials
+   ========================================================================== */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.review-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.review-stars {
+  color: #F59E0B;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+.review-text {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-light);
+  padding-top: 14px;
+}
+
+.author-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--primary-navy);
+}
+
+.author-tag {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   AEO FAQ Accordion Section
+   ========================================================================== */
+.faq-section {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.faq-item {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.faq-item:hover, .faq-item[open] {
+  border-color: var(--cyan-turquoise);
+  box-shadow: var(--shadow-sm);
+}
+
+.faq-question {
+  padding: 20px 24px;
+  font-family: var(--ff-headings);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question::after {
+  content: '+';
+  font-size: 1.4rem;
+  color: var(--cyan-turquoise);
+  transition: var(--transition);
+}
+
+.faq-item[open] .faq-question::after {
+  content: '−';
+}
+
+.faq-answer {
+  padding: 0 24px 20px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.site-footer {
+  background: var(--navy-dark);
+  color: #94A3B8;
+  padding: 70px 0 30px;
+  margin-top: 80px;
+  border-top: 4px solid var(--cyan-turquoise);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+.footer-col h4 {
+  font-family: var(--ff-headings);
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a:hover {
+  color: var(--sun-yellow);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* ==========================================================================
+   Mobile Fixed Bottom Action Bar (Thumb-Friendly UX)
+   ========================================================================== */
+.mobile-sticky-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #FFFFFF;
+  border-top: 1px solid var(--border-light);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+  padding: 12px 20px;
+  z-index: 999;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sticky-bar-price {
+  display: flex;
+  flex-direction: column;
+}
+
+.sticky-bar-price .label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.sticky-bar-price .val {
+  font-family: var(--ff-headings);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--primary-navy);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .tours-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-bar-contact {
+    display: none;
+  }
+  .main-nav {
+    display: none;
+  }
+  .menu-toggle {
+    display: flex;
+  }
+  .hero-title {
+    font-size: 2.3rem;
+  }
+  .category-strip {
+    margin-top: -30px;
+  }
+  .category-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .trust-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .tours-grid {
+    grid-template-columns: 1fr;
+  }
+  .vip-banner {
+    padding: 40px 24px;
+  }
+  .vip-banner h2 {
+    font-size: 1.8rem;
+  }
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .mobile-sticky-bar {
+    display: flex;
+  }
+  body {
+    padding-bottom: 74px; /* clearance for sticky bottom bar */
+  }
+}
+
+/* ==========================================================================
+   RTL (Right-to-Left) Arabic Support
+   ========================================================================== */
+html[dir="rtl"], body[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Cairo', 'Readex Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] h4 {
+  font-family: 'Cairo', 'Readex Pro', system-ui, sans-serif;
+}
+
+html[dir="rtl"] .top-bar-contact {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .card-badge-pickup {
+  left: auto;
+  right: 14px;
+}
+
+html[dir="rtl"] .card-badge-cat {
+  left: 14px;
+  right: auto;
+}
+
+html[dir="rtl"] .timeline {
+  padding-left: 0;
+  padding-right: 28px;
+}
+
+html[dir="rtl"] .timeline::before {
+  left: auto;
+  right: 8px;
+}
+
+html[dir="rtl"] .timeline-item::before {
+  left: auto;
+  right: -28px;
+}
+
+html[dir="rtl"] .banner-charter {
+  background-image: linear-gradient(270deg, rgba(5, 38, 70, 0.95) 0%, rgba(5, 38, 70, 0.8) 50%, rgba(5, 38, 70, 0.4) 100%), url('../images/banners/banner-private-charter.jpg');
+}
+

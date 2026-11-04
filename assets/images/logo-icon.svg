@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sunGrad" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#FFDD00" />
+      <stop offset="60%" stop-color="#FFAE00" />
+      <stop offset="100%" stop-color="#FF7A00" />
+    </linearGradient>
+    <linearGradient id="waveCyanGrad" x1="0%" y1="30%" x2="100%" y2="70%">
+      <stop offset="0%" stop-color="#38E1FF" />
+      <stop offset="60%" stop-color="#00B4DB" />
+      <stop offset="100%" stop-color="#0083B0" />
+    </linearGradient>
+    <linearGradient id="waveNavyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E73B9" />
+      <stop offset="100%" stop-color="#083E75" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sun -->
+  <circle cx="120" cy="85" r="54" fill="url(#sunGrad)" />
+
+  <!-- Birds in the Sun -->
+  <!-- Top Bird -->
+  <path d="M 102 54 C 106 48, 112 48, 115 52 C 118 48, 124 48, 128 54 C 122 55, 117 56, 115 60 C 113 56, 108 55, 102 54 Z" fill="#052646" />
+  <!-- Bottom-Left Bird -->
+  <path d="M 90 68 C 94 63, 99 63, 102 66 C 105 63, 110 63, 114 68 C 109 69, 105 70, 102 73 C 100 70, 95 69, 90 68 Z" fill="#052646" />
+
+  <!-- Luxury Yacht Silhouette -->
+  <!-- Main Hull & Cabin -->
+  <path d="M 118 78 L 136 78 C 142 78, 146 80, 150 84 L 164 84 L 161 80 C 158 76, 150 72, 142 72 L 126 72 C 122 72, 119 74, 118 78 Z" fill="#052646" opacity="0.95" />
+  <!-- Hull Body -->
+  <path d="M 112 85 L 175 80 C 181 83, 185 86, 186 90 L 120 108 C 116 102, 113 94, 112 85 Z" fill="#083E75" />
+
+  <!-- Top Flowing Wave (Vivid Turquoise) -->
+  <path d="M 40 115 C 65 105, 95 90, 125 110 C 150 126, 175 110, 198 120 C 170 126, 145 130, 122 118 C 95 104, 70 120, 40 115 Z" fill="url(#waveCyanGrad)" />
+
+  <!-- Bottom Flowing Wave (Deep Ocean Blue) -->
+  <path d="M 48 126 C 75 114, 108 108, 134 126 C 158 138, 186 130, 206 138 C 178 144, 150 148, 130 134 C 102 118, 76 132, 48 126 Z" fill="url(#waveNavyGrad)" />
+</svg>
