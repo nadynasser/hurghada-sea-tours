@@ -88,7 +88,8 @@
     <div class="container">
       <div class="top-bar-license"><span>🛡️ Официальная лицензия Министерства туризма Египта #2344</span></div>
       <div class="top-bar-contact">
-        <a href="tel:+201091705805">📞 +20 109 170 5805</a>
+        <a href="https://wa.me/201091705805" target="_blank" rel="noopener">💬 WhatsApp Бронирование: +20 109 170 5805</a>
+        <span>🚐 Бесплатный трансфер из отеля включен</span>
         <div class="lang-switch" aria-label="Выбор языка">
           <a href="../../tours/hula-hula-island.html" title="English" data-lang="en">EN</a>
           <a href="../../de/tours/hula-hula-island.html" title="Deutsch" data-lang="de">DE</a>
@@ -271,8 +272,14 @@
               </div>
             </div>
             <div class="booking-field">
-              <label for="bookHotelRu">Отель в Хургаде (для трансфера)</label>
-              <input type="text" id="bookHotelRu" class="booking-input" placeholder="например, Steigenberger Al Dau">
+              <label for="bookHotelRu">Отель или место посадки</label>
+              <div class="location-picker-group">
+                <input type="text" id="bookHotelRu" class="booking-input" placeholder="например, Steigenberger Al Dau или Макади">
+                <button type="button" class="btn-gps-pin" onclick="window.HSTShareLocation('bookHotelRu', this)" title="Поделиться геопозицией GPS">
+                  <span>📍 Моя геопозиция GPS</span>
+                </button>
+              </div>
+              <span class="location-picker-hint">Нажмите Моя геопозиция, чтобы отправить точные координаты отеля</span>
             </div>
 
             <button type="submit" class="btn btn-whatsapp" style="width:100%; margin-top:10px;" data-wa-tour="Остров Хула Хула и снорклинг" data-wa-price="€32" data-product-id="hula-hula">
@@ -283,7 +290,7 @@
           <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border-light); font-size:0.82rem; color:var(--text-muted);">
             <p>🛡️ <strong>Без предоплаты:</strong> Оплата при посадке.</p>
             <p style="margin-top:4px;">🔄 <strong>Бесплатная отмена:</strong> За 24 часа до поездки.</p>
-            <p style="margin-top:4px;">📞 <strong>Диспетчер Марины:</strong> +20 109 170 5805</p>
+            <p style="margin-top:4px;">💬 <strong>WhatsApp поддержка:</strong> +20 109 170 5805 (24/7)</p>
           </div>
         </div>
       </aside>

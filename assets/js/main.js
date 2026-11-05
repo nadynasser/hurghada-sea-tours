@@ -66,3 +66,61 @@ document.addEventListener('DOMContentLoaded', () => {
     window.HSTWhatsAppRouter.bindAllElements();
   }
 });
+
+/**
+ * Smart Geolocation Pinning for Bookings
+ * Automatically detects tourist's GPS location and fills the hotel/location input
+ */
+window.HSTShareLocation = function(inputId, btnElement) {
+  const input = document.getElementById(inputId) || document.querySelector('input[name*="hotel"], input[name*="location"], #bookHotel');
+  const btn = btnElement || (event ? event.currentTarget : null);
+
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported by your browser. Please type your hotel name or area.");
+    return;
+  }
+
+  const origText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.innerHTML = '<span>⏳ Detecting GPS...</span>';
+    btn.disabled = true;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const lat = pos.coords.latitude.toFixed(5);
+      const lng = pos.coords.longitude.toFixed(5);
+      const mapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
+      if (input) {
+        const curVal = input.value.trim();
+        if (curVal && !curVal.includes('maps.google.com')) {
+          input.value = `${curVal} (📍 Maps: ${mapsUrl})`;
+        } else {
+          input.value = `📍 GPS Location: ${mapsUrl}`;
+        }
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      if (btn) {
+        btn.innerHTML = '<span>✅ Location Pinned!</span>';
+        btn.disabled = false;
+        setTimeout(() => {
+          btn.innerHTML = origText || '<span>📍 Pin GPS</span>';
+        }, 3500);
+      }
+    },
+    (err) => {
+      console.warn('Geolocation error:', err);
+      if (btn) {
+        btn.innerHTML = '<span>⚠️ GPS Permission Denied</span>';
+        btn.disabled = false;
+        setTimeout(() => {
+          btn.innerHTML = origText || '<span>📍 Pin GPS</span>';
+        }, 3000);
+      }
+      alert('Could not access current location. Please type your hotel name or paste your Google Maps link.');
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+  );
+};
+

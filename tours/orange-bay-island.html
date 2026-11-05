@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -254,8 +254,8 @@
         <span>🛡️ Egyptian Ministry of Tourism License #2344</span>
       </div>
       <div class="top-bar-contact">
-        <a href="tel:+201091705805">📞 +20 109 170 5805 (Marina Dispatch)</a>
-        <span>📍 Daily Marina Departures</span>
+        <a href="https://wa.me/201091705805" target="_blank" rel="noopener">💬 WhatsApp: +20 109 170 5805</a>
+        <span>🚐 Hotel Pickup &amp; Transfers Included</span>
         <div class="lang-switch" aria-label="Language Selector">
           <a href="../tours/orange-bay-island.html" class="active" title="English" data-lang="en">EN</a>
           <a href="../de/tours/orange-bay-island.html" title="Deutsch" data-lang="de">DE</a>
@@ -343,11 +343,11 @@
           <div class="timeline-item">
             <span class="timeline-time">08:00 AM – 08:30 AM</span>
             <h3 class="timeline-title">Hotel Pickup</h3>
-            <p class="timeline-desc">Air-conditioned transfer from your hotel lobby directly to Hurghada Marina.</p>
+            <p class="timeline-desc">Air-conditioned transfer from your hotel lobby directly to the cruise departure pier.</p>
           </div>
           <div class="timeline-item">
             <span class="timeline-time">09:00 AM</span>
-            <h3 class="timeline-title">Departure from Hurghada Marina</h3>
+            <h3 class="timeline-title">Departure &amp; Cruising Begins</h3>
             <p class="timeline-desc">Board our modern cruise yacht and begin sailing across the turquoise Red Sea waters.</p>
           </div>
           <div class="timeline-item">
@@ -367,8 +367,8 @@
           </div>
           <div class="timeline-item">
             <span class="timeline-time">04:30 PM</span>
-            <h3 class="timeline-title">Return to Marina &amp; Hotel Drop-Off</h3>
-            <p class="timeline-desc">Cruise back to the marina and transfer in comfort back to your hotel.</p>
+            <h3 class="timeline-title">Cruise Return &amp; Hotel Drop-Off</h3>
+            <p class="timeline-desc">Cruise back to the pier and transfer in comfort back to your hotel.</p>
           </div>
         </div>
 
@@ -441,8 +441,14 @@
               </div>
             </div>
             <div class="booking-field">
-              <label for="bookHotel">Hotel Name in Hurghada (For Pickup)</label>
-              <input type="text" id="bookHotel" class="booking-input" placeholder="e.g. Steigenberger Al Dau">
+              <label for="bookHotel">Pickup Hotel or Location (GPS Pin)</label>
+              <div class="location-picker-group">
+                <input type="text" id="bookHotel" class="booking-input" placeholder="Hotel name or area (e.g. Steigenberger)">
+                <button type="button" class="btn-gps-pin" onclick="window.HSTShareLocation('bookHotel', this)" title="Detect and pin my current GPS location">
+                  <span>📍 Pin GPS</span>
+                </button>
+              </div>
+              <small class="location-picker-hint">📍 Tap to detect your GPS pin or type your hotel name</small>
             </div>
 
             <button type="submit" class="btn btn-whatsapp" style="width:100%; margin-top:10px;" data-wa-tour="Orange Bay Island Cruise" data-wa-price="€30" data-product-id="orange-bay">
@@ -453,7 +459,7 @@
           <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border-light); font-size:0.82rem; color:var(--text-muted);">
             <p>🛡️ <strong>Zero Risk:</strong> Pay in cash on arrival.</p>
             <p style="margin-top:4px;">🔄 <strong>Free Cancellation:</strong> Up to 24 hours before trip.</p>
-            <p style="margin-top:4px;">📞 <strong>Marina Hotline:</strong> +20 109 170 5805</p>
+            <p style="margin-top:4px;">💬 <strong>WhatsApp Support:</strong> +20 109 170 5805 (Instant Reply)</p>
           </div>
         </div>
       </aside>

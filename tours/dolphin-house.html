@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -84,7 +84,8 @@
     <div class="container">
       <div class="top-bar-license"><span>🛡️ Egyptian Ministry of Tourism License #2344</span></div>
       <div class="top-bar-contact">
-        <a href="tel:+201091705805">📞 +20 109 170 5805 (Marina Dispatch)</a>
+        <a href="https://wa.me/201091705805" target="_blank" rel="noopener">💬 WhatsApp Dispatch: +20 109 170 5805</a>
+        <span>🚐 Free Hotel Pickup &amp; Transfers Included</span>
         <div class="lang-switch" aria-label="Language Selector">
           <a href="../tours/dolphin-house.html" class="active" title="English" data-lang="en">EN</a>
           <a href="../de/tours/dolphin-house.html" title="Deutsch" data-lang="de">DE</a>
@@ -163,7 +164,7 @@
           <div class="timeline-item">
             <span class="timeline-time">07:00 AM – 07:30 AM</span>
             <h3 class="timeline-title">Early Morning Hotel Pickup</h3>
-            <p class="timeline-desc">Prompt transfer from your hotel to Hurghada Marina for early departure.</p>
+            <p class="timeline-desc">Prompt transfer from your hotel or accommodation direct to the departure pier.</p>
           </div>
           <div class="timeline-item">
             <span class="timeline-time">08:00 AM</span>
@@ -182,7 +183,7 @@
           </div>
           <div class="timeline-item">
             <span class="timeline-time">12:00 PM</span>
-            <h3 class="timeline-title">Return to Marina &amp; Hotel Transfer</h3>
+            <h3 class="timeline-title">Arrival &amp; Return Hotel Transfer</h3>
             <p class="timeline-desc">Fresh fruit snacks and cold drinks on board before returning to your hotel by noon.</p>
           </div>
         </div>
@@ -232,8 +233,14 @@
               <input type="date" id="dDate" class="booking-input" required>
             </div>
             <div class="booking-field">
-              <label for="dHotel">Hotel Name (For Pickup)</label>
-              <input type="text" id="dHotel" class="booking-input" placeholder="e.g. Jaz Aquaviva">
+              <label for="bookHotel">Hotel or Pickup Location</label>
+              <div class="location-picker-group">
+                <input type="text" id="bookHotel" class="booking-input" placeholder="e.g. Jaz Aquaviva or Makadi Bay">
+                <button type="button" class="btn-gps-pin" onclick="window.HSTShareLocation('bookHotel', this)" title="Pin my current GPS Location">
+                  <span>📍 Pin GPS</span>
+                </button>
+              </div>
+              <span class="location-picker-hint">Tap Pin GPS to auto-share your hotel/resort location</span>
             </div>
             <button type="submit" class="btn btn-whatsapp" style="width:100%; margin-top:10px;">
               <span>💬 Book Dolphin Tour via WhatsApp (€25)</span>
@@ -243,7 +250,7 @@
           <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border-light); font-size:0.82rem; color:var(--text-muted);">
             <p>🛡️ <strong>Zero Risk:</strong> Pay on arrival.</p>
             <p style="margin-top:4px;">🔄 <strong>Free Cancellation:</strong> Up to 24h before sailing.</p>
-            <p style="margin-top:4px;">📞 <strong>Hotline:</strong> +20 109 170 5805</p>
+            <p style="margin-top:4px;">💬 <strong>WhatsApp Inquiries:</strong> +20 109 170 5805 (Available 24/7)</p>
           </div>
         </div>
       </aside>

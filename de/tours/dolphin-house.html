@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
@@ -85,7 +85,8 @@
     <div class="container">
       <div class="top-bar-license"><span>🛡️ Ägyptisches Tourismusministerium Lizenz #2344</span></div>
       <div class="top-bar-contact">
-        <a href="tel:+201091705805">📞 +20 109 170 5805 (Marina Hurghada)</a>
+        <a href="https://wa.me/201091705805" target="_blank" rel="noopener">💬 WhatsApp Dispatch: +20 109 170 5805</a>
+        <span>🚐 Kostenloser Hoteltransfer inklusive</span>
         <div class="lang-switch" aria-label="Sprachauswahl">
           <a href="../../tours/dolphin-house.html" title="English" data-lang="en">EN</a>
           <a href="./dolphin-house.html" class="active" title="Deutsch" data-lang="de">DE</a>
@@ -173,7 +174,7 @@
             <div class="timeline-item">
               <div class="timeline-time">07:30 – 08:00 Uhr</div>
               <div class="timeline-title">Abholung am Hotel</div>
-              <div class="timeline-desc">Transfer im klimatisierten Kleinbus zur Marina.</div>
+              <div class="timeline-desc">Pünktlicher Transfer im klimatisierten Kleinbus zum Ablegesteg.</div>
             </div>
             <div class="timeline-item">
               <div class="timeline-time">08:30 Uhr</div>
@@ -192,7 +193,7 @@
             </div>
             <div class="timeline-item">
               <div class="timeline-time">12:30 Uhr</div>
-              <div class="timeline-title">Rückkehr zur Marina &amp; Hoteltransfer</div>
+              <div class="timeline-title">Ankunft am Steg &amp; Hoteltransfer</div>
               <div class="timeline-desc">Pünktlich zum Hotel-Mittagessen zurück im Resort.</div>
             </div>
           </div>
@@ -259,8 +260,14 @@
               </div>
             </div>
             <div class="booking-field">
-              <label for="bHotel">Hotelname in Hurghada</label>
-              <input type="text" id="bHotel" class="booking-input" placeholder="z.B. Pickalbatros White Beach">
+              <label for="bookHotelDe">Hotel oder Abholort</label>
+              <div class="location-picker-group">
+                <input type="text" id="bookHotelDe" class="booking-input" placeholder="z.B. Pickalbatros White Beach">
+                <button type="button" class="btn-gps-pin" onclick="window.HSTShareLocation('bookHotelDe', this)" title="GPS-Standort teilen">
+                  <span>📍 GPS Standort</span>
+                </button>
+              </div>
+              <span class="location-picker-hint">Tippen Sie auf GPS Standort, um Ihren genauen Hotelort zu teilen</span>
             </div>
 
             <button type="submit" class="btn btn-whatsapp" style="width:100%; margin-top:10px;" data-wa-tour="Dolphin House Adventure" data-wa-price="€25" data-product-id="dolphin-house">

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
@@ -89,7 +89,8 @@
     <div class="container">
       <div class="top-bar-license"><span>🛡️ Ägyptisches Tourismusministerium Lizenz #2344</span></div>
       <div class="top-bar-contact">
-        <a href="tel:+201091705805">📞 +20 109 170 5805 (Marina Hurghada)</a>
+        <a href="https://wa.me/201091705805" target="_blank" rel="noopener">💬 WhatsApp Dispatch: +20 109 170 5805</a>
+        <span>🚐 Kostenloser Hoteltransfer inklusive</span>
         <div class="lang-switch" aria-label="Sprachauswahl">
           <a href="../../tours/orange-bay-island.html" title="English" data-lang="en">EN</a>
           <a href="./orange-bay-island.html" class="active" title="Deutsch" data-lang="de">DE</a>
@@ -279,8 +280,14 @@
               </div>
             </div>
             <div class="booking-field">
-              <label for="bookHotelDe">Hotelname in Hurghada (für Abholung)</label>
-              <input type="text" id="bookHotelDe" class="booking-input" placeholder="z.B. Steigenberger Al Dau Beach">
+              <label for="bookHotelDe">Hotel oder Abholort</label>
+              <div class="location-picker-group">
+                <input type="text" id="bookHotelDe" class="booking-input" placeholder="z.B. Steigenberger Al Dau oder Makadi Bay">
+                <button type="button" class="btn-gps-pin" onclick="window.HSTShareLocation('bookHotelDe', this)" title="GPS-Standort teilen">
+                  <span>📍 GPS Standort</span>
+                </button>
+              </div>
+              <span class="location-picker-hint">Tippen Sie auf GPS Standort, um Ihren genauen Hotelort zu teilen</span>
             </div>
 
             <button type="submit" class="btn btn-whatsapp" style="width:100%; margin-top:10px;" data-wa-tour="Orange Bay Island Cruise" data-wa-price="€30" data-product-id="orange-bay">
@@ -291,7 +298,7 @@
           <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border-light); font-size:0.82rem; color:var(--text-muted);">
             <p>🛡️ <strong>Kein Risiko:</strong> Barzahlung erst vor Ort.</p>
             <p style="margin-top:4px;">🔄 <strong>Kostenlose Stornierung:</strong> Bis 24 Std. vorher.</p>
-            <p style="margin-top:4px;">📞 <strong>Marina Hotline:</strong> +20 109 170 5805</p>
+            <p style="margin-top:4px;">💬 <strong>WhatsApp Support:</strong> +20 109 170 5805 (24/7 erreichbar)</p>
           </div>
         </div>
       </aside>

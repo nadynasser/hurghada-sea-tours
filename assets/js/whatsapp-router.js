@@ -88,7 +88,7 @@
     version: 2,
     defaultNumber: "201091705805",
     numbers: [
-      { id: "main", number: "201091705805", label: "Hurghada Marina Central Dispatch", enabled: true },
+      { id: "main", number: "201091705805", label: "Hurghada Central Dispatch & Bookings", enabled: true },
       { id: "de_rep", number: "201091705805", label: "German Guest Relations", enabled: true },
       { id: "ru_rep", number: "201091705805", label: "Russian Support Desk", enabled: true },
       { id: "pl_rep", number: "201091705805", label: "Polish Customer Desk", enabled: true },
@@ -289,13 +289,16 @@
       const dateEl = document.querySelector('input[type="date"], #bookDate, #bookDateDe, #bookDateRu, #bookDatePl, #bookDateAr');
       const adultsEl = document.querySelector('#bookAdults, #bookAdultsDe, #bookAdultsRu, #bookAdultsPl, #bookAdultsAr, #bAdults, #snorkAdults, #subAdults');
       const kidsEl = document.querySelector('#bookChildren, #bookChildrenDe, #bookKidsRu, #bookKidsPl, #bookKidsAr, #bKids, #snorkKids, #subKids');
-      const hotelEl = document.querySelector('#bookHotel, #bookHotelDe, #bookHotelRu, #bookHotelPl, #bookHotelAr, #bHotel, #snorkHotel, #subHotel, input[name*="hotel"]');
+      const hotelEl = document.querySelector('#bookHotel, #bookHotelDe, #bookHotelRu, #bookHotelPl, #bookHotelAr, #bHotel, #snorkHotel, #subHotel, input[name*="hotel"], input[name*="location"], #bookLocation');
+
+      const locVal = hotelEl && hotelEl.value ? hotelEl.value.trim() : null;
 
       return {
         date: dateEl && dateEl.value ? dateEl.value.trim() : null,
         adults: adultsEl ? adultsEl.options[adultsEl.selectedIndex]?.text || adultsEl.value : null,
         kids: kidsEl && kidsEl.value !== '0' ? kidsEl.options[kidsEl.selectedIndex]?.text || kidsEl.value : null,
-        hotel: hotelEl && hotelEl.value ? hotelEl.value.trim() : null
+        hotel: locVal,
+        location: locVal
       };
     }
 
@@ -319,18 +322,19 @@
 
       // 1. Detailed booking message if form fields or specific tour are present
       if (targetProduct) {
-        const hasFormInputs = Boolean(form.date || form.hotel);
+        const hasFormInputs = Boolean(form.date || form.hotel || form.location);
+        const loc = form.location || form.hotel || '';
 
         if (currentLang === 'ar') {
           if (hasFormInputs) {
             let msg = `مرحباً Hurghada Sea Tours! أود حجز رحلة:\n🏖️ الرحلة: ${targetProduct} (${targetPrice || ''})\n`;
             if (form.date) msg += `📅 تاريخ الرحلة: ${form.date}\n`;
             if (form.adults) msg += `👥 عدد الأفراد: ${form.adults}${form.kids ? '، ' + form.kids : ''}\n`;
-            if (form.hotel) msg += `🏨 فندق الإقامة: ${form.hotel}\n`;
-            msg += `يرجى تأكيد الحجز وميعاد التوصيل من الفندق.`;
+            if (loc) msg += `📍 موقع الاستقبال / الفندق: ${loc}\n`;
+            msg += `يرجى تأكيد الحجز وميعاد التوصيل.`;
             return msg;
           }
-          return `مرحباً Hurghada Sea Tours! أود حجز رحلة "${targetProduct}" (${targetPrice || ''}). يرجى تأكيد الإتاحة لموعدنا مع خدمة التوصيل من الفندق.`;
+          return `مرحباً Hurghada Sea Tours! أود حجز رحلة "${targetProduct}" (${targetPrice || ''}). يرجى تأكيد الإتاحة لموعدنا مع خدمة التوصيل.`;
         }
 
         if (currentLang === 'de') {
@@ -338,7 +342,7 @@
             let msg = `Hallo Hurghada Sea Tours! Ich möchte folgenden Ausflug buchen:\n🏖️ Ausflug: ${targetProduct} (${targetPrice || ''})\n`;
             if (form.date) msg += `📅 Reisedatum: ${form.date}\n`;
             if (form.adults) msg += `👥 Personen: ${form.adults}${form.kids ? ', ' + form.kids : ''}\n`;
-            if (form.hotel) msg += `🏨 Hotel: ${form.hotel}\n`;
+            if (loc) msg += `📍 Abholort / Hotel: ${loc}\n`;
             msg += `Bitte prüfen Sie die Verfügbarkeit für unsere Reisedaten und bestätigen Sie die Abholung.`;
             return msg;
           }
@@ -350,7 +354,7 @@
             let msg = `Здравствуйте, Hurghada Sea Tours! Я хочу забронировать:\n🏖️ Экскурсия: ${targetProduct} (${targetPrice || ''})\n`;
             if (form.date) msg += `📅 Дата поездки: ${form.date}\n`;
             if (form.adults) msg += `👥 Гости: ${form.adults}${form.kids ? ', ' + form.kids : ''}\n`;
-            if (form.hotel) msg += `🏨 Отель в Хургаде: ${form.hotel}\n`;
+            if (loc) msg += `📍 Отель / Локация: ${loc}\n`;
             msg += `Пожалуйста, проверьте наличие мест на наши даты и подтвердите трансфер из отеля.`;
             return msg;
           }
@@ -362,7 +366,7 @@
             let msg = `Cześć Hurghada Sea Tours! Chciałbym zarezerwować wycieczkę:\n🏖️ Wycieczka: ${targetProduct} (${targetPrice || ''})\n`;
             if (form.date) msg += `📅 Data rejsu: ${form.date}\n`;
             if (form.adults) msg += `👥 Uczestnicy: ${form.adults}${form.kids ? ', ' + form.kids : ''}\n`;
-            if (form.hotel) msg += `🏨 Hotel w Hurghadzie: ${form.hotel}\n`;
+            if (loc) msg += `📍 Hotel / Lokalizacja: ${loc}\n`;
             msg += `Proszę o sprawdzenie dostępności na wybrane terminy i potwierdzenie transferu.`;
             return msg;
           }
@@ -374,7 +378,7 @@
           let msg = `Hi Hurghada Sea Tours! I would like to book:\n🏖️ Tour: ${targetProduct} (${targetPrice || ''})\n`;
           if (form.date) msg += `📅 Travel Date: ${form.date}\n`;
           if (form.adults) msg += `👥 Guests: ${form.adults}${form.kids ? ', ' + form.kids : ''}\n`;
-          if (form.hotel) msg += `🏨 Hotel: ${form.hotel}\n`;
+          if (loc) msg += `📍 Pickup Location / Hotel: ${loc}\n`;
           msg += `Please check availability and confirm booking details with hotel pickup.`;
           return msg;
         }

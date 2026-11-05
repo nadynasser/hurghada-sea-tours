@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -76,7 +76,8 @@
     <div class="container">
       <div class="top-bar-license"><span>🛡️ Egyptian Ministry of Tourism License #2344</span></div>
       <div class="top-bar-contact">
-        <a href="tel:+201091705805">📞 +20 109 170 5805 (Marina Dispatch)</a>
+        <a href="https://wa.me/201091705805" target="_blank" rel="noopener">💬 WhatsApp Dispatch: +20 109 170 5805</a>
+        <span>🚐 Free Hotel Pickup &amp; Transfers Included</span>
         <div class="lang-switch" aria-label="Language Selector">
           <a href="../tours/semi-submarine.html" class="active" title="English" data-lang="en">EN</a>
           <a href="../de/tours/semi-submarine.html" title="Deutsch" data-lang="de">DE</a>
@@ -222,8 +223,14 @@
               <input type="date" id="subDate" class="booking-input" required>
             </div>
             <div class="booking-field">
-              <label for="subHotel">Hotel Name (For Pickup)</label>
-              <input type="text" id="subHotel" class="booking-input" placeholder="e.g. Albatros Palace">
+              <label for="bookHotel">Hotel or Pickup Location</label>
+              <div class="location-picker-group">
+                <input type="text" id="bookHotel" class="booking-input" placeholder="e.g. Albatros Palace or Sheraton Road">
+                <button type="button" class="btn-gps-pin" onclick="window.HSTShareLocation('bookHotel', this)" title="Pin my current GPS Location">
+                  <span>📍 Pin GPS</span>
+                </button>
+              </div>
+              <span class="location-picker-hint">Tap Pin GPS to auto-share your hotel/resort location</span>
             </div>
             <button type="submit" class="btn btn-whatsapp" style="width:100%; margin-top:10px;">
               <span>💬 Book Submarine via WhatsApp (€20)</span>
@@ -233,7 +240,7 @@
           <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border-light); font-size:0.82rem; color:var(--text-muted);">
             <p>🛡️ <strong>Zero Risk:</strong> Pay on arrival.</p>
             <p style="margin-top:4px;">🔄 <strong>Free Cancellation:</strong> Up to 24h before trip.</p>
-            <p style="margin-top:4px;">📞 <strong>Hotline:</strong> +20 109 170 5805</p>
+            <p style="margin-top:4px;">💬 <strong>WhatsApp Inquiries:</strong> +20 109 170 5805 (Available 24/7)</p>
           </div>
         </div>
       </aside>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
@@ -85,7 +85,8 @@
     <div class="container">
       <div class="top-bar-license"><span>🛡️ Ägyptisches Tourismusministerium Lizenz #2344</span></div>
       <div class="top-bar-contact">
-        <a href="tel:+201091705805">📞 +20 109 170 5805 (Marina Hurghada)</a>
+        <a href="https://wa.me/201091705805" target="_blank" rel="noopener">💬 WhatsApp Dispatch: +20 109 170 5805</a>
+        <span>🚐 Kostenloser Hoteltransfer inklusive</span>
         <div class="lang-switch" aria-label="Sprachauswahl">
           <a href="../../tours/semi-submarine.html" title="English" data-lang="en">EN</a>
           <a href="./semi-submarine.html" class="active" title="Deutsch" data-lang="de">DE</a>
@@ -222,8 +223,14 @@
               </div>
             </div>
             <div class="booking-field">
-              <label for="subHotel">Hotel in Hurghada</label>
-              <input type="text" id="subHotel" class="booking-input" placeholder="z.B. Sindbad Club">
+              <label for="bookHotelDe">Hotel oder Abholort</label>
+              <div class="location-picker-group">
+                <input type="text" id="bookHotelDe" class="booking-input" placeholder="z.B. Sindbad Club oder Sheraton">
+                <button type="button" class="btn-gps-pin" onclick="window.HSTShareLocation('bookHotelDe', this)" title="GPS-Standort teilen">
+                  <span>📍 GPS Standort</span>
+                </button>
+              </div>
+              <span class="location-picker-hint">Tippen Sie auf GPS Standort, um Ihren genauen Hotelort zu teilen</span>
             </div>
 
             <button type="submit" class="btn btn-whatsapp" style="width:100%; margin-top:10px;" data-wa-tour="Semi-Submarine Tour" data-wa-price="€20" data-product-id="semi-submarine">

@@ -90,7 +90,8 @@
     <div class="container">
       <div class="top-bar-license"><span>🛡️ ترخيص وزارة السياحة والآثار المصرية #2344</span></div>
       <div class="top-bar-contact">
-        <a href="tel:+201091705805">📞 5805 170 109 20+</a>
+        <a href="https://wa.me/201091705805" target="_blank" rel="noopener">💬 خدمة حجز واتساب: 5805 170 109 20+</a>
+        <span>🚐 شامل خدمة التوصيل ذهاباً وإياباً من الفندق</span>
         <div class="lang-switch" aria-label="اختيار اللغة">
           <a href="../../tours/hula-hula-island.html" title="English" data-lang="en">EN</a>
           <a href="../../de/tours/hula-hula-island.html" title="Deutsch" data-lang="de">DE</a>
@@ -171,7 +172,7 @@
           <div class="timeline-item">
             <span class="timeline-time">08:00 صباحاً – 08:30 صباحاً</span>
             <h3 class="timeline-title">الاستقبال من الفندق</h3>
-            <p class="timeline-desc">سيارة حديثة ومكيفة تنقلك من بهو فندقك مباشرة إلى مارينا اليخوت بالغردقة.</p>
+            <p class="timeline-desc">سيارة حديثة ومكيفة تنقلك من بهو فندقك مباشرة إلى مرسى انطلاق اليخت.</p>
           </div>
           <div class="timeline-item">
             <span class="timeline-time">09:00 صباحاً</span>
@@ -200,8 +201,8 @@
           </div>
           <div class="timeline-item">
             <span class="timeline-time">04:30 عصراً</span>
-            <h3 class="timeline-title">العودة للمارينا والتوصيل للفندق</h3>
-            <p class="timeline-desc">الرجوع بسلامة الله إلى مارينا الغردقة ثم التوصيل بسيارتك المكيفة إلى فندقك.</p>
+            <h3 class="timeline-title">الوصول والتوصيل إلى فندقك</h3>
+            <p class="timeline-desc">الرجوع بسلامة الله إلى اليابسة ثم التوصيل بسيارتك المكيفة مباشرة إلى فندقك.</p>
           </div>
         </div>
 
@@ -273,8 +274,14 @@
               </div>
             </div>
             <div class="booking-field">
-              <label for="bookHotelAr">اسم الفندق بالغردقة (للتوصيل)</label>
-              <input type="text" id="bookHotelAr" class="booking-input" placeholder="مثال: شتايجنبرجر الداو">
+              <label for="bookHotelAr">اسم الفندق أو موقع التوصيل</label>
+              <div class="location-picker-group">
+                <input type="text" id="bookHotelAr" class="booking-input" placeholder="مثال: شتايجنبرجر الداو أو مكادي باي">
+                <button type="button" class="btn-gps-pin" onclick="window.HSTShareLocation('bookHotelAr', this)" title="تحديد موقعي الجغرافي GPS">
+                  <span>📍 تحديد موقعي</span>
+                </button>
+              </div>
+              <span class="location-picker-hint">اضغط على زر (تحديد موقعي) لمشاركة موقع فندقك/منتجعك بدقة</span>
             </div>
 
             <button type="submit" class="btn btn-whatsapp" style="width:100%; margin-top:10px;" data-wa-tour="رحلة جزيرة هولا هولا وسنوركلينج" data-wa-price="€32" data-product-id="hula-hula">
@@ -285,7 +292,7 @@
           <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border-light); font-size:0.85rem; color:var(--text-muted); line-height:1.7;">
             <p>🛡️ <strong>بدون مقدم:</strong> الدفع عند الوصول للمركب.</p>
             <p>🔄 <strong>إلغاء مجاني:</strong> حتى 24 ساعة قبل الرحلة.</p>
-            <p>📞 <strong>هاتف المارينا:</strong> 5805 170 109 20+</p>
+            <p>💬 <strong>استفسارات واتساب:</strong> 5805 170 109 20+ (خدمة 24 ساعة)</p>
           </div>
         </div>
       </aside>

@@ -1108,3 +1108,65 @@ html[dir="rtl"] .banner-charter {
   background-image: linear-gradient(270deg, rgba(5, 38, 70, 0.95) 0%, rgba(5, 38, 70, 0.8) 50%, rgba(5, 38, 70, 0.4) 100%), url('../images/banners/banner-private-charter.jpg');
 }
 
+/* ==========================================================================
+   Smart Location Picker & GPS Pin Button
+   ========================================================================== */
+.location-picker-group {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.location-picker-group input {
+  flex: 1;
+  min-width: 0;
+}
+
+.btn-gps-pin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #F0FDF4;
+  border: 1.5px solid #22C55E;
+  color: #15803D;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  height: 46px;
+  flex-shrink: 0;
+}
+
+.btn-gps-pin:hover {
+  background: #22C55E;
+  color: #FFFFFF;
+}
+
+.btn-gps-pin:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.location-picker-hint {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
+
+@media (max-width: 480px) {
+  .location-picker-group {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .btn-gps-pin {
+    width: 100%;
+    height: 40px;
+  }
+}
+
+
