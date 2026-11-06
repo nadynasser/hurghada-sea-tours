@@ -338,7 +338,7 @@
             msg += `يرجى تأكيد الحجز وميعاد التوصيل.`;
             return msg;
           }
-          return `مرحباً Hurghada Sea Tours! أود حجز رحلة "${targetProduct}" (${targetPrice || ''}). يرجى تأكيد الإتاحة لموعدنا مع خدمة التوصيل.`;
+          return `مرحباً Hurghada Sea Tours! أود حجز رحلة "${targetProduct}" (${targetPrice || ''}).\n📍 موقع الاستقبال: (سأرسل لكم اسم الفندق أو اللوكيشن هنا 📎)\nيرجى تأكيد الإتاحة وموعد التوصيل.`;
         }
 
         if (currentLang === 'de') {
@@ -354,7 +354,7 @@
             msg += `Bitte prüfen Sie die Verfügbarkeit für unsere Reisedaten und bestätigen Sie die Abholung.`;
             return msg;
           }
-          return `Hallo Hurghada Sea Tours! Ich interessiere mich für den Ausflug "${targetProduct}" (${targetPrice || ''}). Bitte prüfen Sie die Verfügbarkeit für unsere Reisedaten. Hotelabholung in Hurghada erwünscht.`;
+          return `Hallo Hurghada Sea Tours! Ich interessiere mich für den Ausflug "${targetProduct}" (${targetPrice || ''}).\n📍 Abholort: (Ich sende meinen Hotelnamen oder Standort hier 📎)\nBitte bestätigen Sie die Verfügbarkeit.`;
         }
 
         if (currentLang === 'ru') {
@@ -370,7 +370,7 @@
             msg += `Пожалуйста, проверьте наличие мест на наши даты и подтвердите трансфер из отеля.`;
             return msg;
           }
-          return `Здравствуйте, Hurghada Sea Tours! Я хочу забронировать экскурсию "${targetProduct}" (${targetPrice || ''}). Пожалуйста, проверьте наличие мест на наши даты. Нужен трансфер из отеля.`;
+          return `Здравствуйте, Hurghada Sea Tours! Я хочу забронировать "${targetProduct}" (${targetPrice || ''}).\n📍 Локация: (Я отправлю отель или геопозицию здесь 📎)\nПожалуйста, подтвердите наличие мест.`;
         }
 
         if (currentLang === 'pl') {
@@ -386,7 +386,7 @@
             msg += `Proszę o sprawdzenie dostępności na wybrane terminy i potwierdzenie transferu.`;
             return msg;
           }
-          return `Cześć Hurghada Sea Tours! Chciałbym zarezerwować wycieczkę "${targetProduct}" (${targetPrice || ''}). Proszę o sprawdzenie dostępności na wybrane terminy. Potrzebny transfer z hotelu w Hurghadzie.`;
+          return `Cześć Hurghada Sea Tours! Chciałbym zarezerwować "${targetProduct}" (${targetPrice || ''}).\n📍 Lokalizacja: (Wyślę nazwę hotelu lub pinezkę tutaj 📎)\nProszę o potwierdzenie dostępności.`;
         }
 
         // English default
@@ -402,7 +402,7 @@
           msg += `Please check availability and confirm booking details with hotel pickup.`;
           return msg;
         }
-        return `Hi Hurghada Sea Tours! I would like to inquire about booking the "${targetProduct}" (${targetPrice || ''}). Please check availability for my dates. We need hotel pickup in Hurghada.`;
+        return `Hi Hurghada Sea Tours! I would like to book the "${targetProduct}" (${targetPrice || ''}).\n📍 Pickup Location: (I will send my hotel / live location here 📎)\nPlease confirm availability and hotel pickup time.`;
       }
 
       // 2. General inquiry message
