@@ -330,7 +330,11 @@
             let msg = `مرحباً Hurghada Sea Tours! أود حجز رحلة:\n🏖️ الرحلة: ${targetProduct} (${targetPrice || ''})\n`;
             if (form.date) msg += `📅 تاريخ الرحلة: ${form.date}\n`;
             if (form.adults) msg += `👥 عدد الأفراد: ${form.adults}${form.kids ? '، ' + form.kids : ''}\n`;
-            if (loc) msg += `📍 موقع الاستقبال / الفندق: ${loc}\n`;
+            if (loc) {
+              msg += `📍 موقع الاستقبال / الفندق: ${loc}\n`;
+            } else {
+              msg += `📍 موقع الاستقبال: (سأرسل لكم اللوكيشن أو اسم الفندق هنا 📎)\n`;
+            }
             msg += `يرجى تأكيد الحجز وميعاد التوصيل.`;
             return msg;
           }
@@ -342,7 +346,11 @@
             let msg = `Hallo Hurghada Sea Tours! Ich möchte folgenden Ausflug buchen:\n🏖️ Ausflug: ${targetProduct} (${targetPrice || ''})\n`;
             if (form.date) msg += `📅 Reisedatum: ${form.date}\n`;
             if (form.adults) msg += `👥 Personen: ${form.adults}${form.kids ? ', ' + form.kids : ''}\n`;
-            if (loc) msg += `📍 Abholort / Hotel: ${loc}\n`;
+            if (loc) {
+              msg += `📍 Abholort / Hotel: ${loc}\n`;
+            } else {
+              msg += `📍 Abholort: (Ich sende meinen Standort / Hotelnamen hier 📎)\n`;
+            }
             msg += `Bitte prüfen Sie die Verfügbarkeit für unsere Reisedaten und bestätigen Sie die Abholung.`;
             return msg;
           }
@@ -354,7 +362,11 @@
             let msg = `Здравствуйте, Hurghada Sea Tours! Я хочу забронировать:\n🏖️ Экскурсия: ${targetProduct} (${targetPrice || ''})\n`;
             if (form.date) msg += `📅 Дата поездки: ${form.date}\n`;
             if (form.adults) msg += `👥 Гости: ${form.adults}${form.kids ? ', ' + form.kids : ''}\n`;
-            if (loc) msg += `📍 Отель / Локация: ${loc}\n`;
+            if (loc) {
+              msg += `📍 Отель / Локация: ${loc}\n`;
+            } else {
+              msg += `📍 Локация для трансфера: (Я отправлю отель или геопозицию здесь 📎)\n`;
+            }
             msg += `Пожалуйста, проверьте наличие мест на наши даты и подтвердите трансфер из отеля.`;
             return msg;
           }
@@ -366,7 +378,11 @@
             let msg = `Cześć Hurghada Sea Tours! Chciałbym zarezerwować wycieczkę:\n🏖️ Wycieczka: ${targetProduct} (${targetPrice || ''})\n`;
             if (form.date) msg += `📅 Data rejsu: ${form.date}\n`;
             if (form.adults) msg += `👥 Uczestnicy: ${form.adults}${form.kids ? ', ' + form.kids : ''}\n`;
-            if (loc) msg += `📍 Hotel / Lokalizacja: ${loc}\n`;
+            if (loc) {
+              msg += `📍 Hotel / Lokalizacja: ${loc}\n`;
+            } else {
+              msg += `📍 Lokalizacja: (Wyślę nazwę hotelu lub pinezkę tutaj 📎)\n`;
+            }
             msg += `Proszę o sprawdzenie dostępności na wybrane terminy i potwierdzenie transferu.`;
             return msg;
           }
@@ -378,7 +394,11 @@
           let msg = `Hi Hurghada Sea Tours! I would like to book:\n🏖️ Tour: ${targetProduct} (${targetPrice || ''})\n`;
           if (form.date) msg += `📅 Travel Date: ${form.date}\n`;
           if (form.adults) msg += `👥 Guests: ${form.adults}${form.kids ? ', ' + form.kids : ''}\n`;
-          if (loc) msg += `📍 Pickup Location / Hotel: ${loc}\n`;
+          if (loc) {
+            msg += `📍 Pickup Location / Hotel: ${loc}\n`;
+          } else {
+            msg += `📍 Pickup Location: (I will send my hotel / live location here 📎)\n`;
+          }
           msg += `Please check availability and confirm booking details with hotel pickup.`;
           return msg;
         }

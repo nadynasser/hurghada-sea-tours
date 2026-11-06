@@ -72,55 +72,77 @@ document.addEventListener('DOMContentLoaded', () => {
  * Automatically detects tourist's GPS location and fills the hotel/location input
  */
 window.HSTShareLocation = function(inputId, btnElement) {
-  const input = document.getElementById(inputId) || document.querySelector('input[name*="hotel"], input[name*="location"], #bookHotel');
-  const btn = btnElement || (event ? event.currentTarget : null);
+  const input = document.getElementById(inputId) || document.querySelector('input[name*="hotel"], input[name*="location"], #bookHotel, #bookHotelAr, #bookHotelDe, #bookHotelRu, #bookHotelPl');
+  const btn = btnElement || (typeof event !== 'undefined' && event ? event.currentTarget : null);
+
+  const isAr = document.documentElement.lang === 'ar' || window.location.pathname.includes('/ar/');
+  const isDe = document.documentElement.lang === 'de' || window.location.pathname.includes('/de/');
+  const isRu = document.documentElement.lang === 'ru' || window.location.pathname.includes('/ru/');
+  const isPl = document.documentElement.lang === 'pl' || window.location.pathname.includes('/pl/');
+
+  const msgLoading = isAr ? '⏳ جاري تحديد موقعك...' : isDe ? '⏳ GPS ermitteln...' : isRu ? '⏳ Поиск GPS...' : isPl ? '⏳ Ustalanie GPS...' : '⏳ Detecting GPS...';
+  const msgSuccess = isAr ? '✅ تم حفظ موقعك!' : isDe ? '✅ Standort erfasst!' : isRu ? '✅ Координаты готовы!' : isPl ? '✅ Zapisano!' : '✅ Location Pinned!';
+  const msgError = isAr ? '⚠️ تعذر التقاط GPS' : isDe ? '⚠️ GPS nicht verfügbar' : isRu ? '⚠️ GPS недоступен' : isPl ? '⚠️ Błąd GPS' : '⚠️ GPS Unavailable';
+  const msgPromptError = isAr 
+    ? 'تعذر الوصول للموقع التلقائي. يرجى كتابة اسم الفندق أو إرسال الموقع عبر علامة الدبوس 📎 داخل الواتساب.' 
+    : 'Could not access GPS. Please type your hotel name or share your location inside WhatsApp via the 📎 attachment icon.';
 
   if (!navigator.geolocation) {
-    alert("Geolocation is not supported by your browser. Please type your hotel name or area.");
+    alert(msgPromptError);
     return;
   }
 
-  const origText = btn ? btn.innerHTML : '';
+  const origHTML = btn ? btn.innerHTML : '';
   if (btn) {
-    btn.innerHTML = '<span>⏳ Detecting GPS...</span>';
+    btn.innerHTML = `<span>${msgLoading}</span>`;
     btn.disabled = true;
   }
 
+  const handleSuccess = (pos) => {
+    const lat = pos.coords.latitude.toFixed(5);
+    const lng = pos.coords.longitude.toFixed(5);
+    const mapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
+    if (input) {
+      const curVal = input.value.trim();
+      const mapLabel = isAr ? '📍 خريطة جوجل:' : '📍 Google Maps:';
+      if (curVal && !curVal.includes('maps.google.com')) {
+        input.value = `${curVal} (${mapLabel} ${mapsUrl})`;
+      } else {
+        input.value = `${mapLabel} ${mapsUrl}`;
+      }
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    if (btn) {
+      btn.innerHTML = `<span>${msgSuccess}</span>`;
+      btn.disabled = false;
+      setTimeout(() => {
+        btn.innerHTML = origHTML || (isAr ? '<span>📍 تحديد موقعي</span>' : '<span>📍 Pin GPS</span>');
+      }, 3500);
+    }
+  };
+
+  const handleError = (err) => {
+    console.warn('Geolocation error:', err);
+    if (btn) {
+      btn.innerHTML = `<span>${msgError}</span>`;
+      btn.disabled = false;
+      setTimeout(() => {
+        btn.innerHTML = origHTML || (isAr ? '<span>📍 تحديد موقعي</span>' : '<span>📍 Pin GPS</span>');
+      }, 3000);
+    }
+    // Try lower accuracy fallback if timed out or failed initially
+    if (err.code === err.TIMEOUT && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(handleSuccess, () => alert(msgPromptError), { enableHighAccuracy: false, timeout: 10000 });
+      return;
+    }
+    alert(msgPromptError);
+  };
+
   navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      const lat = pos.coords.latitude.toFixed(5);
-      const lng = pos.coords.longitude.toFixed(5);
-      const mapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
-      if (input) {
-        const curVal = input.value.trim();
-        if (curVal && !curVal.includes('maps.google.com')) {
-          input.value = `${curVal} (📍 Maps: ${mapsUrl})`;
-        } else {
-          input.value = `📍 GPS Location: ${mapsUrl}`;
-        }
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-        input.dispatchEvent(new Event('change', { bubbles: true }));
-      }
-      if (btn) {
-        btn.innerHTML = '<span>✅ Location Pinned!</span>';
-        btn.disabled = false;
-        setTimeout(() => {
-          btn.innerHTML = origText || '<span>📍 Pin GPS</span>';
-        }, 3500);
-      }
-    },
-    (err) => {
-      console.warn('Geolocation error:', err);
-      if (btn) {
-        btn.innerHTML = '<span>⚠️ GPS Permission Denied</span>';
-        btn.disabled = false;
-        setTimeout(() => {
-          btn.innerHTML = origText || '<span>📍 Pin GPS</span>';
-        }, 3000);
-      }
-      alert('Could not access current location. Please type your hotel name or paste your Google Maps link.');
-    },
-    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+    handleSuccess,
+    handleError,
+    { enableHighAccuracy: false, timeout: 12000, maximumAge: 300000 }
   );
 };
 
