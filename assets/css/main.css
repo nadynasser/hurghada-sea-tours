@@ -1113,32 +1113,52 @@ html[dir="rtl"] .banner-charter {
    ========================================================================== */
 .location-picker-group {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   align-items: stretch;
+  width: 100%;
 }
 
-.location-picker-group input {
+.location-picker-group input,
+.location-picker-group .booking-input {
   flex: 1;
   min-width: 0;
+  height: 48px;
+  min-height: 48px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  line-height: normal;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  box-sizing: border-box;
+  transition: var(--transition);
+}
+
+.location-picker-group input:focus,
+.location-picker-group .booking-input:focus {
+  outline: none;
+  border-color: var(--cyan-turquoise);
+  box-shadow: 0 0 0 3px rgba(0, 180, 219, 0.15);
 }
 
 .btn-gps-pin {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   background: #F0FDF4;
   border: 1.5px solid #22C55E;
   color: #15803D;
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   font-weight: 700;
-  padding: 0 14px;
+  padding: 0 16px;
   border-radius: var(--radius-sm);
   cursor: pointer;
   white-space: nowrap;
   transition: var(--transition);
-  height: 46px;
+  height: 48px;
+  min-height: 48px;
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .btn-gps-pin:hover {
@@ -1153,19 +1173,67 @@ html[dir="rtl"] .banner-charter {
 
 .location-picker-hint {
   display: block;
-  font-size: 0.74rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
-  margin-top: 5px;
+  margin-top: 8px;
+  line-height: 1.4;
 }
 
-@media (max-width: 480px) {
+/* Mobile & Tablet responsiveness (generous vertical spacing & comfortable touch targets) */
+@media (max-width: 768px) {
   .location-picker-group {
     flex-direction: column;
-    gap: 6px;
-  }
-  .btn-gps-pin {
+    gap: 10px;
     width: 100%;
-    height: 40px;
+  }
+
+  .location-picker-group input,
+  .location-picker-group .booking-input {
+    width: 100% !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    flex: none !important;
+    padding: 12px 16px !important;
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .btn-gps-pin {
+    width: 100% !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    flex: none !important;
+    padding: 10px 16px !important;
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .booking-field {
+    margin-bottom: 20px !important;
+  }
+
+  .booking-field label {
+    margin-bottom: 8px !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+  }
+
+  .booking-input,
+  .booking-select {
+    height: 48px;
+    min-height: 48px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+
+  .location-picker-hint {
+    margin-top: 8px !important;
+    font-size: 0.82rem !important;
+    line-height: 1.45 !important;
   }
 }
 
