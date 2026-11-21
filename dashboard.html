@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -434,7 +434,7 @@
 <body>
 
 <!-- ======================================================================
-     1. Authentication Gatekeeper Screen (Requires nadynasser / Nady@015)
+     1. Authentication Gatekeeper Screen (Requires authorized credentials)
      ====================================================================== -->
 <div id="dashLoginGate" class="login-gate-overlay">
   <div class="login-card">
@@ -449,7 +449,7 @@
         <label for="loginUser">اسم المستخدم (Username)</label>
         <div class="input-with-icon">
           <span class="icon-prefix">👤</span>
-          <input type="text" id="loginUser" class="login-input" placeholder="nadynasser" required autofocus autocomplete="username">
+          <input type="text" id="loginUser" class="login-input" placeholder="اسم المستخدم" required autofocus autocomplete="username">
         </div>
       </div>
 
@@ -529,7 +529,7 @@
         <span style="background:#DCFCE7; color:#15803D; padding:6px 14px; border-radius:var(--radius-pill); font-size:0.85rem; font-weight:700;">
           ● WhatsApp: +20 109 170 5805
         </span>
-        <span style="background:#E0F2FE; color:#0369A1; padding:6px 14px; border-radius:var(--radius-pill); font-size:0.85rem; font-weight:700;">
+        <span id="dashCurrentUserName" style="background:#E0F2FE; color:#0369A1; padding:6px 14px; border-radius:var(--radius-pill); font-size:0.85rem; font-weight:700;">
           👤 nadynasser
         </span>
         <a href="index.html" target="_blank" class="btn btn-outline btn-sm">Preview Site</a>
@@ -967,16 +967,23 @@
 // Authentication Gatekeeper State
 // ==========================================================================
 const AUTH_KEY = 'hst_auth_user';
-const VALID_USER = 'nadynasser';
-const VALID_PASS = 'Nady@015';
+const VALID_USERS = {
+  'nadynasser': 'Nady@015',
+  'admin': 'Admin@015'
+};
 
 function checkAuthStatus() {
   const sessionUser = sessionStorage.getItem(AUTH_KEY);
   const localUser = localStorage.getItem(AUTH_KEY);
+  const currentUser = sessionUser || localUser;
 
-  if (sessionUser === VALID_USER || localUser === VALID_USER) {
+  if (currentUser && Object.prototype.hasOwnProperty.call(VALID_USERS, currentUser)) {
     document.getElementById('dashLoginGate').style.display = 'none';
     document.getElementById('dashLayout').style.display = 'grid';
+    const userBadge = document.getElementById('dashCurrentUserName');
+    if (userBadge) {
+      userBadge.textContent = '👤 ' + currentUser;
+    }
     initDashboard();
   } else {
     document.getElementById('dashLoginGate').style.display = 'flex';
@@ -991,16 +998,20 @@ function handleDashboardLogin(e) {
   const remember = document.getElementById('loginRemember').checked;
   const errBox = document.getElementById('loginErrorMsg');
 
-  if (u === VALID_USER && p === VALID_PASS) {
-    sessionStorage.setItem(AUTH_KEY, VALID_USER);
+  if (Object.prototype.hasOwnProperty.call(VALID_USERS, u) && VALID_USERS[u] === p) {
+    sessionStorage.setItem(AUTH_KEY, u);
     if (remember) {
-      localStorage.setItem(AUTH_KEY, VALID_USER);
+      localStorage.setItem(AUTH_KEY, u);
     } else {
       localStorage.removeItem(AUTH_KEY);
     }
     errBox.style.display = 'none';
     document.getElementById('dashLoginGate').style.display = 'none';
     document.getElementById('dashLayout').style.display = 'grid';
+    const userBadge = document.getElementById('dashCurrentUserName');
+    if (userBadge) {
+      userBadge.textContent = '👤 ' + u;
+    }
     initDashboard();
   } else {
     errBox.style.display = 'block';
