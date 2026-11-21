@@ -1434,26 +1434,61 @@
       <div class="studio-card-section">
         <div class="studio-section-title">
           <span>🖼️ Cover Image</span>
+          <span style="font-size:0.75rem; color:var(--text-muted); text-transform:none; margin-left:auto; font-weight:500;">
+            PNG, JPG, WEBP, AVIF (Recommended: 1200 × 675 px / 16:9)
+          </span>
         </div>
 
-        <div style="display:grid; grid-template-columns: 220px 1fr; gap:20px; align-items:start;">
-          <!-- Left: Thumbnail Preview / Upload Box -->
-          <div style="background:#F8FAFC; border:2px dashed #CBD5E1; border-radius:10px; aspect-ratio:16/10; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:12px; position:relative; overflow:hidden;">
+        <div style="display:grid; grid-template-columns: 240px 1fr; gap:20px; align-items:start;">
+          <!-- Left: Thumbnail Preview / Click-to-Upload Dropzone -->
+          <div id="coverDropZone" onclick="document.getElementById('artCoverFileInput').click()" style="background:#F8FAFC; border:2px dashed #93C5FD; border-radius:12px; aspect-ratio:16/10; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:12px; position:relative; overflow:hidden; cursor:pointer; transition:all 0.2s;" title="اضغط لرفع أو تغيير الصورة من الجهاز">
             <img id="coverPreviewImg" src="assets/images/tours/tour-snorkeling.jpg" alt="Preview" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
-            <div id="coverPlaceholder" style="display:none; flex-direction:column; align-items:center; gap:6px; z-index:2; color:var(--text-muted);">
-              <span style="font-size:1.8rem;">🖼️</span>
-              <span style="font-size:0.75rem; font-weight:700;">Upload Cover</span>
+            <div id="coverPlaceholder" style="display:none; flex-direction:column; align-items:center; gap:8px; z-index:2; color:#085EA8;">
+              <span style="font-size:2.2rem;">📁</span>
+              <strong style="font-size:0.82rem;">اضغط لرفع صورة من الجهاز</strong>
+              <span style="font-size:0.72rem; color:var(--text-muted);">أو اسحب وأفلت الصورة هنا</span>
+            </div>
+            <!-- Hover overlay button -->
+            <div style="position:absolute; bottom:8px; right:8px; background:rgba(5,38,70,0.85); color:#fff; font-size:0.72rem; font-weight:700; padding:4px 8px; border-radius:4px; z-index:3; display:flex; align-items:center; gap:4px;">
+              <span>📁 تغيير الصورة</span>
             </div>
           </div>
 
-          <!-- Right: Inputs & Library Presets -->
+          <!-- Right: Direct File Upload + URL Input + Library Presets -->
           <div>
+            <!-- 1. Native Device File Upload Field (الرفع من الجهاز) -->
             <div class="studio-form-group">
-              <label for="artCoverUrl">Image URL (or upload)</label>
-              <input type="text" id="artCoverUrl" class="studio-input" placeholder="https://hurghadaseatours.com/assets/images/..." value="/assets/images/tours/tour-snorkeling.jpg" oninput="updateCoverPreview(this.value)">
+              <label for="artCoverFileInput" style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="color:#085EA8; font-weight:800;">📁 رفع صورة من جهازك مباشرة (Upload from Device):</span>
+                <span style="font-size:0.75rem; color:#15803D; font-weight:700;">✓ يدعم الهاتف والكمبيوتر</span>
+              </label>
+              
+              <div style="display:flex; gap:12px; align-items:center; background:#F0FDF4; border:1.5px solid #86EFAC; padding:10px 14px; border-radius:8px; flex-wrap:wrap;">
+                <input type="file" id="artCoverFileInput" accept="image/png, image/jpeg, image/webp, image/jpg, image/avif" style="display:none;" onchange="handleCoverFileUpload(event)">
+                <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('artCoverFileInput').click()" style="display:inline-flex; align-items:center; gap:8px; padding:8px 16px; font-weight:700; font-size:0.85rem; cursor:pointer;">
+                  <span>📂 اختيار صورة من الجهاز (Choose File)</span>
+                </button>
+                <div style="flex:1; min-width:200px;">
+                  <span id="coverUploadFileName" style="font-size:0.82rem; color:#166534; font-style:italic;">
+                    لم يتم اختيار ملف بعد (أو اختر من صور الموقع بالأسفل)
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Image URL Field (Alternative Option) -->
+            <div class="studio-form-group">
+              <label for="artCoverUrl">أو رابط الصورة (Image URL / Path):</label>
+              <div style="display:flex; gap:8px;">
+                <input type="text" id="artCoverUrl" class="studio-input" placeholder="https://hurghadaseatours.com/assets/images/..." value="/assets/images/tours/tour-snorkeling.jpg" oninput="updateCoverPreview(this.value)">
+                <button type="button" class="btn btn-outline btn-sm" onclick="clearCoverImage()" style="white-space:nowrap; padding:0 12px; font-size:0.8rem; color:#DC2626; border-color:#FECACA;" title="مسح الصورة">
+                  🗑️ مسح
+                </button>
+              </div>
+
               <!-- Preset Quick Selection Pills -->
               <div style="margin-top:6px;">
-                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">Site Photos: </span>
+                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">أو اختر من مكتبة صور الموقع: </span>
                 <span class="preset-img-pill" onclick="selectPresetImage('/assets/images/tours/tour-orange-bay.jpg', 'Orange Bay Island water swings and turquoise lagoon')">Orange Bay</span>
                 <span class="preset-img-pill" onclick="selectPresetImage('/assets/images/tours/tour-hula-hula.jpg', 'Hula Hula Island boho beach swings')">Hula Hula</span>
                 <span class="preset-img-pill" onclick="selectPresetImage('/assets/images/tours/tour-dolphin-house.jpg', 'Wild dolphins swimming in Hurghada Red Sea')">Dolphin House</span>
@@ -1463,8 +1498,9 @@
               </div>
             </div>
 
+            <!-- 3. Alt Text -->
             <div class="studio-form-group" style="margin-bottom:0;">
-              <label for="artCoverAlt">Alt text (describe the image — important for SEO &amp; accessibility)</label>
+              <label for="artCoverAlt">Alt text (وصف الصورة لمحركات البحث وسهولة الوصول):</label>
               <input type="text" id="artCoverAlt" class="studio-input" placeholder="e.g. Snorkeling with colorful tropical fish and coral reefs in Hurghada Red Sea" value="Snorkeling with colorful tropical fish and coral reefs in Hurghada Red Sea">
             </div>
           </div>
@@ -2604,6 +2640,22 @@ function openArticleStudio(articleId) {
   document.getElementById('artCoverAlt').value = articleEditBuffer.coverAlt || '';
   updateCoverPreview(articleEditBuffer.coverImage);
 
+  const fileInput = document.getElementById('artCoverFileInput');
+  if (fileInput) fileInput.value = '';
+  const fileLabel = document.getElementById('coverUploadFileName');
+  if (fileLabel) {
+    if (articleEditBuffer.coverImage && articleEditBuffer.coverImage.startsWith('data:')) {
+      fileLabel.innerHTML = '✓ تم رفع صورة مخصصة من الجهاز سابقاً';
+      fileLabel.style.color = '#15803D';
+      fileLabel.style.fontStyle = 'normal';
+    } else {
+      fileLabel.textContent = 'لم يتم اختيار ملف بعد (أو اختر من صور الموقع بالأسفل)';
+      fileLabel.style.color = '#166534';
+      fileLabel.style.fontStyle = 'italic';
+    }
+  }
+  initCoverDropZone();
+
   document.getElementById('artStatus').value = articleEditBuffer.status || 'published';
   const pubDateStr = articleEditBuffer.publishDate ? articleEditBuffer.publishDate.slice(0, 16) : new Date().toISOString().slice(0, 16);
   document.getElementById('artPubDate').value = pubDateStr;
@@ -2744,19 +2796,116 @@ function updateCoverPreview(url) {
   const ph = document.getElementById('coverPlaceholder');
   if (url && url.trim()) {
     let finalUrl = url.trim();
-    if (finalUrl.startsWith('/')) finalUrl = finalUrl.substring(1);
+    if (!finalUrl.startsWith('data:') && !finalUrl.startsWith('http') && finalUrl.startsWith('/')) {
+      finalUrl = finalUrl.substring(1);
+    }
     img.src = finalUrl;
     img.style.display = 'block';
-    ph.style.display = 'none';
+    if (ph) ph.style.display = 'none';
   } else {
     img.style.display = 'none';
-    ph.style.display = 'flex';
+    if (ph) ph.style.display = 'flex';
   }
+}
+
+function handleDirectImageFile(file) {
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    alert('يرجى اختيار ملف صورة صالح (JPG, PNG, WEBP, GIF, AVIF)');
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    if (!confirm('حجم الصورة كبير نسبياً (أكثر من 5 ميجابايت). هل تريد المتابعة؟')) return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const dataUrl = e.target.result;
+    document.getElementById('artCoverUrl').value = dataUrl;
+    updateCoverPreview(dataUrl);
+
+    const sizeKB = Math.round(file.size / 1024);
+    const label = document.getElementById('coverUploadFileName');
+    if (label) {
+      label.innerHTML = `✓ تم اختيار: <strong>${escapeHtml(file.name)}</strong> (${sizeKB} KB)`;
+      label.style.color = '#15803D';
+      label.style.fontStyle = 'normal';
+    }
+
+    const altInput = document.getElementById('artCoverAlt');
+    if (altInput && (!altInput.value || altInput.value.trim() === '' || altInput.value === 'Snorkeling with colorful tropical fish and coral reefs in Hurghada Red Sea')) {
+      const suggested = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]+/g, ' ');
+      altInput.value = suggested.charAt(0).toUpperCase() + suggested.slice(1);
+    }
+
+    showToast(`✓ تم رفع وتحميل الصورة: ${file.name}`);
+  };
+  reader.readAsDataURL(file);
+}
+
+function handleCoverFileUpload(event) {
+  const file = event.target.files && event.target.files[0];
+  handleDirectImageFile(file);
+}
+
+function initCoverDropZone() {
+  const dropZone = document.getElementById('coverDropZone');
+  if (!dropZone || dropZone._dropZoneInit) return;
+  dropZone._dropZoneInit = true;
+
+  ['dragenter', 'dragover'].forEach(evtName => {
+    dropZone.addEventListener(evtName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropZone.style.borderColor = '#2563EB';
+      dropZone.style.background = '#EFF6FF';
+    });
+  });
+
+  ['dragleave', 'drop'].forEach(evtName => {
+    dropZone.addEventListener(evtName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropZone.style.borderColor = '#93C5FD';
+      dropZone.style.background = '#F8FAFC';
+    });
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    const dt = e.dataTransfer;
+    if (dt && dt.files && dt.files.length > 0) {
+      handleDirectImageFile(dt.files[0]);
+    }
+  });
+}
+
+function clearCoverImage() {
+  document.getElementById('artCoverUrl').value = '';
+  const fileInput = document.getElementById('artCoverFileInput');
+  if (fileInput) fileInput.value = '';
+  const fileLabel = document.getElementById('coverUploadFileName');
+  if (fileLabel) {
+    fileLabel.textContent = 'لم يتم اختيار ملف بعد (أو اختر من صور الموقع بالأسفل)';
+    fileLabel.style.color = 'var(--text-muted)';
+    fileLabel.style.fontStyle = 'italic';
+  }
+  updateCoverPreview('');
+  showToast('تم مسح صورة الغلاف');
 }
 
 function selectPresetImage(url, alt) {
   document.getElementById('artCoverUrl').value = url;
   document.getElementById('artCoverAlt').value = alt;
+  const fileInput = document.getElementById('artCoverFileInput');
+  if (fileInput) fileInput.value = '';
+  const fileLabel = document.getElementById('coverUploadFileName');
+  if (fileLabel) {
+    fileLabel.textContent = `تم اختيار صورة من مكتبة الموقع: ${url.split('/').pop()}`;
+    fileLabel.style.color = '#085EA8';
+    fileLabel.style.fontStyle = 'normal';
+  }
   updateCoverPreview(url);
 }
 
