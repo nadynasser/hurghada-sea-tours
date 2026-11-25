@@ -198,13 +198,34 @@
     }
 
     saveSettings(newSettings) {
-      this.settings = Object.assign({}, this.settings, newSettings, { version: 2 });
+      this.settings = Object.assign({}, this.settings, newSettings, {
+        version: Math.max(Number(newSettings && newSettings.version || 2), 2),
+        updatedAt: (newSettings && newSettings.updatedAt) || new Date().toISOString()
+      });
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.settings));
       } catch (e) {
         console.warn('[WhatsAppRouter] LocalStorage save failed:', e);
       }
       this.bindAllElements();
+    }
+
+    applyRemoteSettings(remoteSettings, forcePreferRemote = false) {
+      if (!remoteSettings || !Array.isArray(remoteSettings.numbers) || remoteSettings.numbers.length === 0) {
+        return false;
+      }
+      const hasLocal = Boolean(localStorage.getItem(STORAGE_KEY));
+      const localVer = (this.settings && this.settings.version) || 0;
+      const remoteVer = remoteSettings.version || 0;
+      const localTs = (this.settings && this.settings.updatedAt) ? Date.parse(this.settings.updatedAt) : 0;
+      const remoteTs = remoteSettings.updatedAt ? Date.parse(remoteSettings.updatedAt) : 0;
+
+      if (!hasLocal || remoteVer > localVer || (forcePreferRemote && remoteTs >= localTs)) {
+        this.settings = remoteSettings;
+        this.bindAllElements();
+        return true;
+      }
+      return false;
     }
 
     async initAsyncFetch() {
@@ -217,17 +238,28 @@
       }
       const basePath = `${prefix}assets/data/whatsapp-settings.json`;
 
+      // 1. Try live Cloudflare KV endpoint first when running over HTTP/HTTPS
+      if (window.location.protocol.startsWith('http')) {
+        try {
+          const kvRes = await fetch('/api/whatsapp-settings', { cache: 'no-store' });
+          if (kvRes.ok) {
+            const payload = await kvRes.json();
+            if (payload && payload.source === 'kv' && payload.settings) {
+              this.applyRemoteSettings(payload.settings, true);
+              return;
+            }
+          }
+        } catch (e) {
+          // Fall through to static JSON fallback
+        }
+      }
+
+      // 2. Fallback to static repository JSON file
       try {
         const res = await fetch(basePath);
         if (res.ok) {
           const remoteSettings = await res.json();
-          const hasLocal = Boolean(localStorage.getItem(STORAGE_KEY));
-          const localVer = (this.settings && this.settings.version) || 0;
-          const remoteVer = (remoteSettings && remoteSettings.version) || 0;
-          if (!hasLocal || remoteVer > localVer) {
-            this.settings = remoteSettings;
-          }
-          this.bindAllElements();
+          this.applyRemoteSettings(remoteSettings, false);
         }
       } catch (e) {
         // Fallback already loaded

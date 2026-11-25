@@ -806,11 +806,13 @@
         <span style="font-size:0.75rem; color:var(--text-muted);">Protected Access</span>
       </div>
 
+      <div id="loginSetupNotice" style="display:none; background:#FEF3C7; border:1px solid #F59E0B; color:#92400E; padding:12px 14px; border-radius:10px; font-size:0.84rem; line-height:1.55; margin-bottom:14px; text-align:right; direction:rtl;"></div>
+
       <div id="loginErrorMsg" class="login-error-alert" style="display:none;">
         ⚠️ اسم المستخدم أو كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.
       </div>
 
-      <button type="submit" class="btn-login-submit">
+      <button type="submit" id="btnLoginSubmit" class="btn-login-submit">
         <span>تسجيل الدخول →</span>
       </button>
     </form>
@@ -874,6 +876,9 @@
         </p>
       </div>
       <div class="dash-header-actions">
+        <span id="cloudStatusPill" style="background:#F1F5F9; color:#334155; padding:6px 14px; border-radius:var(--radius-pill); font-size:0.82rem; font-weight:700;" title="Cloudflare KV &amp; GitHub Sync Status">
+          ☁️ Connecting Cloud...
+        </span>
         <span style="background:#DCFCE7; color:#15803D; padding:6px 14px; border-radius:var(--radius-pill); font-size:0.85rem; font-weight:700;">
           ● WhatsApp: +20 109 170 5805
         </span>
@@ -1445,6 +1450,17 @@
         </span>
       </div>
 
+      <!-- Gemini AI SEO / GEO / AEO Generator Bar -->
+      <div id="aiSeoStudioBar" style="background:linear-gradient(135deg, #EFF6FF 0%, #F0FDF4 100%); border:1.5px solid #93C5FD; border-radius:10px; padding:14px 16px; margin-bottom:18px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:8px; font-weight:800; font-size:0.86rem; color:var(--primary-navy);">
+          <span>✨ Gemini AI SEO/GEO/AEO</span>
+        </div>
+        <input type="text" id="aiSeoTopicInput" class="studio-input" style="flex:1; min-width:220px; background:#FFFFFF;" placeholder="اكتب موضوع المقال هنا مثل: Best Dolphin House snorkeling tour Hurghada for families">
+        <button type="button" id="btnAiGenerateSeo" class="btn btn-primary btn-sm" onclick="generateArticleWithGemini()" style="white-space:nowrap;">
+          <span>⚡ توليد المقال + الـ SEO بالذكاء الاصطناعي</span>
+        </button>
+      </div>
+
       <!-- Section 1: BASICS -->
       <div class="studio-card-section">
         <div class="studio-section-title">
@@ -1829,13 +1845,16 @@
         </button>
       </div>
 
-      <div style="display:flex; gap:10px; align-items:center;">
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <button type="button" class="btn btn-outline" onclick="closeArticleStudio()">Cancel</button>
         <button type="button" class="btn btn-outline" onclick="exportCurrentArticleHTML()" style="color:var(--primary-navy); border-color:var(--primary-navy);">
-          📄 Export Static HTML
+          📄 Export HTML
         </button>
-        <button type="button" class="btn-action-save" onclick="saveCurrentArticle()" style="padding:10px 24px; font-size:0.95rem;">
-          💾 Save &amp; Publish Article
+        <button type="button" class="btn btn-outline" onclick="saveCurrentArticle()" style="color:#0369A1; border-color:#BAE6FD; background:#F0F9FF;">
+          💾 Save Draft (KV)
+        </button>
+        <button type="button" id="btnPublishLiveStudio" class="btn-action-save" onclick="publishCurrentArticleToLive()" style="padding:10px 22px; font-size:0.95rem;">
+          🚀 Publish Live to Website
         </button>
       </div>
     </div>
@@ -1865,68 +1884,194 @@
 <div class="toast-msg" id="toastMsg"></div>
 
 <!-- Scripts -->
-<script src="assets/js/whatsapp-router.js?v=5"></script>
+<script src="assets/js/whatsapp-router.js?v=6"></script>
 <script>
 // ==========================================================================
-// Authentication Gatekeeper State
+// Cloud Authentication & Cloudflare Pages Status Gatekeeper
 // ==========================================================================
 const AUTH_KEY = 'hst_auth_user';
-const VALID_USERS = {
-  'nadynasser': 'Nady@015',
-  'admin': 'Admin@015'
+const SERVER_STATUS = {
+  available: false,
+  cloudKv: false,
+  authConfigured: false,
+  githubPublish: false,
+  aiSeo: false,
+  loggedInUser: null
 };
 
-function checkAuthStatus() {
-  const sessionUser = sessionStorage.getItem(AUTH_KEY);
-  const localUser = localStorage.getItem(AUTH_KEY);
-  const currentUser = sessionUser || localUser;
+function isLocalDevEnvironment() {
+  return ['localhost', '127.0.0.1'].includes(window.location.hostname) || window.location.protocol === 'file:';
+}
 
-  if (currentUser && Object.prototype.hasOwnProperty.call(VALID_USERS, currentUser)) {
-    document.getElementById('dashLoginGate').style.display = 'none';
-    document.getElementById('dashLayout').style.display = 'grid';
-    const userBadge = document.getElementById('dashCurrentUserName');
-    if (userBadge) {
-      userBadge.textContent = '👤 ' + currentUser;
-    }
-    initDashboard();
-  } else {
-    document.getElementById('dashLoginGate').style.display = 'flex';
-    document.getElementById('dashLayout').style.display = 'none';
+function showAuthenticatedDashboard(username) {
+  document.getElementById('dashLoginGate').style.display = 'none';
+  document.getElementById('dashLayout').style.display = 'grid';
+  const userBadge = document.getElementById('dashCurrentUserName');
+  if (userBadge) {
+    userBadge.textContent = '👤 ' + username;
+  }
+  updateCloudStatusBadge();
+}
+
+function handleSessionExpired() {
+  sessionStorage.removeItem(AUTH_KEY);
+  localStorage.removeItem(AUTH_KEY);
+  document.getElementById('dashLayout').style.display = 'none';
+  document.getElementById('dashLoginGate').style.display = 'flex';
+  const errBox = document.getElementById('loginErrorMsg');
+  if (errBox) {
+    errBox.textContent = '⏳ انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى.';
+    errBox.style.display = 'block';
   }
 }
 
-function handleDashboardLogin(e) {
+function updateCloudStatusBadge() {
+  const pill = document.getElementById('cloudStatusPill');
+  if (!pill) return;
+
+  if (!SERVER_STATUS.available && isLocalDevEnvironment()) {
+    pill.textContent = '🔧 Local Dev Mode (server.ps1)';
+    pill.style.background = '#FEF3C7';
+    pill.style.color = '#92400E';
+    return;
+  }
+
+  const parts = [];
+  parts.push(SERVER_STATUS.cloudKv ? '☁️ KV Ready' : '⚠️ KV Unlinked');
+  parts.push(SERVER_STATUS.githubPublish ? '🚀 GitHub Ready' : 'GitHub Pending');
+  if (SERVER_STATUS.aiSeo) parts.push('✨ AI Ready');
+
+  pill.textContent = parts.join(' · ');
+  pill.style.background = (SERVER_STATUS.cloudKv && SERVER_STATUS.githubPublish) ? '#DCFCE7' : '#FEF3C7';
+  pill.style.color = (SERVER_STATUS.cloudKv && SERVER_STATUS.githubPublish) ? '#15803D' : '#92400E';
+}
+
+async function fetchServerStatus() {
+  if (window.location.protocol === 'file:') return;
+  try {
+    const res = await fetch('/api/status', { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      SERVER_STATUS.available = true;
+      SERVER_STATUS.cloudKv = Boolean(data.cloudKv);
+      SERVER_STATUS.authConfigured = Boolean(data.authConfigured);
+      SERVER_STATUS.githubPublish = Boolean(data.githubPublish);
+      SERVER_STATUS.aiSeo = Boolean(data.aiSeo);
+      SERVER_STATUS.loggedInUser = data.loggedInUser || null;
+    }
+  } catch (e) {
+    SERVER_STATUS.available = false;
+  }
+}
+
+async function checkAuthStatus() {
+  await fetchServerStatus();
+
+  const notice = document.getElementById('loginSetupNotice');
+  if (SERVER_STATUS.available && !SERVER_STATUS.authConfigured) {
+    if (notice) {
+      notice.innerHTML = '⚙️ <strong>تفعيل الحماية السحابية:</strong> أضف المتغير السري <code>ADMIN_PASSWORD</code> داخل لوحة Cloudflare Pages ← Settings ← Variables and Secrets لتسجيل الدخول الآمن.';
+      notice.style.display = 'block';
+    }
+    document.getElementById('dashLoginGate').style.display = 'flex';
+    document.getElementById('dashLayout').style.display = 'none';
+    return;
+  }
+
+  if (SERVER_STATUS.available && SERVER_STATUS.authConfigured) {
+    if (notice) notice.style.display = 'none';
+    if (SERVER_STATUS.loggedInUser) {
+      showAuthenticatedDashboard(SERVER_STATUS.loggedInUser);
+      initDashboard();
+    } else {
+      document.getElementById('dashLoginGate').style.display = 'flex';
+      document.getElementById('dashLayout').style.display = 'none';
+    }
+    return;
+  }
+
+  // Fallback ONLY for offline/local preview server.ps1 where Functions aren't mounted
+  if (isLocalDevEnvironment()) {
+    if (notice) {
+      notice.innerHTML = '🔧 <strong>وضع المعاينة المحلي:</strong> Cloudflare Functions غير مشغّلة محلياً. أدخل اسم المستخدم (<code>nadynasser</code> أو <code>admin</code>) للمعاينة على جهازك.';
+      notice.style.display = 'block';
+    }
+    const localUser = sessionStorage.getItem(AUTH_KEY) || localStorage.getItem(AUTH_KEY);
+    if (localUser === 'nadynasser' || localUser === 'admin') {
+      showAuthenticatedDashboard(localUser);
+      initDashboard();
+      return;
+    }
+  }
+
+  document.getElementById('dashLoginGate').style.display = 'flex';
+  document.getElementById('dashLayout').style.display = 'none';
+}
+
+async function handleDashboardLogin(e) {
   e.preventDefault();
   const u = document.getElementById('loginUser').value.trim();
   const p = document.getElementById('loginPass').value.trim();
   const remember = document.getElementById('loginRemember').checked;
   const errBox = document.getElementById('loginErrorMsg');
+  const btn = document.getElementById('btnLoginSubmit');
 
-  if (Object.prototype.hasOwnProperty.call(VALID_USERS, u) && VALID_USERS[u] === p) {
-    sessionStorage.setItem(AUTH_KEY, u);
-    if (remember) {
-      localStorage.setItem(AUTH_KEY, u);
-    } else {
-      localStorage.removeItem(AUTH_KEY);
+  if (SERVER_STATUS.available) {
+    if (btn) btn.disabled = true;
+    try {
+      const res = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p, remember })
+      });
+      const data = await res.json();
+      if (res.ok && data.authenticated) {
+        SERVER_STATUS.loggedInUser = data.user;
+        errBox.style.display = 'none';
+        showAuthenticatedDashboard(data.user);
+        initDashboard();
+      } else {
+        errBox.textContent = '⚠️ ' + (data.error || 'اسم المستخدم أو كلمة المرور غير صحيحة.');
+        errBox.style.display = 'block';
+        document.getElementById('loginPass').value = '';
+        document.getElementById('loginPass').focus();
+      }
+    } catch (err) {
+      errBox.textContent = '⚠️ تعذر الاتصال بالخادم. حاول مرة أخرى.';
+      errBox.style.display = 'block';
+    } finally {
+      if (btn) btn.disabled = false;
     }
-    errBox.style.display = 'none';
-    document.getElementById('dashLoginGate').style.display = 'none';
-    document.getElementById('dashLayout').style.display = 'grid';
-    const userBadge = document.getElementById('dashCurrentUserName');
-    if (userBadge) {
-      userBadge.textContent = '👤 ' + u;
-    }
-    initDashboard();
-  } else {
-    errBox.style.display = 'block';
-    document.getElementById('loginPass').value = '';
-    document.getElementById('loginPass').focus();
+    return;
   }
+
+  if (isLocalDevEnvironment() && (u === 'nadynasser' || u === 'admin') && p.length > 0) {
+    sessionStorage.setItem(AUTH_KEY, u);
+    if (remember) localStorage.setItem(AUTH_KEY, u);
+    else localStorage.removeItem(AUTH_KEY);
+    errBox.style.display = 'none';
+    showAuthenticatedDashboard(u);
+    initDashboard();
+    return;
+  }
+
+  errBox.textContent = '⚠️ اسم المستخدم أو كلمة المرور غير صحيحة.';
+  errBox.style.display = 'block';
 }
 
-function logoutDashboard() {
+async function logoutDashboard() {
   sessionStorage.removeItem(AUTH_KEY);
   localStorage.removeItem(AUTH_KEY);
+  SERVER_STATUS.loggedInUser = null;
+  if (SERVER_STATUS.available) {
+    try {
+      await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'logout' })
+      });
+    } catch (e) {}
+  }
   document.getElementById('dashLayout').style.display = 'none';
   document.getElementById('dashLoginGate').style.display = 'flex';
   document.getElementById('loginPass').value = '';
@@ -1948,17 +2093,46 @@ let activeTransTab = 'ar';
 const SETTINGS_KEY = 'hst_whatsapp_settings';
 const TRANS_KEY = 'hst_translations';
 
-// Initialize Dashboard Data
+// Initialize Dashboard Data (prefers live Cloudflare KV when connected)
 async function initDashboard() {
-  // Load WhatsApp Settings
-  const localSet = localStorage.getItem(SETTINGS_KEY);
-  if (localSet) {
-    try { 
-      const parsed = JSON.parse(localSet);
-      if (parsed && parsed.defaultNumber === '201091705805') {
-        currentSettings = parsed; 
+  currentSettings = null;
+  currentTranslations = null;
+
+  if (SERVER_STATUS.available && SERVER_STATUS.cloudKv) {
+    try {
+      const kvSetRes = await fetch('/api/whatsapp-settings', { cache: 'no-store' });
+      if (kvSetRes.ok) {
+        const payload = await kvSetRes.json();
+        if (payload && payload.source === 'kv' && payload.settings) {
+          currentSettings = payload.settings;
+          try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(currentSettings)); } catch (e) {}
+        }
       }
     } catch (e) {}
+
+    try {
+      const kvTrRes = await fetch('/api/translations', { cache: 'no-store' });
+      if (kvTrRes.ok) {
+        const payload = await kvTrRes.json();
+        if (payload && payload.source === 'kv' && payload.translations) {
+          currentTranslations = payload.translations;
+          try { localStorage.setItem(TRANS_KEY, JSON.stringify(currentTranslations)); } catch (e) {}
+        }
+      }
+    } catch (e) {}
+  }
+
+  // Fallback to LocalStorage & repository static JSON
+  if (!currentSettings) {
+    const localSet = localStorage.getItem(SETTINGS_KEY);
+    if (localSet) {
+      try {
+        const parsed = JSON.parse(localSet);
+        if (parsed && Array.isArray(parsed.numbers) && parsed.numbers.length > 0) {
+          currentSettings = parsed;
+        }
+      } catch (e) {}
+    }
   }
   if (!currentSettings) {
     try {
@@ -1970,10 +2144,11 @@ async function initDashboard() {
     currentSettings = window.HSTWhatsAppRouter.settings;
   }
 
-  // Load Translations
-  const localTrans = localStorage.getItem(TRANS_KEY);
-  if (localTrans) {
-    try { currentTranslations = JSON.parse(localTrans); } catch (e) {}
+  if (!currentTranslations) {
+    const localTrans = localStorage.getItem(TRANS_KEY);
+    if (localTrans) {
+      try { currentTranslations = JSON.parse(localTrans); } catch (e) {}
+    }
   }
   if (!currentTranslations) {
     try {
@@ -2142,8 +2317,11 @@ function renderRoutingDropdowns() {
   });
 }
 
-// 3. Save WhatsApp Configuration persistently
+// 3. Save WhatsApp Configuration persistently (Browser + Cloudflare KV / local disk)
 async function saveWhatsAppSettings() {
+  currentSettings.updatedAt = new Date().toISOString();
+  currentSettings.version = Math.max(Number(currentSettings.version || 2), 2);
+
   try {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(currentSettings));
   } catch (e) {
@@ -2162,10 +2340,14 @@ async function saveWhatsAppSettings() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(currentSettings, null, 2)
     });
-    if (res.ok) serverStatus = ' & disk JSON';
+    if (res.status === 401) {
+      handleSessionExpired();
+      return;
+    }
+    if (res.ok) serverStatus = SERVER_STATUS.cloudKv ? ' & Cloudflare KV (Live)' : ' & disk JSON';
   } catch (e) {}
 
-  showToast(`✓ تم حفظ إعدادات واتساب بنجاح في المتصفح${serverStatus}!`);
+  showToast(`✓ تم حفظ إعدادات واتساب بنجاح${serverStatus}!`);
 }
 
 // Localized tour names map for Simulator
@@ -2358,7 +2540,11 @@ async function saveTranslations() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(currentTranslations, null, 2)
     });
-    if (res.ok) serverStatus = ' & disk JSON';
+    if (res.status === 401) {
+      handleSessionExpired();
+      return;
+    }
+    if (res.ok) serverStatus = SERVER_STATUS.cloudKv ? ' & Cloudflare KV' : ' & disk JSON';
   } catch (e) {}
 
   showToast(`✓ تم حفظ الترجمات بنجاح${serverStatus}!`);
@@ -2562,16 +2748,33 @@ const DEFAULT_ARTICLES = [
 ];
 
 async function initArticles() {
-  const localArticles = localStorage.getItem(ARTICLES_KEY);
-  if (localArticles) {
+  currentArticles = [];
+  if (SERVER_STATUS.available && SERVER_STATUS.cloudKv) {
     try {
-      const parsed = JSON.parse(localArticles);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        currentArticles = parsed;
+      const kvRes = await fetch('/api/articles', { cache: 'no-store' });
+      if (kvRes.ok) {
+        const data = await kvRes.json();
+        if (data && data.source === 'kv' && Array.isArray(data.articles) && data.articles.length > 0) {
+          currentArticles = data.articles;
+          try { localStorage.setItem(ARTICLES_KEY, JSON.stringify(currentArticles)); } catch (e) {}
+        }
       }
     } catch (e) {}
   }
-  if (!currentArticles || currentArticles.length === 0) {
+
+  if (currentArticles.length === 0) {
+    const localArticles = localStorage.getItem(ARTICLES_KEY);
+    if (localArticles) {
+      try {
+        const parsed = JSON.parse(localArticles);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          currentArticles = parsed;
+        }
+      } catch (e) {}
+    }
+  }
+
+  if (currentArticles.length === 0) {
     currentArticles = JSON.parse(JSON.stringify(DEFAULT_ARTICLES));
     try {
       const res = await fetch('assets/data/articles.json');
@@ -2583,6 +2786,29 @@ async function initArticles() {
   if (!currentArticles) currentArticles = [];
   renderArticlesTable();
   updateArticleStats();
+}
+
+async function syncArticlesToCloud() {
+  try {
+    localStorage.setItem(ARTICLES_KEY, JSON.stringify(currentArticles));
+  } catch (e) {
+    console.warn('LocalStorage articles sync skipped:', e);
+  }
+  if (SERVER_STATUS.available && SERVER_STATUS.cloudKv) {
+    try {
+      const res = await fetch('/api/articles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentArticles)
+      });
+      if (res.status === 401) {
+        handleSessionExpired();
+        return false;
+      }
+      return res.ok;
+    } catch (e) {}
+  }
+  return false;
 }
 
 function updateArticleStats() {
@@ -2674,6 +2900,7 @@ function renderArticlesTable(list) {
       <td>
         <div style="display:flex; gap:6px; align-items:center;">
           <button type="button" class="btn btn-outline btn-sm" onclick="openArticleStudio('${art.id}')" title="Edit Article" style="padding:4px 8px; font-size:0.8rem;">✏️ Edit</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="publishArticleToLive('${art.id}')" title="Publish Live to Website via Cloudflare + GitHub" style="padding:4px 8px; font-size:0.8rem; color:#15803D; border-color:#86EFAC; background:#F0FDF4;">🚀</button>
           <button type="button" class="btn btn-outline btn-sm" onclick="viewArticlePreview('${art.id}')" title="Live Preview" style="padding:4px 8px; font-size:0.8rem;">👁️</button>
           <button type="button" class="btn btn-outline btn-sm" onclick="exportArticleHTML('${art.id}')" title="Export Standalone HTML" style="padding:4px 8px; font-size:0.8rem;">📄</button>
           <button type="button" class="btn btn-outline btn-sm" onclick="copyArticleLink('${slug}')" title="Copy Article URL" style="padding:4px 8px; font-size:0.8rem;">🔗</button>
@@ -3213,7 +3440,7 @@ function addFaqRow(q = '', a = '') {
   container.appendChild(div);
 }
 
-function saveCurrentArticle() {
+function collectArticleFormBuffer() {
   saveCurrentLangFieldsToBuffer();
 
   const en = articleEditBuffer.translations.en || {};
@@ -3221,15 +3448,17 @@ function saveCurrentArticle() {
     alert('Please enter at least an English Title for the article.');
     switchArticleLang('en');
     document.getElementById('artTitle').focus();
-    return;
+    return null;
   }
 
-  const slug = (document.getElementById('artSlug').value || '').trim();
+  const rawSlug = (document.getElementById('artSlug').value || '').trim();
+  const slug = rawSlug.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
   if (!slug) {
-    alert('Please specify a URL slug for the article.');
+    alert('Please specify a valid URL slug (letters, numbers, hyphens) for the article.');
     document.getElementById('artSlug').focus();
-    return;
+    return null;
   }
+  document.getElementById('artSlug').value = slug;
 
   // Update Shared Attributes
   articleEditBuffer.slug = slug;
@@ -3269,35 +3498,36 @@ function saveCurrentArticle() {
   });
   articleEditBuffer.aeo.faqs = faqs;
 
-  // Insert or Update in currentArticles
-  const idx = currentArticles.findIndex(a => a.id === articleEditBuffer.id);
+  const idx = currentArticles.findIndex(a => a.id === articleEditBuffer.id || a.slug === articleEditBuffer.slug);
   if (idx >= 0) {
     currentArticles[idx] = articleEditBuffer;
   } else {
     currentArticles.unshift(articleEditBuffer);
   }
+  editingArticleId = articleEditBuffer.id;
+  return articleEditBuffer;
+}
 
-  try {
-    localStorage.setItem(ARTICLES_KEY, JSON.stringify(currentArticles));
-  } catch (e) {
-    alert('⚠️ تعذر الحفظ في ذاكرة المتصفح المؤقتة بسبب مساحة الصور الكبيرة. يمكنك استخدام Export Static HTML أو Export JSON لتحميل المقال.');
-  }
+async function saveCurrentArticle() {
+  const saved = collectArticleFormBuffer();
+  if (!saved) return;
 
+  const kvSynced = await syncArticlesToCloud();
   renderArticlesTable();
   updateArticleStats();
   closeArticleStudio();
-  showToast('✓ تم حفظ المقال وتحديث إعدادات الـ SEO و AEO بنجاح!');
+  showToast(kvSynced
+    ? '✓ تم حفظ المقال ومزامنته سحابياً في Cloudflare KV!'
+    : '✓ تم حفظ المسودة في المتصفح (LocalStorage).');
 }
 
-function deleteArticle(articleId) {
+async function deleteArticle(articleId) {
   if (!confirm('Are you sure you want to delete this article?')) return;
   currentArticles = currentArticles.filter(a => a.id !== articleId);
-  try {
-    localStorage.setItem(ARTICLES_KEY, JSON.stringify(currentArticles));
-  } catch (e) {}
+  const kvSynced = await syncArticlesToCloud();
   renderArticlesTable();
   updateArticleStats();
-  showToast('🗑️ تم حذف المقال بنجاح');
+  showToast(kvSynced ? '🗑️ تم حذف المقال من الداشبورد وCloudflare KV' : '🗑️ تم حذف المقال بنجاح');
 }
 
 function deleteCurrentArticle() {
@@ -3332,12 +3562,12 @@ function handleImportArticlesJSON(e) {
   const file = e.target.files && e.target.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = function(evt) {
+  reader.onload = async function(evt) {
     try {
       const data = JSON.parse(evt.target.result);
       if (Array.isArray(data)) {
         currentArticles = data;
-        localStorage.setItem(ARTICLES_KEY, JSON.stringify(currentArticles));
+        await syncArticlesToCloud();
         renderArticlesTable();
         updateArticleStats();
         showToast(`✓ Imported ${data.length} articles successfully!`);
@@ -3383,10 +3613,8 @@ function exportCurrentArticleHTML() {
   }
 }
 
-function exportArticleHTML(articleId, fallbackObj) {
-  const art = fallbackObj || currentArticles.find(a => a.id === articleId);
-  if (!art) return;
-
+function buildArticleHTML(art) {
+  if (!art) return '';
   const en = (art.translations && art.translations.en) || {};
   const title = en.title || 'Hurghada Sea Excursions Guide';
   const seoTitle = en.seoTitle || title;
@@ -3407,7 +3635,6 @@ function exportArticleHTML(articleId, fallbackObj) {
   const relatedIds = art.relatedTrips || [];
   const geoArea = (art.geo && art.geo.area) || 'Hurghada, Red Sea, Egypt';
 
-  // Build AEO Key Takeaways HTML
   const takeawaysHtml = takeaways.length > 0 ? `
     <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:14px; padding:20px 24px; margin:24px 0 32px;">
       <h3 style="font-size:1.05rem; color:#166534; margin-bottom:10px;">🤖 Quick Answer &amp; Key Takeaways (AEO Summary)</h3>
@@ -3416,7 +3643,6 @@ function exportArticleHTML(articleId, fallbackObj) {
       </ul>
     </div>` : '';
 
-  // Build FAQ HTML Section & JSON-LD
   const faqHtml = faqs.length > 0 ? `
     <section style="margin-top:44px; background:#F8FAFC; border:1px solid var(--border-light); border-radius:14px; padding:26px;">
       <h2 style="font-family:var(--ff-headings); font-size:1.4rem; color:var(--primary-navy); margin-bottom:16px;">Frequently Asked Questions (FAQ)</h2>
@@ -3427,7 +3653,6 @@ function exportArticleHTML(articleId, fallbackObj) {
         </div>`).join('')}
     </section>` : '';
 
-  // Build Related Trips HTML Section
   const relatedHtml = relatedIds.length > 0 ? `
     <section style="margin-top:40px;">
       <h2 style="font-family:var(--ff-headings); font-size:1.4rem; color:var(--primary-navy); margin-bottom:16px;">Explore Related Hurghada Excursions</h2>
@@ -3459,7 +3684,7 @@ function exportArticleHTML(articleId, fallbackObj) {
     }
   }));
 
-  const fullHtml = `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -3551,11 +3776,18 @@ function exportArticleHTML(articleId, fallbackObj) {
   <footer class="site-footer" style="padding:20px 0; text-align:center;">
     <p>&copy; 2026 Hurghada Sea Tours · <a href="../" style="color:var(--cyan-turquoise);">Back to All Sea Tours</a></p>
   </footer>
-  <script src="../assets/js/whatsapp-router.js?v=5"><\/script>
+  <script src="../assets/js/whatsapp-router.js?v=6"><\/script>
   <script src="../assets/js/main.js?v=5"><\/script>
 </body>
 </html>`;
+}
 
+function exportArticleHTML(articleId, fallbackObj) {
+  const art = fallbackObj || currentArticles.find(a => a.id === articleId);
+  if (!art) return;
+
+  const slug = art.slug || art.id || 'article';
+  const fullHtml = buildArticleHTML(art);
   const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -3565,6 +3797,149 @@ function exportArticleHTML(articleId, fallbackObj) {
   a.click();
   document.body.removeChild(a);
   showToast(`📄 Exported static HTML: ${slug}.html`);
+}
+
+async function publishArticleToLive(articleId, fallbackObj) {
+  const art = fallbackObj || currentArticles.find(a => a.id === articleId);
+  if (!art) return;
+
+  if (!SERVER_STATUS.available || !SERVER_STATUS.githubPublish) {
+    showToast('⚠️ النشر المباشر يتطلب إضافة GITHUB_TOKEN في إعدادات Cloudflare Pages.');
+    return;
+  }
+
+  const btn = document.getElementById('btnPublishLiveStudio');
+  const prevBtnHtml = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '⏳ جاري النشر على الموقع...';
+  }
+  showToast('⏳ جاري رفع المقال وتحديث السايت ماب على الموقع المباشر...');
+
+  try {
+    const htmlContent = buildArticleHTML(art);
+    const res = await fetch('/api/publish-article', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ article: art, htmlContent })
+    });
+    if (res.status === 401) {
+      handleSessionExpired();
+      return;
+    }
+    const data = await res.json();
+    if (!res.ok || !data.ok) {
+      alert('⚠️ تعذر النشر التلقائي: ' + (data.error || 'Unknown error'));
+      return;
+    }
+
+    if (data.updatedArticle) {
+      const idx = currentArticles.findIndex(a => a.id === art.id || a.slug === data.slug);
+      if (idx >= 0) currentArticles[idx] = data.updatedArticle;
+      if (articleEditBuffer && articleEditBuffer.slug === data.slug) {
+        articleEditBuffer = data.updatedArticle;
+      }
+      await syncArticlesToCloud();
+    }
+
+    renderArticlesTable();
+    updateArticleStats();
+    closeArticleStudio();
+    showToast(`🚀 تم نشر المقال بنجاح! يظهر الآن خلال ~25 ثانية على: /articles/${data.slug}.html`);
+  } catch (err) {
+    alert('⚠️ خطأ أثناء النشر: ' + err.message);
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = prevBtnHtml;
+    }
+  }
+}
+
+async function publishCurrentArticleToLive() {
+  const saved = collectArticleFormBuffer();
+  if (!saved) return;
+  await syncArticlesToCloud();
+  await publishArticleToLive(saved.id, saved);
+}
+
+async function generateArticleWithGemini() {
+  const topicInput = document.getElementById('aiSeoTopicInput');
+  const topic = topicInput ? topicInput.value.trim() : '';
+  if (!topic) {
+    alert('اكتب موضوع المقال أولاً (مثال: Best Dolphin House snorkeling tour for families in Hurghada)');
+    if (topicInput) topicInput.focus();
+    return;
+  }
+
+  if (!SERVER_STATUS.available || !SERVER_STATUS.aiSeo) {
+    showToast('✨ لتفعيل التوليد الآلي، أضف GEMINI_API_KEY المجاني من Google AI Studio في إعدادات Cloudflare Pages.');
+    return;
+  }
+
+  const btn = document.getElementById('btnAiGenerateSeo');
+  const prevHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳ Gemini يكتب المقال والـ SEO...</span>';
+
+  try {
+    const category = document.getElementById('artCategory').value || 'Guides';
+    const res = await fetch('/api/ai-seo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ topic, category, lang: currentStudioLang })
+    });
+    if (res.status === 401) {
+      handleSessionExpired();
+      return;
+    }
+    const data = await res.json();
+    if (!res.ok || !data.ok || !data.generated) {
+      alert('⚠️ Gemini API: ' + (data.error || 'تعذر التوليد الآن'));
+      return;
+    }
+
+    const g = data.generated;
+    document.getElementById('artTitle').value = g.title || '';
+    if (currentStudioLang === 'en' && g.slug) {
+      document.getElementById('artSlug').value = g.slug;
+    }
+    document.getElementById('artExcerpt').value = g.excerpt || '';
+    document.getElementById('artSeoTitle').value = g.seoTitle || '';
+    document.getElementById('artMetaDesc').value = g.metaDesc || '';
+    const kwEl = document.getElementById('artKeywords');
+    if (kwEl) kwEl.value = g.keywords || '';
+    document.getElementById('artCoverAlt').value = g.coverAlt || '';
+    document.getElementById('artContent').value = g.content || '';
+
+    if (g.geoArea) {
+      document.getElementById('geoAreaSelect').value = g.geoArea;
+      document.getElementById('geoArea').value = g.geoArea;
+    }
+    if (Array.isArray(g.relatedTrips)) {
+      document.querySelectorAll('input[name="relatedTrips"]').forEach(chk => {
+        chk.checked = g.relatedTrips.includes(chk.value);
+        toggleTripCardActive(chk);
+      });
+    }
+    if (Array.isArray(g.takeaways)) {
+      document.getElementById('aeoTakeaways').value = g.takeaways.join('\n');
+    }
+    if (Array.isArray(g.faqs)) {
+      renderFaqRows(g.faqs);
+    }
+
+    saveCurrentLangFieldsToBuffer();
+    updateCharCounters();
+    updateReadingTime();
+    updateSerpPreview();
+    showToast(`✨ تم توليد المقال الكامل والـ SEO/GEO/AEO بنموذج ${data.model} بنجاح!`);
+  } catch (err) {
+    alert('⚠️ خطأ في الاتصال بـ Gemini API: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = prevHtml;
+  }
 }
 
 // Start with Authentication Check
