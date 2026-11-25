@@ -3,6 +3,16 @@
  * Integrates with window.HSTWhatsAppRouter
  */
 
+/**
+ * Safely forwards client interaction telemetry to Google Analytics (gtag).
+ */
+function trackAnalyticsEvent(eventName, params = {}) {
+  if (typeof window.gtag !== 'function') return;
+  try {
+    window.gtag('event', eventName, params);
+  } catch (_) {}
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Mobile Menu Drawer Toggle (auto-creates drawer & button if missing on subpages)
   const siteHeader = document.querySelector('.site-header');
@@ -89,6 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
       pill.classList.add('active');
 
       const filterValue = pill.getAttribute('data-filter');
+      trackAnalyticsEvent('tour_filter', {
+        filter_category: filterValue || 'all',
+        page_language: document.documentElement.lang || 'en'
+      });
 
       tourCards.forEach(card => {
         const cardCategory = card.getAttribute('data-category');
@@ -106,6 +120,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.lang-switch a').forEach(link => {
     link.addEventListener('click', (e) => {
       const lang = link.getAttribute('data-lang') || link.innerText.toLowerCase().trim();
+      if (['en', 'de', 'ru', 'pl', 'ar'].includes(lang)) {
+        trackAnalyticsEvent('language_switch', {
+          target_language: lang,
+          source_language: document.documentElement.lang || 'en',
+          transport_type: 'beacon'
+        });
+      }
       if (window.HSTWhatsAppRouter && ['en', 'de', 'ru', 'pl', 'ar'].includes(lang)) {
         window.HSTWhatsAppRouter.setLanguage(lang);
       }
@@ -417,6 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const lat = Number(pos.coords.latitude.toFixed(5));
           const lng = Number(pos.coords.longitude.toFixed(5));
           selectedCoords = { lat, lng, label: L_TXT.gpsLabel };
+          trackAnalyticsEvent('location_gps_detected', { page_language: langKey });
           if (activeMap && activeMarker) {
             activeMap.flyTo([lat, lng], 15);
             activeMarker.setLatLng([lat, lng]);
@@ -460,6 +482,11 @@ document.addEventListener('DOMContentLoaded', () => {
           btnElement.innerHTML = prevHtml || L_TXT.resetBtn;
         }, 4000);
       }
+
+      trackAnalyticsEvent('location_pinned', {
+        method: selectedCoords.label === L_TXT.gpsLabel ? 'gps' : 'map_or_area',
+        page_language: langKey
+      });
 
       closeModal();
     };

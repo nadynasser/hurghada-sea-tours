@@ -442,6 +442,66 @@
     }
 
     /**
+     * Parses a display price string (e.g. "€30") into a finite numeric amount.
+     */
+    parseNumericPrice(priceStr) {
+      if (priceStr === null || priceStr === undefined) return null;
+      const match = String(priceStr).match(/(\d+(?:[.,]\d+)?)/);
+      if (!match) return null;
+      const num = parseFloat(match[1].replace(',', '.'));
+      return Number.isFinite(num) && num > 0 ? num : null;
+    }
+
+    /**
+     * Pushes privacy-safe GA4 conversion telemetry without ever blocking WhatsApp navigation.
+     */
+    trackAnalyticsEvent(eventName, details = {}) {
+      if (typeof window.gtag !== 'function') return;
+      try {
+        const form = details.formInputs || {};
+        const unitPrice = this.parseNumericPrice(details.productPrice);
+        const rawAdults = form.adults ? parseInt(String(form.adults), 10) : NaN;
+        const guestFactor = Number.isFinite(rawAdults) && rawAdults >= 1 && rawAdults <= 50 ? rawAdults : 1;
+
+        const payload = {
+          event_category: 'whatsapp',
+          tour_id: details.productId || 'general',
+          tour_name: details.productName || 'General Inquiry',
+          language: details.language || this.activeLanguage || 'en',
+          interaction_type: details.interactionType || 'button_click',
+          has_date: Boolean(form.date),
+          has_hotel: Boolean(form.hotel),
+          has_gps: Boolean(form.hotel && String(form.hotel).includes('maps.google.com')),
+          transport_type: 'beacon'
+        };
+
+        if (unitPrice !== null) {
+          payload.value = Number((unitPrice * guestFactor).toFixed(2));
+          payload.currency = 'EUR';
+        }
+
+        window.gtag('event', eventName, payload);
+      } catch (_) {}
+    }
+
+    /**
+     * Evaluates live form inputs, fires GA4 tracking, and opens the WhatsApp URL.
+     */
+    openTrackedLink({ eventName, productName, productPrice, productId, triggerEl, interactionType }) {
+      const formInputs = this.getBookingFormDetails(triggerEl);
+      this.trackAnalyticsEvent(eventName, {
+        productName,
+        productPrice,
+        productId,
+        language: this.activeLanguage,
+        formInputs,
+        interactionType
+      });
+      const liveUrl = this.generateLink(productName, productPrice, productId, this.activeLanguage, formInputs);
+      window.open(liveUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    /**
      * Dynamically binds and updates all WhatsApp buttons and links on the page (Rule 6)
      */
     bindAllElements() {
@@ -472,9 +532,14 @@
         // Click handler: evaluates latest form state live at the exact moment of click
         btn.onclick = (e) => {
           e.preventDefault();
-          const formInputs = this.getBookingFormDetails(btn);
-          const liveUrl = this.generateLink(productName, productPrice, productId, this.activeLanguage, formInputs);
-          window.open(liveUrl, '_blank', 'noopener,noreferrer');
+          this.openTrackedLink({
+            eventName: 'whatsapp_click',
+            productName,
+            productPrice,
+            productId,
+            triggerEl: btn,
+            interactionType: 'button_click'
+          });
         };
       });
 
@@ -483,10 +548,9 @@
       bookingForms.forEach(form => {
         form.onsubmit = (e) => {
           e.preventDefault();
-          const formInputs = this.getBookingFormDetails(form);
           let pName = null;
           let pPrice = null;
-          let pId = this.pageTour;
+          const pId = this.pageTour;
 
           if (this.pageTour && TOUR_CATALOG[this.pageTour]) {
             const pInfo = TOUR_CATALOG[this.pageTour];
@@ -494,8 +558,14 @@
             pPrice = pInfo.price;
           }
 
-          const liveUrl = this.generateLink(pName, pPrice, pId, this.activeLanguage, formInputs);
-          window.open(liveUrl, '_blank', 'noopener,noreferrer');
+          this.openTrackedLink({
+            eventName: 'generate_lead',
+            productName: pName,
+            productPrice: pPrice,
+            productId: pId,
+            triggerEl: form,
+            interactionType: 'booking_form'
+          });
         };
       });
     }

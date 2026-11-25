@@ -1865,7 +1865,7 @@
 <div class="toast-msg" id="toastMsg"></div>
 
 <!-- Scripts -->
-<script src="assets/js/whatsapp-router.js?v=4"></script>
+<script src="assets/js/whatsapp-router.js?v=5"></script>
 <script>
 // ==========================================================================
 // Authentication Gatekeeper State
@@ -3464,6 +3464,13 @@ function exportArticleHTML(articleId, fallbackObj) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-59LZTV47"><\/script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  <\/script>
   <title>${escapeHtml(seoTitle)}</title>
   <meta name="description" content="${escapeHtml(metaDesc)}">
   <link rel="canonical" href="https://hurghadaseatours.com/articles/${slug}.html">
@@ -3544,8 +3551,8 @@ function exportArticleHTML(articleId, fallbackObj) {
   <footer class="site-footer" style="padding:20px 0; text-align:center;">
     <p>&copy; 2026 Hurghada Sea Tours · <a href="../" style="color:var(--cyan-turquoise);">Back to All Sea Tours</a></p>
   </footer>
-  <script src="../assets/js/whatsapp-router.js?v=4"><\/script>
-  <script src="../assets/js/main.js?v=4"><\/script>
+  <script src="../assets/js/whatsapp-router.js?v=5"><\/script>
+  <script src="../assets/js/main.js?v=5"><\/script>
 </body>
 </html>`;
 
