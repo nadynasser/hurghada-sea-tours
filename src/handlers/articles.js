@@ -72,7 +72,7 @@ function upsertArticlesHubCard(hubHtml, article, slug, relativeImgSrc) {
 
   const cardHtml = [
     `      <!-- Article: ${slug} -->`,
-    `      <a href="${slug}.html" class="article-card" data-category="${category}">`,
+    `      <a href="${slug}" class="article-card" data-category="${category}">`,
     `        <div class="article-card-cover">`,
     `          <img src="${relativeImgSrc}" alt="${coverAlt}" width="600" height="375" loading="lazy">`,
     `          <span class="article-cat-badge">${category}</span>`,
@@ -96,7 +96,7 @@ function upsertArticlesHubCard(hubHtml, article, slug, relativeImgSrc) {
   ].join('\n');
 
   const existingCardRegex = new RegExp(
-    `(?:\\s*<!-- Article(?:: ${slug}| \\d+) -->)?\\s*<a\\s+href="${slug}\\.html"[\\s\\S]*?<\\/a>`,
+    `(?:\\s*<!-- Article(?:: ${slug}| \\d+) -->)?\\s*<a\\s+href="(?:\\/articles\\/)?${slug}(?:\\.html)?"[\\s\\S]*?<\\/a>`,
     'i'
   );
   if (existingCardRegex.test(hubHtml)) {
@@ -115,7 +115,7 @@ function upsertSitemapUrl(sitemapXml, article, slug, imageAbsoluteUrl) {
   const en = (article.translations && article.translations.en) || {};
   const title = escapeHtml(en.title || slug);
   const lastmod = new Date().toISOString().slice(0, 10);
-  const locUrl = `${SITE_ORIGIN}/articles/${slug}.html`;
+  const locUrl = `${SITE_ORIGIN}/articles/${slug}`;
 
   const urlBlock = [
     `  <url>`,
@@ -131,7 +131,7 @@ function upsertSitemapUrl(sitemapXml, article, slug, imageAbsoluteUrl) {
   ].join('\n');
 
   const existingUrlRegex = new RegExp(
-    `\\s*<url>\\s*<loc>${locUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<\\/loc>[\\s\\S]*?<\\/url>`,
+    `\\s*<url>\\s*<loc>${locUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:\\.html)?<\\/loc>[\\s\\S]*?<\\/url>`,
     'i'
   );
   if (existingUrlRegex.test(sitemapXml)) {
@@ -297,7 +297,7 @@ export async function handlePublishArticle(context) {
       ok: true,
       slug,
       commitSha,
-      url: `${SITE_ORIGIN}/articles/${slug}.html`,
+      url: `${SITE_ORIGIN}/articles/${slug}`,
       imagePath: uploadedImagePath,
       updatedArticle: normalizedArticle
     });

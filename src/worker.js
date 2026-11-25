@@ -24,11 +24,57 @@ const ROUTES = {
   'POST /api/ai-seo': handleAiSeo
 };
 
+const CANONICAL_HOST = 'hurghadaseatours.com';
+const DIRECTORY_SLASH_PATHS = new Set(['/de', '/ru', '/pl', '/ar', '/articles']);
+
+function getCanonicalRedirectUrl(requestUrl) {
+  const lowerHost = requestUrl.hostname.toLowerCase();
+  const isWww = lowerHost === `www.${CANONICAL_HOST}`;
+  let targetPath = requestUrl.pathname;
+  let pathChanged = false;
+
+  if (targetPath === '/index.html') {
+    targetPath = '/';
+    pathChanged = true;
+  } else if (targetPath.endsWith('/index.html')) {
+    targetPath = targetPath.slice(0, -'index.html'.length);
+    pathChanged = true;
+  } else if (targetPath.endsWith('.html')) {
+    targetPath = targetPath.slice(0, -'.html'.length);
+    pathChanged = true;
+  } else if (DIRECTORY_SLASH_PATHS.has(targetPath)) {
+    targetPath = `${targetPath}/`;
+    pathChanged = true;
+  }
+
+  if (!isWww && !pathChanged) {
+    return null;
+  }
+
+  const targetOrigin = isWww ? `https://${CANONICAL_HOST}` : requestUrl.origin;
+  return `${targetOrigin}${targetPath}${requestUrl.search}`;
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    const method = request.method.toUpperCase();
+
+    if (method === 'GET' || method === 'HEAD') {
+      const redirectTarget = getCanonicalRedirectUrl(url);
+      if (redirectTarget) {
+        return new Response(null, {
+          status: 301,
+          headers: {
+            Location: redirectTarget,
+            'Cache-Control': 'public, max-age=3600'
+          }
+        });
+      }
+    }
+
     if (url.pathname.startsWith('/api/')) {
-      const key = `${request.method.toUpperCase()} ${url.pathname}`;
+      const key = `${method} ${url.pathname}`;
       const handler = ROUTES[key];
       if (!handler) {
         return jsonResponse({ ok: false, error: 'API endpoint not found.' }, 404);

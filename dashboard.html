@@ -845,7 +845,7 @@
     </ul>
 
     <div class="dash-sidebar-footer">
-      <a href="index.html" target="_blank" class="btn btn-primary" style="width:100%; font-size:0.85rem; padding:10px;">
+      <a href="/" target="_blank" class="btn btn-primary" style="width:100%; font-size:0.85rem; padding:10px;">
         <span>🌐 Open Customer Site →</span>
       </a>
       <button onclick="logoutDashboard()" class="btn btn-outline" style="width:100%; font-size:0.82rem; padding:8px; margin-top:8px; color:#F87171; border-color:rgba(248,113,113,0.3); cursor:pointer;">
@@ -865,7 +865,7 @@
       <a href="#tours-matrix">🚤 Tours</a>
       <a href="#articles-seo">📝 Articles SEO</a>
       <a href="#leads">💬 Bookings</a>
-      <a href="index.html" target="_blank">🌐 Live Site</a>
+      <a href="/" target="_blank">🌐 Live Site</a>
     </nav>
     <!-- Top Header -->
     <header class="dash-header">
@@ -885,7 +885,7 @@
         <span id="dashCurrentUserName" style="background:#E0F2FE; color:#0369A1; padding:6px 14px; border-radius:var(--radius-pill); font-size:0.85rem; font-weight:700;">
           👤 nadynasser
         </span>
-        <a href="index.html" target="_blank" class="btn btn-outline btn-sm">Preview Site</a>
+        <a href="/" target="_blank" class="btn btn-outline btn-sm">Preview Site</a>
         <button onclick="logoutDashboard()" class="btn btn-outline btn-sm" style="color:#DC2626; border-color:#FECACA;" title="تسجيل الخروج">
           🔒 Logout
         </button>
@@ -2596,35 +2596,35 @@ const TOUR_DIRECTORY = {
   'orange-bay': {
     name: 'Orange Bay Island & Snorkeling Cruise',
     price: '€30',
-    link: '/tours/orange-bay-island.html',
+    link: '/tours/orange-bay-island',
     icon: '🏝️',
     desc: '2 full hours on white sandy beach, 2 coral snorkeling stops & buffet lunch.'
   },
   'hula-hula': {
     name: 'Hula Hula Island Excursion',
     price: '€32',
-    link: '/tours/hula-hula-island.html',
+    link: '/tours/hula-hula-island',
     icon: '🌺',
     desc: 'Tropical Hawaiian boho beach club, scenic photo swings & reef snorkeling.'
   },
   'dolphin-house': {
     name: 'Dolphin House Swimming & Snorkeling',
     price: '€25',
-    link: '/tours/dolphin-house.html',
+    link: '/tours/dolphin-house',
     icon: '🐬',
     desc: 'Full day cruise to Shaab El Erg wild dolphin habitat with 90%+ sightings.'
   },
   'coral-reef': {
     name: 'Living Coral Reef Snorkeling',
     price: '€35',
-    link: '/tours/snorkeling-coral-reef.html',
+    link: '/tours/snorkeling-coral-reef',
     icon: '🤿',
     desc: '2 guided snorkeling stops at secluded Red Sea reef sanctuaries with buffet lunch.'
   },
   'semi-submarine': {
     name: 'Semi-Submarine Underwater Tour',
     price: '€20',
-    link: '/tours/semi-submarine.html',
+    link: '/tours/semi-submarine',
     icon: '🌊',
     desc: 'Underwater panoramic coral observation cabin 3 meters below sea level.'
   },
@@ -2893,7 +2893,7 @@ function renderArticlesTable(list) {
           <img src="${cover.startsWith('/') ? cover.substring(1) : cover}" alt="thumb" style="width:52px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #E2E8F0;" onerror="this.src='assets/images/tours/tour-snorkeling.jpg'">
           <div>
             <strong style="color:var(--primary-navy); display:block; font-size:0.9rem;">${escapeHtml(title)}</strong>
-            <span style="font-size:0.75rem; color:var(--text-muted); font-family:monospace;">/articles/${escapeHtml(slug)}.html</span>
+            <span style="font-size:0.75rem; color:var(--text-muted); font-family:monospace;">/articles/${escapeHtml(slug)}</span>
           </div>
         </div>
       </td>
@@ -3377,7 +3377,7 @@ function parseMarkdownToHtml(md) {
         </div>
         <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
           <div style="font-size:1.4rem; font-weight:800; color:var(--primary-navy);">${t.price} <small style="font-size:0.8rem; font-weight:500; color:var(--text-muted);">/ person</small></div>
-          <a href="https://wa.me/201091705805?text=Hi!%20I%20want%20to%20book%20the%20${encodeURIComponent(t.name)}" target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm" style="background:#25D366; color:#fff; text-decoration:none; padding:8px 14px; border-radius:6px; font-weight:700; font-size:0.85rem;">
+          <a href="#whatsapp-contact" class="btn btn-whatsapp btn-sm" data-wa-tour="${escapeHtml(t.name)}" data-wa-price="${escapeHtml(t.price)}" data-product-id="${escapeHtml(tourId)}" style="background:#25D366; color:#fff; text-decoration:none; padding:8px 14px; border-radius:6px; font-weight:700; font-size:0.85rem;">
             💬 Book via WhatsApp
           </a>
         </div>
@@ -3543,7 +3543,7 @@ function deleteCurrentArticle() {
 }
 
 function copyArticleLink(slug) {
-  const url = `https://hurghadaseatours.com/articles/${slug}.html`;
+  const url = `https://hurghadaseatours.com/articles/${slug}`;
   navigator.clipboard.writeText(url).then(() => {
     showToast(`📋 Copied URL to clipboard: ${url}`);
   }).catch(() => {
@@ -3703,17 +3703,17 @@ function buildArticleHTML(art) {
   <\/script>
   <title>${escapeHtml(seoTitle)}</title>
   <meta name="description" content="${escapeHtml(metaDesc)}">
-  <link rel="canonical" href="https://hurghadaseatours.com/articles/${slug}.html">
+  <link rel="canonical" href="https://hurghadaseatours.com/articles/${slug}">
   <meta name="geo.region" content="EG-BA">
   <meta name="geo.placename" content="${escapeHtml(geoArea)}">
   <meta name="geo.position" content="27.1850;33.8250">
   <meta name="ICBM" content="27.1850, 33.8250">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://hurghadaseatours.com/articles/${slug}.html">
+  <meta property="og:url" content="https://hurghadaseatours.com/articles/${slug}">
   <meta property="og:title" content="${escapeHtml(seoTitle)}">
   <meta property="og:description" content="${escapeHtml(metaDesc)}">
   <meta property="og:image" content="${ogImageUrl}">
-  <link rel="stylesheet" href="../assets/css/main.css?v=5">
+  <link rel="stylesheet" href="../assets/css/main.css?v=6">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -3759,12 +3759,12 @@ function buildArticleHTML(art) {
         <ul class="nav-list">
           <li><a href="../" class="nav-link">Home</a></li>
           <li><a href="../#tours" class="nav-link">All Tours</a></li>
-          <li><a href="index.html" class="nav-link active">Guides &amp; Articles</a></li>
+          <li><a href="./" class="nav-link active">Guides &amp; Articles</a></li>
           <li><a href="../#faq" class="nav-link">FAQ</a></li>
         </ul>
       </nav>
       <div class="header-actions">
-        <a href="https://wa.me/201091705805" target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm">💬 WhatsApp</a>
+        <a href="#whatsapp-contact" class="btn btn-whatsapp btn-sm" data-wa-general="true">💬 WhatsApp</a>
       </div>
     </div>
   </header>
@@ -3781,8 +3781,8 @@ function buildArticleHTML(art) {
   <footer class="site-footer" style="padding:20px 0; text-align:center;">
     <p>&copy; 2026 Hurghada Sea Tours · <a href="../" style="color:var(--cyan-turquoise);">Back to All Sea Tours</a></p>
   </footer>
-  <script src="../assets/js/whatsapp-router.js?v=6"><\/script>
-  <script src="../assets/js/main.js?v=5"><\/script>
+  <script src="../assets/js/whatsapp-router.js?v=7"><\/script>
+  <script src="../assets/js/main.js?v=6"><\/script>
 </body>
 </html>`;
 }
@@ -3850,7 +3850,7 @@ async function publishArticleToLive(articleId, fallbackObj) {
     renderArticlesTable();
     updateArticleStats();
     closeArticleStudio();
-    showToast(`🚀 تم نشر المقال بنجاح! يظهر الآن خلال ~25 ثانية على: /articles/${data.slug}.html`);
+    showToast(`🚀 تم نشر المقال بنجاح! يظهر الآن خلال ~25 ثانية على: /articles/${data.slug}`);
   } catch (err) {
     alert('⚠️ خطأ أثناء النشر: ' + err.message);
   } finally {

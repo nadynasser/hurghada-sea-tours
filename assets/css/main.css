@@ -1605,5 +1605,168 @@ html[dir="rtl"] .timeline-item::before {
   background: #DBEAFE;
 }
 
+/* ==========================================================================
+   Tour Detail Hardening & Mobile Above-the-Fold Booking Jump CTA
+   ========================================================================== */
+.tour-detail-container > * {
+  min-width: 0;
+}
 
+.tour-breadcrumbs {
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 100%;
+}
+
+.tour-meta-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  max-width: 100%;
+}
+
+.booking-sidebar,
+#booking-form {
+  max-width: 100%;
+  min-width: 0;
+  scroll-margin-top: 90px;
+}
+
+.booking-input,
+.booking-select {
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.booking-price-tag {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mobile-top-booking-cta {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .mobile-top-booking-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
+    background: linear-gradient(135deg, #F0F9FF 0%, #FFFFFF 100%);
+    border: 1.5px solid var(--cyan-turquoise);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    margin: 10px 0 18px;
+    box-shadow: var(--shadow-sm);
+    max-width: 100%;
+  }
+
+  .mobile-top-cta-price {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    font-family: var(--ff-headings);
+    font-weight: 800;
+    color: var(--primary-navy);
+    font-size: 1.2rem;
+  }
+
+  .mobile-top-cta-price small {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .mobile-top-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+
+  .mobile-top-cta-actions .btn {
+    flex: 1 1 auto;
+    min-height: 40px;
+    padding: 8px 12px;
+    font-size: 0.84rem;
+    justify-content: center;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .tour-breadcrumbs {
+    margin: 10px 0 6px !important;
+    font-size: 0.78rem !important;
+    gap: 4px 6px !important;
+  }
+
+  .tour-detail-container {
+    margin-top: 10px !important;
+    gap: 24px !important;
+  }
+
+  .tour-gallery {
+    margin-bottom: 12px !important;
+  }
+
+  .tour-gallery-main {
+    aspect-ratio: 16 / 9 !important;
+    max-height: 195px;
+  }
+
+  .tour-detail-container h1 {
+    font-size: 1.5rem !important;
+    line-height: 1.22 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .tour-detail-container h1 + div {
+    margin-bottom: 10px !important;
+    gap: 6px 12px !important;
+    font-size: 0.84rem !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .mobile-top-cta-actions {
+    width: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .mobile-top-cta-actions .btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 0.82rem;
+  }
+
+  .mobile-top-cta-actions .btn-whatsapp {
+    flex: 0 0 auto;
+  }
+
+  .vip-banner {
+    padding: 32px 18px;
+  }
+
+  .vip-banner .btn {
+    white-space: normal;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .inc-box,
+  .exc-box,
+  .booking-sidebar {
+    padding: 18px 16px;
+  }
+}
 

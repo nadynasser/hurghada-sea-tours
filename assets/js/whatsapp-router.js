@@ -143,7 +143,40 @@
       this.settings = this.loadLocalSettings() || DEFAULT_FALLBACK_SETTINGS;
       this.activeLanguage = this.detectLanguage();
       this.pageTour = this.detectPageTour();
+      this.beginBookingSent = false;
+      this.lastClickTs = 0;
       this.initAsyncFetch();
+    }
+
+    generateAttemptId(prefix = 'wa') {
+      return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`;
+    }
+
+    triggerBeginBooking(source = 'booking_form') {
+      if (this.beginBookingSent) return;
+      this.beginBookingSent = true;
+      const productId = this.pageTour || 'general';
+      const catalogItem = this.pageTour && TOUR_CATALOG[this.pageTour] ? TOUR_CATALOG[this.pageTour] : null;
+      const productPrice = catalogItem ? catalogItem.price : null;
+      const unitPrice = this.parseNumericPrice(productPrice);
+
+      if (typeof window.gtag !== 'function') return;
+      try {
+        const payload = {
+          event_id: this.generateAttemptId('beg'),
+          product_id: productId,
+          locale: this.activeLanguage || 'en',
+          landing_page: window.location.pathname || '/',
+          channel: 'booking_form',
+          interaction_source: source,
+          transport_type: 'beacon'
+        };
+        if (unitPrice !== null) {
+          payload.value = Number(unitPrice.toFixed(2));
+          payload.currency = 'EUR';
+        }
+        window.gtag('event', 'begin_booking', payload);
+      } catch (_) {}
     }
 
     // Detect language from HTML lang attribute, URL path, or default to 'en'
@@ -327,7 +360,7 @@
      */
     getBookingFormDetails(triggerEl = null) {
       const scopeForm = (triggerEl && typeof triggerEl.closest === 'function' && triggerEl.closest('form'))
-        || document.querySelector('.booking-sidebar form, form[action*="wa.me"]');
+        || document.querySelector('.booking-sidebar form, form#booking-form, form[action*="wa.me"]');
       const root = scopeForm || document;
 
       const dateEl = root.querySelector('input[type="date"]')
@@ -494,12 +527,19 @@
         const unitPrice = this.parseNumericPrice(details.productPrice);
         const rawAdults = form.adults ? parseInt(String(form.adults), 10) : NaN;
         const guestFactor = Number.isFinite(rawAdults) && rawAdults >= 1 && rawAdults <= 50 ? rawAdults : 1;
+        const locale = details.language || this.activeLanguage || 'en';
 
+        // Strict zero-PII payload: no phone numbers, prefilled text, hotel names, or GPS URLs.
         const payload = {
           event_category: 'whatsapp',
+          event_id: details.attemptId || this.generateAttemptId('att'),
+          channel: 'whatsapp',
+          product_id: details.productId || this.pageTour || 'general',
           tour_id: details.productId || 'general',
           tour_name: details.productName || 'General Inquiry',
-          language: details.language || this.activeLanguage || 'en',
+          locale: locale,
+          language: locale,
+          landing_page: window.location.pathname || '/',
           interaction_type: details.interactionType || 'button_click',
           has_date: Boolean(form.date),
           has_hotel: Boolean(form.hotel),
@@ -520,8 +560,14 @@
      * Evaluates live form inputs, fires GA4 tracking, and opens the WhatsApp URL.
      */
     openTrackedLink({ eventName, productName, productPrice, productId, triggerEl, interactionType }) {
+      const now = Date.now();
+      if (now - this.lastClickTs < 450) return;
+      this.lastClickTs = now;
+
       const formInputs = this.getBookingFormDetails(triggerEl);
+      const attemptId = this.generateAttemptId(interactionType === 'booking_form' ? 'lead' : 'wa');
       this.trackAnalyticsEvent(eventName, {
+        attemptId,
         productName,
         productPrice,
         productId,
@@ -537,7 +583,7 @@
      * Dynamically binds and updates all WhatsApp buttons and links on the page (Rule 6)
      */
     bindAllElements() {
-      const waButtons = document.querySelectorAll('[data-wa-tour], [data-wa-product], .btn-whatsapp, a[href*="wa.me"]');
+      const waButtons = document.querySelectorAll('[data-wa-tour], [data-wa-product], [data-wa-general], .btn-whatsapp, a[href*="wa.me"]');
 
       waButtons.forEach(btn => {
         // Resolve tour and product identity
@@ -546,26 +592,31 @@
         let productId = btn.getAttribute('data-product-id');
 
         // On tour landing pages, if the button does not have an explicit product, attach the page tour!
-        if (!productName && this.pageTour && TOUR_CATALOG[this.pageTour]) {
+        if (!productName && this.pageTour && TOUR_CATALOG[this.pageTour] && !btn.hasAttribute('data-wa-general')) {
           const pInfo = TOUR_CATALOG[this.pageTour];
           productName = pInfo.names[this.activeLanguage] || pInfo.names.en;
           productPrice = productPrice || pInfo.price;
           productId = productId || this.pageTour;
         }
 
-        // Set static href for preview/hover
-        const staticUrl = this.generateLink(productName, productPrice, productId, this.activeLanguage, null);
+        // Prevent GA4 Enhanced Measurement outbound_click from capturing wa.me phone/message/GPS query strings
         if (btn.tagName.toLowerCase() === 'a') {
-          btn.href = staticUrl;
-          btn.target = "_blank";
-          btn.rel = "noopener noreferrer";
+          btn.setAttribute('href', '#whatsapp-inquiry');
+          btn.setAttribute('role', 'button');
+          btn.removeAttribute('target');
+        }
+
+        // Do not hijack submit buttons inside booking forms; form.onsubmit handles validation & generate_lead
+        const btnType = (btn.getAttribute('type') || '').toLowerCase();
+        if (btn.tagName.toLowerCase() === 'button' && btnType === 'submit' && btn.closest('form')) {
+          return;
         }
 
         // Click handler: evaluates latest form state live at the exact moment of click
         btn.onclick = (e) => {
           e.preventDefault();
           this.openTrackedLink({
-            eventName: 'whatsapp_click',
+            eventName: 'click_whatsapp',
             productName,
             productPrice,
             productId,
@@ -575,11 +626,19 @@
         };
       });
 
-      // Intercept booking forms to open WhatsApp with form details
-      const bookingForms = document.querySelectorAll('form[action*="wa.me"], .booking-sidebar form');
+      // Intercept booking forms to track begin_booking and submit generate_lead without PII
+      const bookingForms = document.querySelectorAll('form[action*="wa.me"], form#booking-form, .booking-sidebar form');
       bookingForms.forEach(form => {
+        if (!form.dataset.hstBeginBound) {
+          form.dataset.hstBeginBound = '1';
+          const markBegin = () => this.triggerBeginBooking('booking_form');
+          form.addEventListener('focusin', markBegin, { once: true });
+          form.addEventListener('change', markBegin, { once: true });
+        }
+
         form.onsubmit = (e) => {
           e.preventDefault();
+          this.triggerBeginBooking('booking_submit');
           let pName = null;
           let pPrice = null;
           const pId = this.pageTour;
