@@ -15,7 +15,22 @@
   <meta property="og:image" content="https://hurghadaseatours.com/assets/images/hero/hero-hurghada-yacht.jpg">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="../assets/css/main.css?v=4">
+  <link rel="stylesheet" href="../assets/css/main.css?v=5">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Hurghada Travel & Snorkeling Guides",
+    "description": "Local Red Sea snorkeling guides, island boat comparisons, and marine trip planning articles by Hurghada Sea Tours.",
+    "url": "https://hurghadaseatours.com/articles/",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Hurghada Sea Tours",
+      "url": "https://hurghadaseatours.com/"
+    }
+  }
+  </script>
   
   <style>
     .articles-hero {
@@ -198,9 +213,9 @@
   <div class="container">
     <!-- Category Filter Chips -->
     <div class="filter-chips-bar">
-      <button class="filter-chip active" onclick="filterArticles('all')">All Guides</button>
-      <button class="filter-chip" onclick="filterArticles('Guides')">Snorkeling Guides</button>
-      <button class="filter-chip" onclick="filterArticles('Island Trips')">Island Destinations</button>
+      <button class="filter-chip active" onclick="filterArticles('all', this)">All Guides</button>
+      <button class="filter-chip" onclick="filterArticles('Guides', this)">Snorkeling Guides</button>
+      <button class="filter-chip" onclick="filterArticles('Island Trips', this)">Island Destinations</button>
     </div>
 
     <!-- Articles Grid -->
@@ -270,9 +285,9 @@
   </footer>
 
   <script>
-    function filterArticles(cat) {
+    function filterArticles(cat, btnEl) {
       document.querySelectorAll('.filter-chip').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      if (btnEl) btnEl.classList.add('active');
       const cards = document.querySelectorAll('.article-card');
       cards.forEach(card => {
         if (cat === 'all' || card.dataset.category === cat) {
@@ -283,6 +298,8 @@
       });
     }
   </script>
+  <script src="../assets/js/whatsapp-router.js?v=4"></script>
+  <script src="../assets/js/main.js?v=4"></script>
 
 </body>
 </html>

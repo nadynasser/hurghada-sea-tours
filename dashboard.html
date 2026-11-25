@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hurghada Sea Tours | Operations &amp; WhatsApp Management Dashboard</title>
-  <link rel="stylesheet" href="assets/css/main.css?v=4">
+  <link rel="stylesheet" href="assets/css/main.css?v=5">
   <style>
     :root {
       --dash-bg: #F1F5F9;
@@ -715,12 +715,55 @@
       transform: translateY(-1px);
     }
 
+    .mobile-dash-nav {
+      display: none;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 14px;
+      background: #052646;
+      border-bottom: 2px solid var(--cyan-turquoise);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+    .mobile-dash-nav a {
+      color: #E2E8F0;
+      background: rgba(255,255,255,0.08);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .mobile-dash-nav a:hover {
+      background: var(--cyan-turquoise);
+      color: #fff;
+    }
+
     @media (max-width: 1024px) {
       .kpi-grid { grid-template-columns: repeat(2, 1fr); }
       .two-col-grid { grid-template-columns: 1fr; }
       .dash-layout { grid-template-columns: 1fr; }
       .dash-sidebar { display: none; }
-      .dash-main { padding: 20px; }
+      .mobile-dash-nav { display: flex; }
+      .dash-main { padding: 18px 14px; min-width: 0; }
+      .trip-checkbox-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .dash-metrics-4 { grid-template-columns: repeat(2, 1fr) !important; }
+      .dash-form-add-num { grid-template-columns: 1fr !important; }
+      .dash-sim-grid { grid-template-columns: 1fr !important; }
+      .dash-trans-grid { grid-template-columns: 1fr !important; }
+      .dash-suppliers-grid { grid-template-columns: 1fr !important; }
+      .studio-form-row { grid-template-columns: 1fr; }
+      .studio-cover-grid { grid-template-columns: 1fr !important; }
+      .trip-checkbox-grid { grid-template-columns: 1fr; }
+      .geo-3col-grid { grid-template-columns: 1fr !important; }
+      .faq-item-row { grid-template-columns: 1fr; }
+      .article-studio-overlay { padding: 8px; }
+      .article-studio-body { padding: 14px; }
     }
   </style>
 </head>
@@ -781,7 +824,7 @@
   <!-- Sidebar -->
   <aside class="dash-sidebar">
     <div class="dash-sidebar-logo">
-      <div class="brand-logo-icon" style="width:40px; height:40px;"></div>
+      <div class="brand-logo-icon" style="width:40px; height:40px;">⛵</div>
       <div>
         <h3 style="font-family:var(--ff-headings); font-size:1.1rem; line-height:1.1; margin:0; color:#fff;">Hurghada Sea Tours</h3>
         <span style="font-size:0.75rem; color:var(--cyan-turquoise);">Operations &amp; Admin</span>
@@ -810,7 +853,18 @@
   </aside>
 
   <!-- Main Content Area -->
-  <main class="dash-main">
+  <main class="dash-main" style="min-width:0;">
+    <!-- Mobile Quick Section Navigation -->
+    <nav class="mobile-dash-nav" aria-label="Dashboard Quick Navigation">
+      <a href="#overview">📊 Overview</a>
+      <a href="#wa-routing">📲 Routing</a>
+      <a href="#simulator">⚡ Simulator</a>
+      <a href="#translations-mgr">🌐 Translations</a>
+      <a href="#tours-matrix">🚤 Tours</a>
+      <a href="#articles-seo">📝 Articles SEO</a>
+      <a href="#leads">💬 Bookings</a>
+      <a href="index.html" target="_blank">🌐 Live Site</a>
+    </nav>
     <!-- Top Header -->
     <header class="dash-header">
       <div>
@@ -875,6 +929,7 @@
 
       <!-- Numbers Table -->
       <h3 style="font-size:1rem; color:var(--primary-navy); margin-bottom:12px;">1. Configured WhatsApp Numbers Directory</h3>
+      <div style="overflow-x:auto;">
       <table class="data-table" id="numbersTable">
         <thead>
           <tr>
@@ -890,9 +945,10 @@
           <!-- Populated by JavaScript -->
         </tbody>
       </table>
+      </div>
 
       <!-- Add Number Form -->
-      <div style="background:#F8FAFC; border:1px solid var(--dash-border); border-radius:8px; padding:16px; margin-top:16px; display:grid; grid-template-columns: 1fr 1.5fr 1.5fr auto; gap:12px; align-items:end;">
+      <div class="dash-form-add-num" style="background:#F8FAFC; border:1px solid var(--dash-border); border-radius:8px; padding:16px; margin-top:16px; display:grid; grid-template-columns: 1fr 1.5fr 1.5fr auto; gap:12px; align-items:end;">
         <div>
           <label style="font-size:0.78rem; font-weight:700; color:var(--text-muted); display:block; margin-bottom:4px;">Desk ID</label>
           <input type="text" id="newDeskId" class="ctrl-input" placeholder="e.g. vip_charter">
@@ -918,7 +974,7 @@
             2. Language-Based Routing (Rule 2 &amp; 3)
           </h3>
           <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:16px;">
-            Assigns visitor browsing language to dedicated language support desks. If unassigned, defaults to primary hotline.
+            Assigns visitor browsing language to dedicated language support desks. If unassigned, defaults to primary WhatsApp desk.
           </p>
 
           <div style="display:flex; flex-direction:column; gap:12px;">
@@ -998,7 +1054,7 @@
       </div>
 
       <div class="sim-card">
-        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+        <div class="dash-sim-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
           <div>
             <label style="font-size:0.82rem; font-weight:700; color:var(--text-main); display:block; margin-bottom:6px;">Select Visitor Language:</label>
             <select id="simLang" class="ctrl-select" onchange="runSimulation()">
@@ -1060,7 +1116,7 @@
         <button class="btn btn-outline btn-sm" onclick="switchTransTab('pl')" id="tab_pl">🇵🇱 Polski</button>
       </div>
 
-      <div id="transFormFields" style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+      <div id="transFormFields" class="dash-trans-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
         <!-- Dynamically filled by JS -->
       </div>
     </section>
@@ -1097,6 +1153,15 @@
               <td>Red Sea Safari Fleet #1</td>
             </tr>
             <tr>
+              <td><strong>Hula Hula Island Excursion</strong></td>
+              <td>Island Trip</td>
+              <td>7.5 Hours</td>
+              <td>€32 / Person</td>
+              <td>€6.40 (20%)</td>
+              <td><span class="badge-status badge-active">Live</span></td>
+              <td>Giftun Boho Cruises</td>
+            </tr>
+            <tr>
               <td><strong>Dolphin House Adventure</strong></td>
               <td>Diving / Snorkel</td>
               <td>4 Hours</td>
@@ -1130,7 +1195,7 @@
               <td>€150 / Boat</td>
               <td>€37.50 (25%)</td>
               <td><span class="badge-status badge-vip">VIP Live</span></td>
-              <td>Marina Luxury Fleet</td>
+              <td>Hurghada Private Yacht Fleet</td>
             </tr>
           </tbody>
         </table>
@@ -1165,7 +1230,7 @@
       </div>
 
       <!-- Quick Metrics Grid -->
-      <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-bottom:20px;">
+      <div class="dash-metrics-4" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-bottom:20px;">
         <div style="background:#F8FAFC; border:1px solid var(--dash-border); padding:16px; border-radius:8px;">
           <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Total Articles</span>
           <div id="statTotalArticles" style="font-size:1.6rem; font-weight:800; color:var(--primary-navy); margin-top:4px;">0</div>
@@ -1208,6 +1273,7 @@
       </div>
 
       <!-- Articles Data Table -->
+      <div style="overflow-x:auto;">
       <table class="data-table" id="articlesTable">
         <thead>
           <tr>
@@ -1224,6 +1290,7 @@
           <!-- Populated dynamically via JS -->
         </tbody>
       </table>
+      </div>
     </section>
 
     <!-- Inquiries & Bookings Pipeline -->
@@ -1235,6 +1302,7 @@
           <span class="badge-status badge-active">Real-time Pipeline</span>
         </div>
       </div>
+      <div style="overflow-x:auto;">
       <table class="data-table" id="bookingsTable">
         <thead>
           <tr>
@@ -1308,29 +1376,30 @@
           </tr>
         </tbody>
       </table>
+      </div>
     </section>
 
     <!-- Suppliers Section -->
     <section class="dash-section" id="suppliers">
       <div class="dash-section-head">
-        <h2>Hurghada Marina Fleet &amp; Boat Suppliers (suppliers.csv)</h2>
+        <h2>Hurghada Fleet &amp; Boat Suppliers (suppliers.csv)</h2>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
+      <div class="dash-suppliers-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
         <div style="border:1px solid var(--dash-border); padding:16px; border-radius:8px;">
           <h4 style="color:var(--primary-navy); margin-bottom:4px;">🚤 Red Sea Safari Fleet #1</h4>
-          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">Hurghada Marina · Pier 4</p>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">Central Hurghada · Pier 4</p>
           <p style="font-size:0.85rem;"><strong>Services:</strong> Orange Bay &amp; Giftun Day Cruisers (Capacity 50 pax)</p>
           <span class="badge-status badge-active" style="margin-top:8px;">Verified Supplier</span>
         </div>
         <div style="border:1px solid var(--dash-border); padding:16px; border-radius:8px;">
           <h4 style="color:var(--primary-navy); margin-bottom:4px;">🐬 Dolphin Explorer Speedboats</h4>
-          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">Northern Marina · Pier 2</p>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">Northern Hurghada Reefs · Pier 2</p>
           <p style="font-size:0.85rem;"><strong>Services:</strong> Fast speedboats for Dolphin House &amp; private charters</p>
           <span class="badge-status badge-active" style="margin-top:8px;">Verified Supplier</span>
         </div>
         <div style="border:1px solid var(--dash-border); padding:16px; border-radius:8px;">
           <h4 style="color:var(--primary-navy); margin-bottom:4px;">🚢 Sea Scope Submarines</h4>
-          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">Old Harbor Marina</p>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">Hurghada Coast · Pier 1</p>
           <p style="font-size:0.85rem;"><strong>Services:</strong> Underwater semi-submarine viewing vessels</p>
           <span class="badge-status badge-active" style="margin-top:8px;">Verified Supplier</span>
         </div>
@@ -1439,7 +1508,7 @@
           </span>
         </div>
 
-        <div style="display:grid; grid-template-columns: 240px 1fr; gap:20px; align-items:start;">
+        <div class="studio-cover-grid" style="display:grid; grid-template-columns: 240px 1fr; gap:20px; align-items:start;">
           <!-- Left: Thumbnail Preview / Click-to-Upload Dropzone -->
           <div id="coverDropZone" onclick="document.getElementById('artCoverFileInput').click()" style="background:#F8FAFC; border:2px dashed #93C5FD; border-radius:12px; aspect-ratio:16/10; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:12px; position:relative; overflow:hidden; cursor:pointer; transition:all 0.2s;" title="اضغط لرفع أو تغيير الصورة من الجهاز">
             <img id="coverPreviewImg" src="assets/images/tours/tour-snorkeling.jpg" alt="Preview" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
@@ -1534,9 +1603,9 @@
               <option value="orange-bay">🏝️ Orange Bay Island Cruise (€30)</option>
               <option value="hula-hula">🌺 Hula Hula Island Cruise (€32)</option>
               <option value="dolphin-house">🐬 Dolphin House Swimming (€25)</option>
-              <option value="coral-reef">🤿 Living Coral Reef Snorkeling (€22)</option>
-              <option value="semi-submarine">🌊 Sindbad Semi-Submarine (€25)</option>
-              <option value="private-charter">🛥️ Private Yacht &amp; Speedboat (€180)</option>
+              <option value="coral-reef">🤿 Living Coral Reef Snorkeling (€35)</option>
+              <option value="semi-submarine">🌊 Semi-Submarine Underwater Tour (€20)</option>
+              <option value="private-charter">🛥️ Private Yacht &amp; Speedboat (€150)</option>
             </select>
 
             <button type="button" class="btn-tool" id="btnTogglePreview" onclick="toggleArticlePreview()" style="background:var(--primary-navy); color:#fff; border-color:var(--primary-navy);">
@@ -1595,15 +1664,15 @@
             <input type="checkbox" name="relatedTrips" value="coral-reef" onchange="toggleTripCardActive(this)">
             <div>
               <strong style="display:block; font-size:0.88rem; color:var(--text-main);">🤿 Coral Reef Snorkeling</strong>
-              <span style="font-size:0.78rem; color:var(--text-muted);">€22 · 3 Reef Stops</span>
+              <span style="font-size:0.78rem; color:var(--text-muted);">€35 · Reef Sanctuary</span>
             </div>
           </label>
 
           <label class="trip-check-card" id="cardTripSemiSubmarine">
             <input type="checkbox" name="relatedTrips" value="semi-submarine" onchange="toggleTripCardActive(this)">
             <div>
-              <strong style="display:block; font-size:0.88rem; color:var(--text-main);">🌊 Sindbad Semi-Submarine</strong>
-              <span style="font-size:0.78rem; color:var(--text-muted);">€25 · Family Underwater</span>
+              <strong style="display:block; font-size:0.88rem; color:var(--text-main);">🌊 Semi-Submarine Tour</strong>
+              <span style="font-size:0.78rem; color:var(--text-muted);">€20 · Family Underwater</span>
             </div>
           </label>
 
@@ -1611,7 +1680,7 @@
             <input type="checkbox" name="relatedTrips" value="private-charter" onchange="toggleTripCardActive(this)">
             <div>
               <strong style="display:block; font-size:0.88rem; color:var(--text-main);">🛥️ Private Yacht Charter</strong>
-              <span style="font-size:0.78rem; color:var(--text-muted);">€180 · VIP Custom Itinerary</span>
+              <span style="font-size:0.78rem; color:var(--text-muted);">€150 · VIP Custom Itinerary</span>
             </div>
           </label>
         </div>
@@ -1659,7 +1728,7 @@
           <h4 style="font-size:0.85rem; font-weight:800; color:var(--primary-navy); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
             <span>🌍 GEO-Targeting (Local Search &amp; Google Maps Placement)</span>
           </h4>
-          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px;">
+          <div class="geo-3col-grid" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px;">
             <div>
               <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); display:block; margin-bottom:4px;">Primary Destination</label>
               <input type="text" id="geoRegion" class="ctrl-input" value="Hurghada, Red Sea, Egypt" readonly style="background:#E2E8F0;">
@@ -1670,7 +1739,7 @@
                 <option value="Shaab El Erg & Giftun National Park">Shaab El Erg &amp; Giftun Marine Park</option>
                 <option value="Orange Bay Beach, Giftun Island">Orange Bay Beach, Giftun Island</option>
                 <option value="Hula Hula Beach, Giftun Island">Hula Hula Beach, Giftun Island</option>
-                <option value="Hurghada Marina Pier">Hurghada Marina Departure Pier</option>
+                <option value="Hurghada Coastal Reefs & Islands">Hurghada Coastal Reefs &amp; Islands</option>
                 <option value="Makadi Bay & Sahl Hasheesh">Makadi Bay &amp; Sahl Hasheesh</option>
                 <option value="El Gouna Red Sea Lagoons">El Gouna Red Sea Lagoons</option>
               </select>
@@ -1796,7 +1865,7 @@
 <div class="toast-msg" id="toastMsg"></div>
 
 <!-- Scripts -->
-<script src="assets/js/whatsapp-router.js"></script>
+<script src="assets/js/whatsapp-router.js?v=4"></script>
 <script>
 // ==========================================================================
 // Authentication Gatekeeper State
@@ -2099,13 +2168,60 @@ async function saveWhatsAppSettings() {
   showToast(`✓ تم حفظ إعدادات واتساب بنجاح في المتصفح${serverStatus}!`);
 }
 
+// Localized tour names map for Simulator
+const SIM_TOUR_NAMES = {
+  'orange-bay': {
+    en: 'Orange Bay Island & Snorkeling Boat Cruise',
+    de: 'Orange Bay Insel & Schnorchelausflug',
+    ru: 'Остров Оранж Бей и снорклинг',
+    pl: 'Wyspa Orange Bay & Snorkeling',
+    ar: 'جزيرة أورانج باي وسنوركلينج اليخت'
+  },
+  'hula-hula': {
+    en: 'Hula Hula Island & Snorkeling Cruise',
+    de: 'Hula Hula Insel & Schnorchelausflug',
+    ru: 'Остров Хула Хула и снорклинг',
+    pl: 'Wyspa Hula Hula & Snorkeling',
+    ar: 'رحلة جزيرة هولا هولا وسنوركلينج'
+  },
+  'dolphin-house': {
+    en: 'Dolphin House Swimming & Snorkeling Adventure',
+    de: 'Dolphin House Schwimmen & Schnorcheln',
+    ru: 'Дом Дельфинов: плавание и снорклинг',
+    pl: 'Dolphin House: Pływanie z delfinami',
+    ar: 'مغامرة بيت الدلافين والسباحة المفتوحة'
+  },
+  'snorkeling-coral-reef': {
+    en: 'Living Coral Reef Snorkeling & Marine Sanctuary',
+    de: 'Korallenriff & Meeres-Schutzgebiet Schnorcheln',
+    ru: 'Коралловые рифы и заповедник: снорклинг',
+    pl: 'Rafy koralowe & Park Narodowy: Snorkeling',
+    ar: 'سنوركلينج المحميات والشعاب المرجانية'
+  },
+  'semi-submarine': {
+    en: 'Semi-Submarine Underwater Observatory Tour',
+    de: 'Semi-U-Boot Unterwasser-Observatorium',
+    ru: 'Полуподводная лодка (Батискаф)',
+    pl: 'Łódź podwodna (Semi-Submarine)',
+    ar: 'المرصد البحري والغواصة (سيمي سبمارين)'
+  },
+  'private-yacht': {
+    en: 'VIP Private Yacht & Speedboat Charter',
+    de: 'VIP Private Yacht & Schnellboot Charter',
+    ru: 'Индивидуальная аренда яхт и катеров VIP',
+    pl: 'Prywatny jacht i rejsy na wyłączność VIP',
+    ar: 'تأجير اليخوت واللانشات السريعة الخاصة VIP'
+  }
+};
+
 // 4. Live Simulator
 function runSimulation() {
   const lang = document.getElementById('simLang').value;
   const prodSelect = document.getElementById('simProduct');
   const prodId = prodSelect.value || null;
   const selectedOpt = prodSelect.options[prodSelect.selectedIndex];
-  const prodName = prodId ? selectedOpt.getAttribute('data-name') : null;
+  const localizedNames = prodId && SIM_TOUR_NAMES[prodId];
+  const prodName = prodId ? (localizedNames ? (localizedNames[lang] || localizedNames.en) : selectedOpt.getAttribute('data-name')) : null;
   const prodPrice = prodId ? selectedOpt.getAttribute('data-price') : null;
 
   const activeNumbers = (currentSettings.numbers || []).filter(n => n.enabled && n.number && n.number.length >= 8);
@@ -2309,21 +2425,21 @@ const TOUR_DIRECTORY = {
   },
   'coral-reef': {
     name: 'Living Coral Reef Snorkeling',
-    price: '€22',
+    price: '€35',
     link: '/tours/snorkeling-coral-reef.html',
     icon: '🤿',
-    desc: '3 snorkeling reef sanctuaries with crystal visibility and vibrant corals.'
+    desc: '2 guided snorkeling stops at secluded Red Sea reef sanctuaries with buffet lunch.'
   },
   'semi-submarine': {
-    name: 'Sindbad Semi-Submarine Viewing',
-    price: '€25',
+    name: 'Semi-Submarine Underwater Tour',
+    price: '€20',
     link: '/tours/semi-submarine.html',
     icon: '🌊',
-    desc: 'Underwater panoramic coral observation deck 3 meters below sea level.'
+    desc: 'Underwater panoramic coral observation cabin 3 meters below sea level.'
   },
   'private-charter': {
     name: 'Private Yacht & Speedboat Charter',
-    price: '€180',
+    price: '€150',
     link: '/#private',
     icon: '🛥️',
     desc: 'Exclusive private boat for couples, VIPs, and families with custom itinerary.'
@@ -2808,6 +2924,27 @@ function updateCoverPreview(url) {
   }
 }
 
+function applyUploadedDataUrl(dataUrl, fileName, approxBytes) {
+  document.getElementById('artCoverUrl').value = dataUrl;
+  updateCoverPreview(dataUrl);
+
+  const sizeKB = Math.round(approxBytes / 1024);
+  const label = document.getElementById('coverUploadFileName');
+  if (label) {
+    label.innerHTML = `✓ تم اختيار: <strong>${escapeHtml(fileName)}</strong> (${sizeKB} KB)`;
+    label.style.color = '#15803D';
+    label.style.fontStyle = 'normal';
+  }
+
+  const altInput = document.getElementById('artCoverAlt');
+  if (altInput && (!altInput.value || altInput.value.trim() === '' || altInput.value === 'Snorkeling with colorful tropical fish and coral reefs in Hurghada Red Sea')) {
+    const suggested = fileName.replace(/\.[^/.]+$/, '').replace(/[-_]+/g, ' ');
+    altInput.value = suggested.charAt(0).toUpperCase() + suggested.slice(1);
+  }
+
+  showToast(`✓ تم رفع وضغط الصورة بنجاح: ${fileName} (${sizeKB} KB)`);
+}
+
 function handleDirectImageFile(file) {
   if (!file) return;
 
@@ -2816,31 +2953,42 @@ function handleDirectImageFile(file) {
     return;
   }
 
-  if (file.size > 5 * 1024 * 1024) {
-    if (!confirm('حجم الصورة كبير نسبياً (أكثر من 5 ميجابايت). هل تريد المتابعة؟')) return;
-  }
-
   const reader = new FileReader();
   reader.onload = function(e) {
-    const dataUrl = e.target.result;
-    document.getElementById('artCoverUrl').value = dataUrl;
-    updateCoverPreview(dataUrl);
+    const rawDataUrl = e.target.result;
 
-    const sizeKB = Math.round(file.size / 1024);
-    const label = document.getElementById('coverUploadFileName');
-    if (label) {
-      label.innerHTML = `✓ تم اختيار: <strong>${escapeHtml(file.name)}</strong> (${sizeKB} KB)`;
-      label.style.color = '#15803D';
-      label.style.fontStyle = 'normal';
+    // Auto-resize & compress images larger than 180KB so localStorage quota is never exceeded
+    if (file.size <= 180 * 1024) {
+      applyUploadedDataUrl(rawDataUrl, file.name, file.size);
+      return;
     }
 
-    const altInput = document.getElementById('artCoverAlt');
-    if (altInput && (!altInput.value || altInput.value.trim() === '' || altInput.value === 'Snorkeling with colorful tropical fish and coral reefs in Hurghada Red Sea')) {
-      const suggested = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]+/g, ' ');
-      altInput.value = suggested.charAt(0).toUpperCase() + suggested.slice(1);
-    }
+    const img = new Image();
+    img.onload = function() {
+      const maxWidth = 1200;
+      let targetW = img.width;
+      let targetH = img.height;
+      if (targetW > maxWidth) {
+        targetH = Math.round((targetH * maxWidth) / targetW);
+        targetW = maxWidth;
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = targetW;
+      canvas.height = targetH;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, targetW, targetH);
 
-    showToast(`✓ تم رفع وتحميل الصورة: ${file.name}`);
+      let compressed = canvas.toDataURL('image/webp', 0.82);
+      if (!compressed.startsWith('data:image/webp')) {
+        compressed = canvas.toDataURL('image/jpeg', 0.82);
+      }
+      const approxBytes = Math.round((compressed.length * 3) / 4);
+      applyUploadedDataUrl(compressed, file.name, approxBytes);
+    };
+    img.onerror = function() {
+      applyUploadedDataUrl(rawDataUrl, file.name, file.size);
+    };
+    img.src = rawDataUrl;
   };
   reader.readAsDataURL(file);
 }
@@ -2975,6 +3123,12 @@ function renderArticleContentPreview() {
   pane.innerHTML = parseMarkdownToHtml(md);
 }
 
+function safeUrl(rawUrl) {
+  const trimmed = (rawUrl || '').trim();
+  if (/^(https?:\/\/|\/|\.\/|\.\.\/|#)/i.test(trimmed)) return trimmed;
+  return '#';
+}
+
 function parseMarkdownToHtml(md) {
   if (!md) return '<p style="color:var(--text-muted); font-style:italic;">No content written in this language yet.</p>';
   let html = escapeHtml(md);
@@ -2983,7 +3137,7 @@ function parseMarkdownToHtml(md) {
   html = html.replace(/:::trip-cta\s+id=&quot;([^&]+)&quot;\s*:::/g, (match, tourId) => {
     const t = TOUR_DIRECTORY[tourId] || { name: 'Hurghada Sea Tour', price: '€30', link: '/#tours', icon: '⛵', desc: 'Book your Red Sea excursion with Hurghada Sea Tours.' };
     return `
-      <div style="background:#FFFFFF; border:2px solid var(--cyan-turquoise); border-radius:12px; padding:18px 20px; margin:24px 0; display:flex; align-items:center; justify-content:space-between; gap:16px; box-shadow:0 4px 14px rgba(0,180,219,0.12); flex-wrap:wrap;">
+      <div class="trip-cta-card" style="background:#FFFFFF; border:2px solid var(--cyan-turquoise); border-radius:12px; padding:18px 20px; margin:24px 0; display:flex; align-items:center; justify-content:space-between; gap:16px; box-shadow:0 4px 14px rgba(0,180,219,0.12); flex-wrap:wrap;">
         <div style="flex:1; min-width:220px;">
           <span style="font-size:0.72rem; font-weight:800; color:var(--primary-navy); text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:4px;">Recommended Excursion</span>
           <div style="font-family:var(--ff-headings); font-size:1.15rem; font-weight:800; color:#1E293B; margin-bottom:4px;">${t.icon} ${t.name}</div>
@@ -2991,7 +3145,7 @@ function parseMarkdownToHtml(md) {
         </div>
         <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
           <div style="font-size:1.4rem; font-weight:800; color:var(--primary-navy);">${t.price} <small style="font-size:0.8rem; font-weight:500; color:var(--text-muted);">/ person</small></div>
-          <a href="https://wa.me/201091705805?text=Hi!%20I%20want%20to%20book%20the%20${encodeURIComponent(t.name)}" target="_blank" class="btn btn-whatsapp btn-sm" style="background:#25D366; color:#fff; text-decoration:none; padding:8px 14px; border-radius:6px; font-weight:700; font-size:0.85rem;">
+          <a href="https://wa.me/201091705805?text=Hi!%20I%20want%20to%20book%20the%20${encodeURIComponent(t.name)}" target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm" style="background:#25D366; color:#fff; text-decoration:none; padding:8px 14px; border-radius:6px; font-weight:700; font-size:0.85rem;">
             💬 Book via WhatsApp
           </a>
         </div>
@@ -3007,18 +3161,20 @@ function parseMarkdownToHtml(md) {
   html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
   html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
 
-  // Links
-  html = html.replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" target="_blank" style="color:var(--cyan-turquoise); font-weight:600; text-decoration:underline;">$1</a>');
+  // Sanitized Links
+  html = html.replace(/\[(.*?)\]\((.*?)\)/gim, (_, txt, url) => `<a href="${safeUrl(url)}" target="_blank" rel="noopener" style="color:var(--cyan-turquoise); font-weight:600; text-decoration:underline;">${txt}</a>`);
 
   // Blockquotes
   html = html.replace(/^&gt; (.*$)/gim, '<blockquote style="border-left:4px solid var(--cyan-turquoise); padding:8px 16px; margin:14px 0; background:#F8FAFC; color:#475569; font-style:italic;">$1</blockquote>');
 
-  // Bullet Lists
-  html = html.replace(/^\- (.*$)/gim, '<li style="margin-bottom:6px;">$1</li>');
-  html = html.replace(/(<li.*<\/li>)/gim, '<ul style="margin:10px 0 14px 20px; list-style-type:disc;">$1</ul>');
+  // Group consecutive bullet lines into a single <ul>
+  html = html.replace(/(?:^- .+(?:\r?\n|$))+/gim, (block) => {
+    const items = block.trim().split(/\r?\n/).map(line => `<li style="margin-bottom:6px;">${line.replace(/^- /, '')}</li>`).join('');
+    return `<ul style="margin:10px 0 16px 22px; list-style-type:disc;">${items}</ul>\n\n`;
+  });
 
   // Paragraphs
-  html = html.split('\n\n').map(p => {
+  html = html.split(/\n{2,}/).map(p => {
     p = p.trim();
     if (!p) return '';
     if (p.startsWith('<h') || p.startsWith('<div') || p.startsWith('<blockquote') || p.startsWith('<ul')) return p;
@@ -3123,7 +3279,9 @@ function saveCurrentArticle() {
 
   try {
     localStorage.setItem(ARTICLES_KEY, JSON.stringify(currentArticles));
-  } catch (e) {}
+  } catch (e) {
+    alert('⚠️ تعذر الحفظ في ذاكرة المتصفح المؤقتة بسبب مساحة الصور الكبيرة. يمكنك استخدام Export Static HTML أو Export JSON لتحميل المقال.');
+  }
 
   renderArticlesTable();
   updateArticleStats();
@@ -3235,11 +3393,63 @@ function exportArticleHTML(articleId, fallbackObj) {
   const metaDesc = en.metaDesc || en.excerpt || 'Complete guide to Hurghada sea excursions by Hurghada Sea Tours.';
   const slug = art.slug || art.id || 'article';
   const content = en.content || '';
-  const cover = art.coverImage || '/assets/images/tours/tour-snorkeling.jpg';
+  const coverRaw = (art.coverImage || '/assets/images/tours/tour-snorkeling.jpg').trim();
+  const isDataUri = coverRaw.startsWith('data:');
+  const imgSrcAttr = isDataUri
+    ? coverRaw
+    : (/^https?:\/\//i.test(coverRaw) ? coverRaw : `..${coverRaw.startsWith('/') ? coverRaw : '/' + coverRaw}`);
+  const ogImageUrl = isDataUri
+    ? 'https://hurghadaseatours.com/assets/images/tours/tour-snorkeling.jpg'
+    : (/^https?:\/\//i.test(coverRaw) ? coverRaw : `https://hurghadaseatours.com${coverRaw.startsWith('/') ? coverRaw : '/' + coverRaw}`);
   const coverAlt = art.coverAlt || title;
+  const takeaways = (art.aeo && art.aeo.keyTakeaways) || [];
   const faqs = (art.aeo && art.aeo.faqs) || [];
+  const relatedIds = art.relatedTrips || [];
+  const geoArea = (art.geo && art.geo.area) || 'Hurghada, Red Sea, Egypt';
 
-  // Build FAQ JSON-LD
+  // Build AEO Key Takeaways HTML
+  const takeawaysHtml = takeaways.length > 0 ? `
+    <div style="background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:14px; padding:20px 24px; margin:24px 0 32px;">
+      <h3 style="font-size:1.05rem; color:#166534; margin-bottom:10px;">🤖 Quick Answer &amp; Key Takeaways (AEO Summary)</h3>
+      <ul style="margin:0 0 0 20px; color:#14532D; font-size:0.95rem; line-height:1.65;">
+        ${takeaways.map(t => `<li style="margin-bottom:6px;">✓ ${escapeHtml(t)}</li>`).join('')}
+      </ul>
+    </div>` : '';
+
+  // Build FAQ HTML Section & JSON-LD
+  const faqHtml = faqs.length > 0 ? `
+    <section style="margin-top:44px; background:#F8FAFC; border:1px solid var(--border-light); border-radius:14px; padding:26px;">
+      <h2 style="font-family:var(--ff-headings); font-size:1.4rem; color:var(--primary-navy); margin-bottom:16px;">Frequently Asked Questions (FAQ)</h2>
+      ${faqs.map(f => `
+        <div style="margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--border-light);">
+          <div style="font-weight:700; font-size:1.05rem; color:var(--primary-navy); margin-bottom:6px;">${escapeHtml(f.q)}</div>
+          <div style="font-size:0.95rem; color:var(--text-muted); line-height:1.6;">${escapeHtml(f.a)}</div>
+        </div>`).join('')}
+    </section>` : '';
+
+  // Build Related Trips HTML Section
+  const relatedHtml = relatedIds.length > 0 ? `
+    <section style="margin-top:40px;">
+      <h2 style="font-family:var(--ff-headings); font-size:1.4rem; color:var(--primary-navy); margin-bottom:16px;">Explore Related Hurghada Excursions</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px;">
+        ${relatedIds.map(tid => {
+          const t = TOUR_DIRECTORY[tid];
+          if (!t) return '';
+          return `
+            <div style="background:#FFFFFF; border:1.5px solid var(--border-light); border-radius:12px; padding:18px; display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+              <div>
+                <div style="font-weight:800; color:var(--primary-navy); margin-bottom:6px;">${t.icon} ${escapeHtml(t.name)}</div>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin:0;">${escapeHtml(t.desc)}</p>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-light); padding-top:10px;">
+                <strong style="color:var(--primary-navy); font-size:1.1rem;">${t.price}</strong>
+                <a href="..${t.link}" class="btn btn-outline btn-sm">Details →</a>
+              </div>
+            </div>`;
+        }).join('')}
+      </div>
+    </section>` : '';
+
   const faqSchema = faqs.map(f => ({
     "@type": "Question",
     "name": f.q,
@@ -3258,15 +3468,15 @@ function exportArticleHTML(articleId, fallbackObj) {
   <meta name="description" content="${escapeHtml(metaDesc)}">
   <link rel="canonical" href="https://hurghadaseatours.com/articles/${slug}.html">
   <meta name="geo.region" content="EG-BA">
-  <meta name="geo.placename" content="Hurghada, Red Sea, Egypt">
+  <meta name="geo.placename" content="${escapeHtml(geoArea)}">
   <meta name="geo.position" content="27.1850;33.8250">
   <meta name="ICBM" content="27.1850, 33.8250">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://hurghadaseatours.com/articles/${slug}.html">
   <meta property="og:title" content="${escapeHtml(seoTitle)}">
   <meta property="og:description" content="${escapeHtml(metaDesc)}">
-  <meta property="og:image" content="https://hurghadaseatours.com${cover}">
-  <link rel="stylesheet" href="../assets/css/main.css?v=4">
+  <meta property="og:image" content="${ogImageUrl}">
+  <link rel="stylesheet" href="../assets/css/main.css?v=5">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -3275,11 +3485,19 @@ function exportArticleHTML(articleId, fallbackObj) {
         "@type": "Article",
         "headline": ${JSON.stringify(title)},
         "description": ${JSON.stringify(metaDesc)},
-        "image": "https://hurghadaseatours.com${cover}",
+        "image": ${JSON.stringify(ogImageUrl)},
         "datePublished": ${JSON.stringify(art.publishDate || new Date().toISOString())},
         "author": {
           "@type": "Organization",
           "name": ${JSON.stringify(art.author || "Hurghada Sea Tours")}
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Hurghada Sea Tours",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://hurghadaseatours.com/assets/images/logo.svg"
+          }
         }
       }${faqs.length > 0 ? `,
       {
@@ -3295,30 +3513,39 @@ function exportArticleHTML(articleId, fallbackObj) {
     <div class="container header-inner">
       <a href="../" class="brand-logo">
         <div class="brand-logo-icon">⛵</div>
-        <div class="brand-logo-text"><span class="brand-logo-title">HURGHADA <span>SEA TOURS</span></span></div>
+        <div class="brand-logo-text">
+          <span class="brand-logo-title">HURGHADA <span>SEA TOURS</span></span>
+          <span class="brand-logo-sub">Your Sea, Your Adventure</span>
+        </div>
       </a>
       <nav class="main-nav">
         <ul class="nav-list">
           <li><a href="../" class="nav-link">Home</a></li>
-          <li><a href="../#tours" class="nav-link">Tours</a></li>
-          <li><a href="index.html" class="nav-link active">Guides</a></li>
+          <li><a href="../#tours" class="nav-link">All Tours</a></li>
+          <li><a href="index.html" class="nav-link active">Guides &amp; Articles</a></li>
+          <li><a href="../#faq" class="nav-link">FAQ</a></li>
         </ul>
       </nav>
       <div class="header-actions">
-        <a href="https://wa.me/201091705805" target="_blank" class="btn btn-whatsapp btn-sm">💬 WhatsApp</a>
+        <a href="https://wa.me/201091705805" target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm">💬 WhatsApp</a>
       </div>
     </div>
   </header>
   <main class="container" style="max-width:860px; margin:40px auto;">
-    <h1 style="font-family:var(--ff-headings); font-size:2.2rem; color:var(--primary-navy);">${escapeHtml(title)}</h1>
-    <img src="..${cover}" alt="${escapeHtml(coverAlt)}" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:12px; margin:20px 0;">
+    <h1 style="font-family:var(--ff-headings); font-size:2.2rem; color:var(--primary-navy); margin-bottom:14px;">${escapeHtml(title)}</h1>
+    <img src="${imgSrcAttr}" alt="${escapeHtml(coverAlt)}" style="width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:12px; margin:20px 0;">
+    ${takeawaysHtml}
     <div style="font-size:1.05rem; line-height:1.8;">
       ${parseMarkdownToHtml(content)}
     </div>
+    ${relatedHtml}
+    ${faqHtml}
   </main>
   <footer class="site-footer" style="padding:20px 0; text-align:center;">
-    <p>&copy; 2026 Hurghada Sea Tours · <a href="../">Back to All Sea Tours</a></p>
+    <p>&copy; 2026 Hurghada Sea Tours · <a href="../" style="color:var(--cyan-turquoise);">Back to All Sea Tours</a></p>
   </footer>
+  <script src="../assets/js/whatsapp-router.js?v=4"><\/script>
+  <script src="../assets/js/main.js?v=4"><\/script>
 </body>
 </html>`;
 

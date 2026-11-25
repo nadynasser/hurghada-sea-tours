@@ -24,7 +24,7 @@
   <meta property="og:description" content="Остров Оранж Бей, плавание с дельфинами, снорклинг на коралловых рифах и аренда яхт без предоплаты.">
   <meta property="og:image" content="https://hurghadaseatours.com/assets/images/hero/hero-hurghada-yacht.jpg">
 
-  <link rel="stylesheet" href="../assets/css/main.css?v=4">
+  <link rel="stylesheet" href="../assets/css/main.css?v=5">
 
   <script type="application/ld+json">
   {
@@ -37,7 +37,7 @@
     "currenciesAccepted": "EUR, USD, EGP",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Hurghada Marina Promenade",
+      "streetAddress": "Red Sea Promenade, Hurghada",
       "addressLocality": "Hurghada",
       "addressCountry": "EG"
     }
@@ -81,6 +81,7 @@
           <li><a href="./" class="nav-link active">Главная</a></li>
           <li><a href="#tours" class="nav-link">Экскурсии</a></li>
           <li><a href="#private" class="nav-link">Аренда яхт</a></li>
+          <li><a href="../articles/" class="nav-link">Гид туриста</a></li>
           <li><a href="#features" class="nav-link">Сервис</a></li>
           <li><a href="#faq" class="nav-link">FAQ</a></li>
         </ul>
@@ -124,8 +125,8 @@
     </div>
   </div>
 
-  <!-- Trust Badges Strip -->
-  <section class="trust-strip">
+  <!-- Trust Badges Bar -->
+  <section class="trust-bar" aria-label="Гарантии бронирования">
     <div class="container">
       <div class="trust-grid">
         <div class="trust-item"><div class="icon">🔄</div><div><h4>Бесплатная отмена</h4><p>Отмена брони за 24 часа без каких-либо штрафов.</p></div></div>
@@ -256,78 +257,75 @@
   </main>
 
   <!-- Private Charter Banner -->
-  <section class="banner-charter" id="private" style="background-image: linear-gradient(90deg, rgba(5, 38, 70, 0.95) 0%, rgba(5, 38, 70, 0.8) 50%, rgba(5, 38, 70, 0.4) 100%), url('../assets/images/banners/banner-private-charter.jpg');">
-    <div class="container">
-      <div class="charter-content">
-        <span class="badge-charter">⭐ VIP Аренда Яхт</span>
+  <section class="container" id="private">
+    <div class="vip-banner">
+      <div class="vip-banner-content">
+        <p class="section-eyebrow" style="color:var(--sun-yellow);">⭐ VIP Аренда Яхт</p>
         <h2>Индивидуальная аренда яхт и катеров</h2>
-        <p>Идеально для романтических прогулок на закате, семейных праздников и закрытых компаний. Персональный маршрут, свежие морепродукты и капитан.</p>
-        <div class="charter-price-tag">
-          <span>От <strong>€150</strong> / яхта (до 8 человек)</span>
-        </div>
-        <a href="https://wa.me/201091705805" class="btn btn-whatsapp" data-wa-tour="Private Yacht Charter" data-wa-price="€150" data-product-id="private-yacht">
-          <span>💬 Запросить яхту в WhatsApp</span>
+        <p>Идеально для романтических прогулок на закате, семейных праздников и закрытых компаний. Персональный маршрут, свежие морепродукты и капитан. От €150 / яхта (до 8 человек).</p>
+        <a href="https://wa.me/201091705805" class="btn btn-primary" data-wa-tour="Private Yacht Charter" data-wa-price="€150" data-product-id="private-yacht">
+          <span>💬 Запросить яхту в WhatsApp →</span>
         </a>
       </div>
     </div>
   </section>
 
   <!-- Service Features -->
-  <section class="section bg-light" id="features">
-    <div class="container">
-      <div class="features-wrapper">
-        <div class="features-text">
+  <section class="container" id="features">
+    <div class="features-section">
+      <div class="features-grid">
+        <div>
           <p class="section-eyebrow">ПОЧЕМУ ВЫБИРАЮТ НАС</p>
-          <h2>Премиальный сервис морских экскурсий</h2>
-          <p>Мы работаем напрямую с проверенными капитанами Марины Хургады без лишних посредников. Высокие стандарты безопасности, вкусное питание и заботливый экипаж.</p>
-          <ul class="features-checklist">
-            <li>🛡️ <strong>Официальная лицензия:</strong> Разрешение Министерства туризма Египта #2344.</li>
-            <li>🥗 <strong>Свежий обед на борту:</strong> Готовится судовым поваром в день круиза.</li>
-            <li>🤿 <strong>Снаряжение для плавания:</strong> Обработанные маски, ласты и детские жилеты.</li>
-            <li>💳 <strong>Без риска:</strong> Бронирование без предоплаты картой — оплата при посадке.</li>
+          <h2 class="section-title">Премиальный сервис <span>морских экскурсий</span></h2>
+          <p style="color:var(--text-muted); margin-top:10px;">Мы работаем напрямую с проверенными капитанами Хургады без лишних посредников. Высокие стандарты безопасности, вкусное питание и заботливый экипаж.</p>
+          <ul class="features-list">
+            <li><span class="check-icon">✓</span> Официальная лицензия Министерства туризма Египта #2344</li>
+            <li><span class="check-icon">✓</span> Свежий обед на борту, приготовленный судовым поваром</li>
+            <li><span class="check-icon">✓</span> Обработанные маски, ласты и детские жилеты</li>
+            <li><span class="check-icon">✓</span> Без предоплаты картой — оплата при посадке</li>
+            <li><span class="check-icon">✓</span> Бесплатный трансфер из центральных отелей Хургады</li>
+            <li><span class="check-icon">✓</span> Разрешения морских заповедников и страховка</li>
           </ul>
         </div>
         <div class="features-media">
-          <img src="../assets/images/features/detail-buffet-lunch.jpg" alt="Обед на борту яхты в Хургаде" width="600" height="400" loading="lazy">
+          <img src="../assets/images/features/detail-buffet-lunch.jpg" alt="Обед на борту яхты в Хургаде" width="800" height="600" loading="lazy">
         </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ Section with Schema -->
-  <section class="section" id="faq">
-    <div class="container">
-      <div class="section-head text-center">
-        <p class="section-eyebrow">ЧАСТЫЕ ВОПРОСЫ</p>
-        <h2 class="section-title">Вопросы и <span>ответы</span></h2>
-      </div>
+  <section class="section faq-section" id="faq">
+    <div class="section-head" style="text-align:center; display:block;">
+      <p class="section-eyebrow">ЧАСТЫЕ ВОПРОСЫ</p>
+      <h2 class="section-title">Вопросы и <span>ответы</span></h2>
+    </div>
 
-      <div class="faq-accordion" style="max-width: 800px; margin: 0 auto;">
-        <details class="faq-item" open>
-          <summary class="faq-question">Как забронировать морскую экскурсию?</summary>
-          <div class="faq-answer">
-            <p>Просто напишите нам в WhatsApp! Укажите выбранную экскурсию, дату поездки, количество человек и название вашего отеля. Мы подтвердим бронь и время трансфера в течение нескольких минут.</p>
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-question">Нужно ли вносить предоплату банковской картой?</summary>
-          <div class="faq-answer">
-            <p>Нет! Предоплата не требуется. Вы оплачиваете экскурсию наличными гиду при посадке на корабль (принимаются EUR, USD, EGP).</p>
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-question">Включен ли трансфер из отеля?</summary>
-          <div class="faq-answer">
-            <p>Да, трансфер на автомобиле с кондиционером из отелей Хургады включен в стоимость. Для удаленных районов (Эль-Гуна, Макади-Бей, Сахл-Хашиш, Сафага) действует небольшая доплата за трансфер (€5 с человека).</p>
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-question">Что нужно взять с собой на морскую прогулку?</summary>
-          <div class="faq-answer">
-            <p>Купальные костюмы, солнцезащитные очки, крем от солнца, головной убор, пляжное полотенце из отеля и хорошее настроение!</p>
-          </div>
-        </details>
-      </div>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary class="faq-question">Как забронировать морскую экскурсию?</summary>
+        <div class="faq-answer">
+          Просто напишите нам в WhatsApp! Укажите выбранную экскурсию, дату поездки, количество человек и название отеля или геопозицию. Мы подтвердим бронь и время трансфера в течение нескольких минут.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">Нужно ли вносить предоплату банковской картой?</summary>
+        <div class="faq-answer">
+          Нет! Предоплата не требуется. Вы оплачиваете экскурсию наличными гиду при посадке на корабль (принимаются EUR, USD, EGP).
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">Включен ли трансфер из отеля?</summary>
+        <div class="faq-answer">
+          Да, трансфер на автомобиле с кондиционером из отелей Хургады включен в стоимость. Для удаленных районов (Эль-Гуна, Макади-Бей, Сахл-Хашиш, Сафага) действует небольшая доплата за трансфер (€5 с человека).
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">Что нужно взять с собой на морскую прогулку?</summary>
+        <div class="faq-answer">
+          Купальные костюмы, солнцезащитные очки, крем от солнца, головной убор, пляжное полотенце из отеля и хорошее настроение!
+        </div>
+      </details>
     </div>
   </section>
 
@@ -336,37 +334,64 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <div class="brand-logo-text" style="margin-bottom:14px;">
-            <span class="brand-logo-title" style="color:#fff;">HURGHADA <span style="color:var(--cyan-turquoise);">SEA TOURS</span></span>
+          <div class="brand-logo" style="margin-bottom:16px;">
+            <div class="brand-logo-icon">⛵</div>
+            <div class="brand-logo-text">
+              <span class="brand-logo-title" style="color:#FFFFFF;">HURGHADA <span style="color:var(--cyan-turquoise);">SEA TOURS</span></span>
+              <span class="brand-logo-sub" style="color:#94A3B8;">Твое море, Твое приключение</span>
+            </div>
           </div>
-          <p style="color:#94A3B8; font-size:0.9rem;">
+          <p style="font-size:0.9rem; line-height:1.6;">
             Официальный лицензированный туроператор морских экскурсий и аренды яхт в Хургаде. Лицензия Министерства туризма Египта #2344.
           </p>
         </div>
         <div class="footer-col">
-          <h4 style="color:#fff; margin-bottom:14px;">Экскурсии</h4>
-          <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; font-size:0.9rem;">
-            <li><a href="tours/orange-bay-island.html" style="color:#94A3B8;">Остров Оранж Бей</a></li>
-            <li><a href="tours/dolphin-house.html" style="color:#94A3B8;">Дом Дельфинов</a></li>
-            <li><a href="tours/snorkeling-coral-reef.html" style="color:#94A3B8;">Коралловые рифы</a></li>
-            <li><a href="tours/semi-submarine.html" style="color:#94A3B8;">Полуподводная лодка</a></li>
+          <h4>Экскурсии</h4>
+          <ul class="footer-links">
+            <li><a href="tours/orange-bay-island.html">Остров Оранж Бей</a></li>
+            <li><a href="tours/hula-hula-island.html">Остров Хула Хула</a></li>
+            <li><a href="tours/dolphin-house.html">Дом Дельфинов</a></li>
+            <li><a href="tours/snorkeling-coral-reef.html">Коралловые рифы</a></li>
+            <li><a href="tours/semi-submarine.html">Полуподводная лодка</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4 style="color:#fff; margin-bottom:14px;">Контакты</h4>
-          <p style="color:#94A3B8; font-size:0.9rem;">📍 Hurghada Marina Boulevard, Hurghada, Egypt</p>
-          <p style="color:#94A3B8; font-size:0.9rem; margin-top:6px;">📞 +20 109 170 5805</p>
-          <p style="color:#94A3B8; font-size:0.9rem; margin-top:6px;">💬 WhatsApp: 24/7 Поддержка</p>
+          <h4>Информация</h4>
+          <ul class="footer-links">
+            <li><a href="../articles/">Гид и статьи по Хургаде</a></li>
+            <li><a href="#features">Что включено</a></li>
+            <li><a href="#faq">Частые вопросы</a></li>
+            <li><a href="#private">Аренда яхт VIP</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Поддержка WhatsApp</h4>
+          <p style="font-size:0.9rem; margin-bottom:8px;">📍 Red Sea Promenade, Хургада, Египет</p>
+          <p style="font-size:0.9rem; margin-bottom:14px;">💬 WhatsApp: <a href="https://wa.me/201091705805" style="color:var(--wa-green); font-weight:700;">+20 109 170 5805</a></p>
+          <a href="https://wa.me/201091705805" class="btn btn-whatsapp btn-sm" data-wa-general="true">
+            <span>💬 Написать в WhatsApp</span>
+          </a>
         </div>
       </div>
       <div class="footer-bottom">
         <p>&copy; 2026 Hurghada Sea Tours. Все права защищены. Лицензия #2344.</p>
-        <p><a href="../" style="color:var(--cyan-turquoise);">English Site</a> · <a href="../de/" style="color:var(--cyan-turquoise);">Deutsche Version</a></p>
+        <p><a href="../" style="color:var(--cyan-turquoise);">English</a> · <a href="../de/" style="color:var(--cyan-turquoise);">Deutsch</a> · <a href="../pl/" style="color:var(--cyan-turquoise);">Polski</a> · <a href="../ar/" style="color:var(--cyan-turquoise);">العربية</a></p>
       </div>
     </div>
   </footer>
 
-  <script src="../assets/js/whatsapp-router.js"></script>
-  <script src="../assets/js/main.js?v=3"></script>
+  <!-- Mobile Sticky Bar -->
+  <div class="mobile-sticky-bar" aria-label="Быстрое бронирование">
+    <div class="sticky-bar-price">
+      <span class="label">Экскурсии от</span>
+      <span class="val">€20 / чел</span>
+    </div>
+    <a href="https://wa.me/201091705805" class="btn btn-whatsapp btn-sm" data-wa-general="true">
+      <span>💬 Бронь в WhatsApp</span>
+    </a>
+  </div>
+
+  <script src="../assets/js/whatsapp-router.js?v=4"></script>
+  <script src="../assets/js/main.js?v=4"></script>
 </body>
 </html>

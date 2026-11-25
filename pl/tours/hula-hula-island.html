@@ -21,7 +21,7 @@
   <meta property="og:description" content="Tropikalny hawajski klimat, huśtawki w turkusowej lagunie, rafy koralowe i obiad w formie bufetu na wyspie Hula Hula.">
   <meta property="og:image" content="https://hurghadaseatours.com/assets/images/tours/tour-hula-hula.jpg">
 
-  <link rel="stylesheet" href="../../assets/css/main.css?v=4">
+  <link rel="stylesheet" href="../../assets/css/main.css?v=5">
 
   <style>
     .tour-detail-container { display: grid; grid-template-columns: 1fr 380px; gap: 40px; margin-top: 30px; }
@@ -272,8 +272,14 @@
               </div>
             </div>
             <div class="booking-field">
-              <label for="bookHotelPl">Nazwa hotelu w Hurghadzie (do odbioru)</label>
-              <input type="text" id="bookHotelPl" class="booking-input" placeholder="np. Steigenberger Al Dau">
+              <label for="bookHotelPl">Nazwa hotelu lub lokalizacja odbioru (GPS)</label>
+              <div class="location-picker-group">
+                <input type="text" id="bookHotelPl" class="booking-input" placeholder="np. Steigenberger Al Dau">
+                <button type="button" class="btn-gps-pin" onclick="window.HSTShareLocation('bookHotelPl', this)" title="Wskaż moją lokalizację GPS">
+                  <span>📍 Wybierz GPS</span>
+                </button>
+              </div>
+              <small class="location-picker-hint">📍 Kliknij Wybierz GPS, aby podać dokładną lokalizację na mapie</small>
             </div>
 
             <button type="submit" class="btn btn-whatsapp" style="width:100%; margin-top:10px;" data-wa-tour="Wyspa Hula Hula & Snorkeling" data-wa-price="€32" data-product-id="hula-hula">
@@ -284,7 +290,7 @@
           <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border-light); font-size:0.82rem; color:var(--text-muted);">
             <p>🛡️ <strong>Bez ryzyka:</strong> Płatność gotówką na statku.</p>
             <p style="margin-top:4px;">🔄 <strong>Bezpłatne anulowanie:</strong> Do 24h przed rejsem.</p>
-            <p style="margin-top:4px;">📞 <strong>Infolinia Mariny:</strong> +20 109 170 5805</p>
+            <p style="margin-top:4px;">💬 <strong>Wsparcie WhatsApp:</strong> +20 109 170 5805 (Czat 24/7)</p>
           </div>
         </div>
       </aside>
@@ -310,7 +316,7 @@
     </a>
   </div>
 
-  <script src="../../assets/js/whatsapp-router.js"></script>
-  <script src="../../assets/js/main.js?v=3"></script>
+  <script src="../../assets/js/whatsapp-router.js?v=4"></script>
+  <script src="../../assets/js/main.js?v=4"></script>
 </body>
 </html>

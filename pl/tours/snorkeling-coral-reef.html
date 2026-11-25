@@ -21,7 +21,7 @@
   <meta property="og:description" content="Niezwykłe ogrody koralowe i bogactwo podwodnego świata Morza Czerwonego.">
   <meta property="og:image" content="https://hurghadaseatours.com/assets/images/tours/tour-snorkeling.jpg">
 
-  <link rel="stylesheet" href="../../assets/css/main.css?v=4">
+  <link rel="stylesheet" href="../../assets/css/main.css?v=5">
   <style>
     .tour-detail-container { display: grid; grid-template-columns: 1fr 380px; gap: 40px; margin-top: 30px; }
     .tour-gallery { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 30px; }
@@ -220,8 +220,14 @@
               </div>
             </div>
             <div class="booking-field">
-              <label for="snHotelPl">Hotel w Hurghadzie</label>
-              <input type="text" id="snHotelPl" class="booking-input" placeholder="np. Jungle Aqua Park">
+              <label for="snHotelPl">Nazwa hotelu lub lokalizacja odbioru (GPS)</label>
+              <div class="location-picker-group">
+                <input type="text" id="snHotelPl" class="booking-input" placeholder="np. Jungle Aqua Park">
+                <button type="button" class="btn-gps-pin" onclick="window.HSTShareLocation('snHotelPl', this)" title="Wskaż moją lokalizację GPS">
+                  <span>📍 Wybierz GPS</span>
+                </button>
+              </div>
+              <small class="location-picker-hint">📍 Kliknij Wybierz GPS, aby podać dokładną lokalizację na mapie</small>
             </div>
 
             <button type="submit" class="btn btn-whatsapp" style="width:100%; margin-top:10px;" data-wa-tour="Snorkeling & Coral Reef" data-wa-price="€35" data-product-id="snorkeling-coral-reef">
@@ -257,7 +263,7 @@
     </a>
   </div>
 
-  <script src="../../assets/js/whatsapp-router.js"></script>
-  <script src="../../assets/js/main.js?v=3"></script>
+  <script src="../../assets/js/whatsapp-router.js?v=4"></script>
+  <script src="../../assets/js/main.js?v=4"></script>
 </body>
 </html>

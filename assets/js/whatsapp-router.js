@@ -82,6 +82,8 @@
       }
     }
   };
+  TOUR_CATALOG['coral-reef'] = TOUR_CATALOG['snorkeling-coral-reef'];
+  TOUR_CATALOG['private-charter'] = TOUR_CATALOG['private-yacht'];
 
   // Hardcoded fallback settings with current WhatsApp number
   const DEFAULT_FALLBACK_SETTINGS = {
@@ -105,6 +107,7 @@
     productRouting: {
       "private-yacht": "vip_charter",
       "orange-bay": null,
+      "hula-hula": null,
       "dolphin-house": null,
       "snorkeling-coral-reef": null,
       "semi-submarine": null
@@ -205,18 +208,23 @@
     }
 
     async initAsyncFetch() {
-      const isSubdir = window.location.pathname.includes('/tours/') ||
-                       window.location.pathname.includes('/de/') ||
-                       window.location.pathname.includes('/ru/') ||
-                       window.location.pathname.includes('/pl/') ||
-                       window.location.pathname.includes('/ar/');
-      const basePath = isSubdir ? '../assets/data/whatsapp-settings.json' : 'assets/data/whatsapp-settings.json';
+      const p = window.location.pathname.toLowerCase();
+      let prefix = '';
+      if (/\/(de|ru|pl|ar)\/tours\//.test(p)) {
+        prefix = '../../';
+      } else if (/\/(tours|articles|de|ru|pl|ar)(\/|$)/.test(p)) {
+        prefix = '../';
+      }
+      const basePath = `${prefix}assets/data/whatsapp-settings.json`;
 
       try {
         const res = await fetch(basePath);
         if (res.ok) {
           const remoteSettings = await res.json();
-          if (!localStorage.getItem(STORAGE_KEY) || (remoteSettings && remoteSettings.version >= 2)) {
+          const hasLocal = Boolean(localStorage.getItem(STORAGE_KEY));
+          const localVer = (this.settings && this.settings.version) || 0;
+          const remoteVer = (remoteSettings && remoteSettings.version) || 0;
+          if (!hasLocal || remoteVer > localVer) {
             this.settings = remoteSettings;
           }
           this.bindAllElements();
@@ -285,18 +293,28 @@
     /**
      * Reads booking form fields if available on page
      */
-    getBookingFormDetails() {
-      const dateEl = document.querySelector('input[type="date"], #bookDate, #bookDateDe, #bookDateRu, #bookDatePl, #bookDateAr');
-      const adultsEl = document.querySelector('#bookAdults, #bookAdultsDe, #bookAdultsRu, #bookAdultsPl, #bookAdultsAr, #bAdults, #snorkAdults, #subAdults');
-      const kidsEl = document.querySelector('#bookChildren, #bookChildrenDe, #bookKidsRu, #bookKidsPl, #bookKidsAr, #bKids, #snorkKids, #subKids');
-      const hotelEl = document.querySelector('#bookHotel, #bookHotelDe, #bookHotelRu, #bookHotelPl, #bookHotelAr, #bHotel, #snorkHotel, #subHotel, input[name*="hotel"], input[name*="location"], #bookLocation');
+    getBookingFormDetails(triggerEl = null) {
+      const scopeForm = (triggerEl && typeof triggerEl.closest === 'function' && triggerEl.closest('form'))
+        || document.querySelector('.booking-sidebar form, form[action*="wa.me"]');
+      const root = scopeForm || document;
+
+      const dateEl = root.querySelector('input[type="date"]')
+        || document.querySelector('input[type="date"], #bookDate, #bookDateDe, #bookDateRu, #bookDatePl, #bookDateAr');
+
+      const allSelects = scopeForm ? Array.from(scopeForm.querySelectorAll('select')) : [];
+      const adultsEl = root.querySelector('#bookAdults, #bookAdultsDe, #bookAdultsRu, #bookAdultsPl, #bookAdultsAr, #dAdultsAr, #subAdultsAr, #snAdultsAr, #dAdultsPl, #subAdultsPl, #snAdultsPl, #dAdultsRu, #subAdultsRu, #snAdultsRu, #bAdults, #snorkAdults, #subAdults')
+        || allSelects[0] || null;
+      const kidsEl = root.querySelector('#bookChildren, #bookChildrenDe, #bookKidsRu, #bookKidsPl, #bookKidsAr, #dKidsAr, #subKidsAr, #snKidsAr, #dKidsPl, #subKidsPl, #snKidsPl, #dKidsRu, #subKidsRu, #snKidsRu, #bKids, #snorkKids, #subKids')
+        || allSelects[1] || null;
+      const hotelEl = root.querySelector('#bookHotel, #bookHotelDe, #bookHotelRu, #bookHotelPl, #bookHotelAr, #dHotelRu, #subHotelRu, #snHotelRu, #dHotelPl, #subHotelPl, #snHotelPl, #bHotel, #snorkHotel, #subHotel, #bookLocation, input[name*="hotel"], input[name*="location"], input[type="text"]')
+        || document.querySelector('#bookHotel, #bookHotelDe, #bookHotelRu, #bookHotelPl, #bookHotelAr, #dHotelRu, #subHotelRu, #snHotelRu, #dHotelPl, #subHotelPl, #snHotelPl, #bookLocation, input[name*="hotel"], input[name*="location"]');
 
       const locVal = hotelEl && hotelEl.value ? hotelEl.value.trim() : null;
 
       return {
         date: dateEl && dateEl.value ? dateEl.value.trim() : null,
-        adults: adultsEl ? adultsEl.options[adultsEl.selectedIndex]?.text || adultsEl.value : null,
-        kids: kidsEl && kidsEl.value !== '0' ? kidsEl.options[kidsEl.selectedIndex]?.text || kidsEl.value : null,
+        adults: adultsEl ? (adultsEl.options[adultsEl.selectedIndex]?.text || adultsEl.value) : null,
+        kids: kidsEl && kidsEl.value !== '0' ? (kidsEl.options[kidsEl.selectedIndex]?.text || kidsEl.value) : null,
         hotel: locVal,
         location: locVal
       };
@@ -454,7 +472,7 @@
         // Click handler: evaluates latest form state live at the exact moment of click
         btn.onclick = (e) => {
           e.preventDefault();
-          const formInputs = this.getBookingFormDetails();
+          const formInputs = this.getBookingFormDetails(btn);
           const liveUrl = this.generateLink(productName, productPrice, productId, this.activeLanguage, formInputs);
           window.open(liveUrl, '_blank', 'noopener,noreferrer');
         };
@@ -465,7 +483,7 @@
       bookingForms.forEach(form => {
         form.onsubmit = (e) => {
           e.preventDefault();
-          const formInputs = this.getBookingFormDetails();
+          const formInputs = this.getBookingFormDetails(form);
           let pName = null;
           let pPrice = null;
           let pId = this.pageTour;

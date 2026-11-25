@@ -4,15 +4,78 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Mobile Menu Drawer Toggle
-  const menuToggle = document.getElementById('menuToggle');
-  const mobileDrawer = document.getElementById('mobileDrawer');
-  
+  // 1. Mobile Menu Drawer Toggle (auto-creates drawer & button if missing on subpages)
+  const siteHeader = document.querySelector('.site-header');
+  const headerActions = document.querySelector('.header-actions');
+  let menuToggle = document.getElementById('menuToggle');
+  let mobileDrawer = document.getElementById('mobileDrawer');
+
+  if (!menuToggle && headerActions && document.querySelector('.main-nav .nav-list')) {
+    menuToggle = document.createElement('button');
+    menuToggle.className = 'menu-toggle';
+    menuToggle.id = 'menuToggle';
+    menuToggle.type = 'button';
+    menuToggle.setAttribute('aria-label', 'Toggle Navigation Menu');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.textContent = '☰';
+    headerActions.appendChild(menuToggle);
+  }
+
+  if (siteHeader && menuToggle && !mobileDrawer) {
+    mobileDrawer = document.createElement('nav');
+    mobileDrawer.id = 'mobileDrawer';
+    mobileDrawer.className = 'mobile-drawer';
+    mobileDrawer.setAttribute('aria-label', 'Mobile Navigation');
+
+    const navList = document.querySelector('.main-nav .nav-list');
+    if (navList) {
+      const linksUl = document.createElement('ul');
+      linksUl.className = 'mobile-drawer-links';
+      linksUl.innerHTML = navList.innerHTML;
+      mobileDrawer.appendChild(linksUl);
+    }
+
+    const topLangSwitch = document.querySelector('.top-bar .lang-switch');
+    if (topLangSwitch) {
+      const langRow = document.createElement('div');
+      langRow.className = 'mobile-drawer-langs';
+      const label = document.createElement('span');
+      label.style.fontSize = '0.82rem';
+      label.style.fontWeight = '700';
+      label.style.color = 'var(--text-muted)';
+      const htmlLang = (document.documentElement.lang || 'en').substring(0, 2);
+      const langLabels = { ar: 'اللغة:', de: 'Sprache:', ru: 'Язык:', pl: 'Język:', en: 'Language:' };
+      label.textContent = langLabels[htmlLang] || 'Language:';
+      const clonedLang = topLangSwitch.cloneNode(true);
+      langRow.appendChild(label);
+      langRow.appendChild(clonedLang);
+      mobileDrawer.appendChild(langRow);
+    }
+
+    siteHeader.appendChild(mobileDrawer);
+  }
+
   if (menuToggle && mobileDrawer) {
-    menuToggle.addEventListener('click', () => {
+    const closeDrawer = () => {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.textContent = '☰';
+      mobileDrawer.classList.remove('is-open');
+    };
+
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
       const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-      menuToggle.setAttribute('aria-expanded', !isExpanded);
+      menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+      menuToggle.textContent = isExpanded ? '☰' : '✕';
       mobileDrawer.classList.toggle('is-open');
+    });
+
+    mobileDrawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeDrawer);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDrawer();
     });
   }
 
@@ -116,43 +179,126 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.HSTShareLocation = function(inputId, btnElement) {
-    const input = document.getElementById(inputId) || document.querySelector('input[name*="hotel"], input[name*="location"], #bookHotel, #bookHotelAr, #bookHotelDe, #bookHotelRu, #bookHotelPl');
+    const input = document.getElementById(inputId) || document.querySelector('#bookHotel, #bookHotelAr, #bookHotelDe, #bookHotelRu, #bookHotelPl, #dHotelRu, #subHotelRu, #snHotelRu, #dHotelPl, #subHotelPl, #snHotelPl, input[name*="hotel"], input[name*="location"]');
     const isAr = document.documentElement.lang === 'ar' || window.location.pathname.includes('/ar/');
     const isDe = document.documentElement.lang === 'de' || window.location.pathname.includes('/de/');
     const isRu = document.documentElement.lang === 'ru' || window.location.pathname.includes('/ru/');
     const isPl = document.documentElement.lang === 'pl' || window.location.pathname.includes('/pl/');
+    const langKey = isAr ? 'ar' : isDe ? 'de' : isRu ? 'ru' : isPl ? 'pl' : 'en';
+
+    const I18N_LOC = {
+      en: {
+        title: '📍 Select Your Hotel or Pickup Location',
+        chips: 'Or tap your resort area:',
+        hint: '👆 Tap map or drag pin to your exact resort',
+        gpsBtn: '📡 Detect My GPS Location',
+        confirmBtn: '✅ Confirm This Location',
+        close: 'Close',
+        pinnedLabel: 'Pinned Location',
+        noGps: 'GPS not supported',
+        detecting: 'Detecting...',
+        gpsLabel: 'Current GPS Location',
+        gpsOk: '✅ GPS Location detected',
+        pickMap: '⚠️ Please pick location on map',
+        mapsPrefix: '📍 Maps:',
+        pinnedDone: 'Location Pinned!',
+        resetBtn: '<span>📍 Pin GPS</span>'
+      },
+      ar: {
+        title: '📍 حدد موقع فندقك أو مكان إقامتك',
+        chips: 'أو اختر منطقتك بنقرة واحدة:',
+        hint: '👆 اضغط على الخريطة أو حرك الدبوس لأي مكان تريده',
+        gpsBtn: '📡 تحديد موقعي التلقائي (GPS)',
+        confirmBtn: '✅ تأكيد هذا الموقع واختياره',
+        close: 'إغلاق',
+        pinnedLabel: 'موقع محدد على الخريطة',
+        noGps: 'المتصفح لا يدعم GPS',
+        detecting: 'جاري البحث...',
+        gpsLabel: 'موقعي الحالي (GPS)',
+        gpsOk: '✅ تم التقاط موقعك بنجاح',
+        pickMap: '⚠️ يرجى تحريك الدبوس على الخريطة',
+        mapsPrefix: '📍 خريطة جوجل:',
+        pinnedDone: 'تم تحديد اللوكيشن',
+        resetBtn: '<span>📍 تحديد موقعي</span>'
+      },
+      de: {
+        title: '📍 Hotel oder Abholort auf der Karte wählen',
+        chips: 'Oder wählen Sie Ihre Urlaubsregion:',
+        hint: '👆 Auf die Karte tippen oder Stecknadel zum Hotel ziehen',
+        gpsBtn: '📡 Meinen GPS-Standort ermitteln',
+        confirmBtn: '✅ Diesen Standort bestätigen',
+        close: 'Schließen',
+        pinnedLabel: 'Gewählter Kartenstandort',
+        noGps: 'GPS wird nicht unterstützt',
+        detecting: 'Suche läuft...',
+        gpsLabel: 'Aktueller GPS-Standort',
+        gpsOk: '✅ GPS-Standort erkannt',
+        pickMap: '⚠️ Bitte Ort auf der Karte wählen',
+        mapsPrefix: '📍 Karte:',
+        pinnedDone: 'Standort markiert!',
+        resetBtn: '<span>📍 GPS-Pin</span>'
+      },
+      ru: {
+        title: '📍 Укажите ваш отель или точку трансфера',
+        chips: 'Или выберите курортный район:',
+        hint: '👆 Нажмите на карту или перетащите маркер к вашему отелю',
+        gpsBtn: '📡 Определить мою геопозицию GPS',
+        confirmBtn: '✅ Подтвердить это местоположение',
+        close: 'Закрыть',
+        pinnedLabel: 'Точка на карте',
+        noGps: 'GPS не поддерживается',
+        detecting: 'Поиск GPS...',
+        gpsLabel: 'Текущая геопозиция (GPS)',
+        gpsOk: '✅ Геопозиция определена',
+        pickMap: '⚠️ Выберите место на карте вручную',
+        mapsPrefix: '📍 Карта:',
+        pinnedDone: 'Локация выбрана!',
+        resetBtn: '<span>📍 Моя геопозиция GPS</span>'
+      },
+      pl: {
+        title: '📍 Wybierz swój hotel lub miejsce odbioru',
+        chips: 'Lub wybierz dzielnicę wypoczynkową:',
+        hint: '👆 Kliknij mapę lub przeciągnij pinezkę na swój hotel',
+        gpsBtn: '📡 Wykryj moją lokalizację GPS',
+        confirmBtn: '✅ Potwierdź tę lokalizację',
+        close: 'Zamknij',
+        pinnedLabel: 'Wybrana pinezka na mapie',
+        noGps: 'GPS nie jest obsługiwany',
+        detecting: 'Wykrywanie...',
+        gpsLabel: 'Aktualna lokalizacja GPS',
+        gpsOk: '✅ Wykryto lokalizację GPS',
+        pickMap: '⚠️ Proszę wskazać miejsce na mapie',
+        mapsPrefix: '📍 Mapa:',
+        pinnedDone: 'Wybrano lokalizację!',
+        resetBtn: '<span>📍 Pin GPS</span>'
+      }
+    };
+    const L_TXT = I18N_LOC[langKey] || I18N_LOC.en;
 
     // Remove existing modal if any
     const oldOverlay = document.getElementById('hstLocModalOverlay');
     if (oldOverlay) oldOverlay.remove();
-
-    const titleText = isAr ? '📍 حدد موقع فندقك أو مكان إقامتك' : '📍 Select Your Hotel or Pickup Location';
-    const chipsTitle = isAr ? 'أو اختر منطقتك بنقرة واحدة:' : 'Or tap your resort area:';
-    const mapHint = isAr ? '👆 اضغط على الخريطة أو حرك الدبوس لأي مكان تريده' : '👆 Tap map or drag pin to your exact resort';
-    const btnGpsText = isAr ? '📡 تحديد موقعي التلقائي (GPS)' : '📡 Detect My GPS Location';
-    const btnConfirmText = isAr ? '✅ تأكيد هذا الموقع واختياره' : '✅ Confirm This Location';
-    const closeTitle = isAr ? 'إغلاق' : 'Close';
 
     const overlay = document.createElement('div');
     overlay.className = 'hst-loc-overlay';
     overlay.id = 'hstLocModalOverlay';
 
     overlay.innerHTML = `
-      <div class="hst-loc-modal" role="dialog" aria-modal="true">
+      <div class="hst-loc-modal" role="dialog" aria-modal="true" dir="${isAr ? 'rtl' : 'ltr'}">
         <div class="hst-loc-header">
-          <h3>${titleText}</h3>
-          <button type="button" class="hst-loc-close" title="${closeTitle}" id="hstLocCloseBtn">&times;</button>
+          <h3>${L_TXT.title}</h3>
+          <button type="button" class="hst-loc-close" title="${L_TXT.close}" id="hstLocCloseBtn">&times;</button>
         </div>
         <div class="hst-loc-body">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <button type="button" class="hst-loc-btn-gps" id="hstLocAutoGpsBtn">
-              <span>${btnGpsText}</span>
+              <span>${L_TXT.gpsBtn}</span>
             </button>
             <span id="hstLocStatusMsg" style="font-size:0.78rem; font-weight:600; color:#0369A1;"></span>
           </div>
 
           <div>
-            <div class="hst-loc-chips-title">${chipsTitle}</div>
+            <div class="hst-loc-chips-title">${L_TXT.chips}</div>
             <div class="hst-loc-chips" id="hstLocChipsContainer" style="margin-top:6px;">
               ${AREAS.map(a => `<button type="button" class="hst-loc-chip" data-lat="${a.lat}" data-lng="${a.lng}" data-name="${isAr ? a.nameAr : a.nameEn}">${isAr ? a.nameAr : a.nameEn}</button>`).join('')}
             </div>
@@ -160,12 +306,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="hst-loc-map-box" id="hstLocMap"></div>
           <div class="hst-loc-map-hint">
-            <span>${mapHint}</span>
+            <span>${L_TXT.hint}</span>
           </div>
         </div>
         <div class="hst-loc-footer">
           <button type="button" class="hst-loc-btn-confirm" id="hstLocConfirmBtn">
-            <span>${btnConfirmText}</span>
+            <span>${L_TXT.confirmBtn}</span>
           </button>
         </div>
       </div>
@@ -216,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pos = e.target.getLatLng();
         selectedCoords.lat = Number(pos.lat.toFixed(5));
         selectedCoords.lng = Number(pos.lng.toFixed(5));
-        selectedCoords.label = isAr ? 'موقع محدد على الخريطة' : 'Pinned Location';
+        selectedCoords.label = L_TXT.pinnedLabel;
         if (statusMsg) statusMsg.textContent = `${selectedCoords.lat}, ${selectedCoords.lng}`;
       });
 
@@ -225,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const lng = Number(e.latlng.lng.toFixed(5));
         selectedCoords.lat = lat;
         selectedCoords.lng = lng;
-        selectedCoords.label = isAr ? 'موقع محدد على الخريطة' : 'Pinned Location';
+        selectedCoords.label = L_TXT.pinnedLabel;
         activeMarker.setLatLng([lat, lng]);
         if (statusMsg) statusMsg.textContent = `${lat}, ${lng}`;
       });
@@ -257,12 +403,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto GPS button handler
     autoGpsBtn.onclick = () => {
       if (!navigator.geolocation) {
-        if (statusMsg) statusMsg.textContent = isAr ? 'المتصفح لا يدعم GPS' : 'GPS not supported';
+        if (statusMsg) statusMsg.textContent = L_TXT.noGps;
         return;
       }
       autoGpsBtn.disabled = true;
       const oldBtnHTML = autoGpsBtn.innerHTML;
-      autoGpsBtn.innerHTML = `<span>⏳ ${isAr ? 'جاري البحث...' : 'Detecting...'}</span>`;
+      autoGpsBtn.innerHTML = `<span>⏳ ${L_TXT.detecting}</span>`;
 
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -270,13 +416,13 @@ document.addEventListener('DOMContentLoaded', () => {
           autoGpsBtn.innerHTML = oldBtnHTML;
           const lat = Number(pos.coords.latitude.toFixed(5));
           const lng = Number(pos.coords.longitude.toFixed(5));
-          selectedCoords = { lat, lng, label: isAr ? 'موقعي الحالي (GPS)' : 'Current GPS Location' };
+          selectedCoords = { lat, lng, label: L_TXT.gpsLabel };
           if (activeMap && activeMarker) {
             activeMap.flyTo([lat, lng], 15);
             activeMarker.setLatLng([lat, lng]);
           }
           if (statusMsg) {
-            statusMsg.textContent = `✅ ${isAr ? 'تم التقاط موقعك بنجاح' : 'GPS Location detected'}`;
+            statusMsg.textContent = L_TXT.gpsOk;
             statusMsg.style.color = '#15803D';
           }
         },
@@ -284,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
           autoGpsBtn.disabled = false;
           autoGpsBtn.innerHTML = oldBtnHTML;
           if (statusMsg) {
-            statusMsg.textContent = isAr ? '⚠️ يرجى تحريك الدبوس على الخريطة' : '⚠️ Please pick location on map';
+            statusMsg.textContent = L_TXT.pickMap;
             statusMsg.style.color = '#B91C1C';
           }
         },
@@ -297,20 +443,21 @@ document.addEventListener('DOMContentLoaded', () => {
       const mapsUrl = `https://maps.google.com/?q=${selectedCoords.lat},${selectedCoords.lng}`;
       if (input) {
         const curVal = input.value.trim();
-        const mapPrefix = isAr ? '📍 خريطة جوجل:' : '📍 Maps:';
-        if (curVal && !curVal.includes('maps.google.com')) {
-          input.value = `${curVal} - ${selectedCoords.label} (${mapPrefix} ${mapsUrl})`;
+        const baseHotel = curVal.includes('maps.google.com') ? '' : curVal;
+        if (baseHotel) {
+          input.value = `${baseHotel} - ${selectedCoords.label} (${L_TXT.mapsPrefix} ${mapsUrl})`;
         } else {
-          input.value = `${selectedCoords.label} (${mapPrefix} ${mapsUrl})`;
+          input.value = `${selectedCoords.label} (${L_TXT.mapsPrefix} ${mapsUrl})`;
         }
         input.dispatchEvent(new Event('input', { bubbles: true }));
         input.dispatchEvent(new Event('change', { bubbles: true }));
       }
 
       if (btnElement) {
-        btnElement.innerHTML = `<span>✅ ${isAr ? 'تم تحديد اللوكيشن' : 'Location Pinned!'}</span>`;
+        const prevHtml = btnElement.innerHTML;
+        btnElement.innerHTML = `<span>✅ ${L_TXT.pinnedDone}</span>`;
         setTimeout(() => {
-          btnElement.innerHTML = isAr ? '<span>📍 تحديد موقعي</span>' : '<span>📍 Pin GPS</span>';
+          btnElement.innerHTML = prevHtml || L_TXT.resetBtn;
         }, 4000);
       }
 

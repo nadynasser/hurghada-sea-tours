@@ -33,6 +33,8 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="de_DE">
   <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:locale:alternate" content="pl_PL">
+  <meta property="og:locale:alternate" content="ar_EG">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -44,7 +46,7 @@
   <meta name="theme-color" content="#085EA8">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="assets/css/main.css?v=4">
+  <link rel="stylesheet" href="assets/css/main.css?v=5">
 
   <!-- ======================================================================
        2. GEO & AEO: Schema.org JSON-LD Structured Data
@@ -106,11 +108,44 @@
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Trip",
+                "name": "Hula Hula Island & Snorkeling Cruise",
+                "description": "Full-day boat trip to Hula Hula Island on Giftun with water swings, 2 coral snorkeling stops, and buffet lunch.",
+                "touristType": "Families, Couples, Snorkelers"
+              },
+              "price": "32.00",
+              "priceCurrency": "EUR"
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Trip",
                 "name": "Dolphin House Adventure",
                 "description": "Morning speed cruise to natural dolphin habitats in Hurghada with swimming and snorkeling opportunities.",
                 "touristType": "Families, Adventure Lovers"
               },
               "price": "25.00",
+              "priceCurrency": "EUR"
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Trip",
+                "name": "Living Coral Reef & Marine Sanctuary",
+                "description": "Guided reef snorkeling boat tour at two pristine Red Sea coral plateaus with equipment and lunch.",
+                "touristType": "Snorkelers, Ocean Lovers"
+              },
+              "price": "35.00",
+              "priceCurrency": "EUR"
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Trip",
+                "name": "Semi-Submarine Underwater Observatory",
+                "description": "2-hour air-conditioned underwater cabin cruise 3 meters under the surface, ideal for families and non-swimmers.",
+                "touristType": "Families, All Ages"
+              },
+              "price": "20.00",
               "priceCurrency": "EUR"
             }
           ]
@@ -209,8 +244,8 @@
           <li><a href="./" class="nav-link active">Home</a></li>
           <li><a href="#tours" class="nav-link">Sea Tours</a></li>
           <li><a href="#private" class="nav-link">Private Charters</a></li>
-          <li><a href="#features" class="nav-link">What's Included</a></li>
-          <li><a href="#reviews" class="nav-link">Reviews</a></li>
+          <li><a href="articles/" class="nav-link">Guides</a></li>
+          <li><a href="#features" class="nav-link">Inclusions</a></li>
           <li><a href="#faq" class="nav-link">FAQ</a></li>
         </ul>
       </nav>
@@ -702,7 +737,7 @@
       <details class="faq-item">
         <summary class="faq-question">Is hotel pickup and drop-off included?</summary>
         <div class="faq-answer">
-          Yes! Round-trip transfer in modern air-conditioned minivans is completely free of charge from all hotels in Hurghada city center and the Marina district. For hotels located in outer resorts (Makadi Bay, Sahl Hasheesh, El Gouna, or Soma Bay), we provide convenient transfer service for a minimal small extra fee (€5 per person).
+          Yes! Round-trip transfer in modern air-conditioned minivans is completely free of charge from all central Hurghada hotels and resorts. For hotels located in outer resorts (Makadi Bay, Sahl Hasheesh, El Gouna, or Soma Bay), we provide convenient transfer service for a minimal small extra fee (€5 per person).
         </div>
       </details>
 
@@ -751,7 +786,7 @@
             </div>
           </div>
           <p style="font-size:0.9rem; line-height:1.6; margin-bottom:16px;">
-            Licensed Egyptian travel operator specializing in premium Red Sea boat trips, island getaways, dolphin encounters, and private yacht charters from Hurghada Marina.
+            Licensed Egyptian travel operator specializing in premium Red Sea boat trips, island getaways, dolphin encounters, and private yacht charters in Hurghada.
           </p>
           <p style="font-size:0.8rem; color:#64748B;">Ministry of Tourism License No. 2344</p>
         </div>
@@ -760,10 +795,10 @@
           <h4>Popular Tours</h4>
           <ul class="footer-links">
             <li><a href="tours/orange-bay-island.html">Orange Bay Island Cruise</a></li>
+            <li><a href="tours/hula-hula-island.html">Hula Hula Island Cruise</a></li>
             <li><a href="tours/dolphin-house.html">Dolphin House Swimming</a></li>
             <li><a href="tours/snorkeling-coral-reef.html">Living Coral Reef Snorkeling</a></li>
             <li><a href="tours/semi-submarine.html">Semi-Submarine Observatory</a></li>
-            <li><a href="#tours">Paradise Island VIP</a></li>
             <li><a href="#private">Private Yacht Charters</a></li>
           </ul>
         </div>
@@ -771,12 +806,11 @@
         <div class="footer-col">
           <h4>Explore Hurghada</h4>
           <ul class="footer-links">
+            <li><a href="articles/">Snorkeling &amp; Island Guides</a></li>
             <li><a href="#features">What's Always Included</a></li>
             <li><a href="#reviews">Guest Reviews &amp; Stories</a></li>
             <li><a href="#faq">Frequently Asked Questions</a></li>
-            <li><a href="./">English Version</a></li>
-            <li><a href="de/">Deutsche Version</a></li>
-            <li><a href="ru/">Русская версия</a></li>
+            <li><a href="de/">Deutsch</a> · <a href="ru/">Русский</a> · <a href="pl/">Polski</a> · <a href="ar/">العربية</a></li>
           </ul>
         </div>
 
@@ -811,7 +845,7 @@
   </div>
 
   <!-- JavaScript -->
-  <script src="assets/js/whatsapp-router.js"></script>
-  <script src="assets/js/main.js?v=3"></script>
+  <script src="assets/js/whatsapp-router.js?v=4"></script>
+  <script src="assets/js/main.js?v=4"></script>
 </body>
 </html>

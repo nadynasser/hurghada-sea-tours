@@ -8,6 +8,7 @@ Allow: /ru/
 Allow: /pl/
 Allow: /ar/
 Allow: /tours/
+Allow: /articles/
 Allow: /assets/
 Allow: /assets/images/
 Allow: /assets/css/

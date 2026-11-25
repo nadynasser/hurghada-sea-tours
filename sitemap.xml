@@ -420,4 +420,34 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hurghadaseatours.com/tours/semi-submarine.html"/>
   </url>
 
+  <!-- ======================================================================
+       SEO / GEO / AEO Guides & Articles Hub
+       ====================================================================== -->
+  <url>
+    <loc>https://hurghadaseatours.com/articles/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/articles/best-snorkeling-spots-hurghada.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://hurghadaseatours.com/assets/images/tours/tour-snorkeling.jpg</image:loc>
+      <image:title>Top 5 Snorkeling Spots in Hurghada Red Sea</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/articles/orange-bay-vs-paradise-island-guide.html</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://hurghadaseatours.com/assets/images/tours/tour-orange-bay.jpg</image:loc>
+      <image:title>Orange Bay vs Hula Hula Island Hurghada Guide</image:title>
+    </image:image>
+  </url>
+
 </urlset>
