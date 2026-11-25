@@ -1970,7 +1970,7 @@ async function checkAuthStatus() {
   const notice = document.getElementById('loginSetupNotice');
   if (SERVER_STATUS.available && !SERVER_STATUS.authConfigured) {
     if (notice) {
-      notice.innerHTML = '⚙️ <strong>تفعيل الحماية السحابية:</strong> أضف المتغير السري <code>ADMIN_PASSWORD</code> داخل لوحة Cloudflare Pages ← Settings ← Variables and Secrets لتسجيل الدخول الآمن.';
+      notice.innerHTML = '⚙️ <strong>تفعيل الحماية السحابية:</strong> أضف المتغير السري <code>ADMIN_PASSWORD</code> داخل لوحة Cloudflare Workers ← <code>hurghada-sea-tours</code> ← Settings ← Variables and Secrets لتسجيل الدخول الآمن.';
       notice.style.display = 'block';
     }
     document.getElementById('dashLoginGate').style.display = 'flex';
@@ -2344,7 +2344,12 @@ async function saveWhatsAppSettings() {
       handleSessionExpired();
       return;
     }
-    if (res.ok) serverStatus = SERVER_STATUS.cloudKv ? ' & Cloudflare KV (Live)' : ' & disk JSON';
+    if (res.ok) {
+      const saveData = await res.json();
+      serverStatus = saveData.source === 'kv'
+        ? ' & Cloudflare KV (Live)'
+        : (saveData.source === 'github' ? ' & GitHub (Live ~30s)' : ' & disk JSON');
+    }
   } catch (e) {}
 
   showToast(`✓ تم حفظ إعدادات واتساب بنجاح${serverStatus}!`);

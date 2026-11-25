@@ -4,27 +4,21 @@ import {
   createSessionCookieHeader,
   jsonResponse,
   verifySession
-} from '../_shared/utils.js';
+} from '../utils.js';
 
-/**
- * Checks whether the current browser holds a valid dashboard session cookie.
- */
-export async function onRequestGet(context) {
+export async function handleAuth(context) {
   const { request, env } = context;
-  const session = await verifySession(request, env);
-  return jsonResponse({
-    ok: true,
-    authConfigured: Boolean(env && env.ADMIN_PASSWORD),
-    authenticated: Boolean(session),
-    user: session ? session.u : null
-  });
-}
 
-/**
- * Handles server-side dashboard login and logout using HMAC-signed HttpOnly cookies.
- */
-export async function onRequestPost(context) {
-  const { request, env } = context;
+  if (request.method.toUpperCase() === 'GET') {
+    const session = await verifySession(request, env);
+    return jsonResponse({
+      ok: true,
+      authConfigured: Boolean(env && env.ADMIN_PASSWORD),
+      authenticated: Boolean(session),
+      user: session ? session.u : null
+    });
+  }
+
   let body;
   try {
     body = await request.json();
@@ -45,7 +39,7 @@ export async function onRequestPost(context) {
       {
         ok: false,
         configured: false,
-        error: 'ADMIN_PASSWORD is not configured in Cloudflare Pages Variables and Secrets.'
+        error: 'ADMIN_PASSWORD is not configured in Cloudflare Worker Variables and Secrets.'
       },
       503
     );

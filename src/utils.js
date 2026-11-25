@@ -1,5 +1,5 @@
 /**
- * Shared utilities for Hurghada Sea Tours Cloudflare Pages Functions
+ * Shared utilities for Hurghada Sea Tours Cloudflare Worker
  * Handles auth session cookies, KV helpers, and atomic GitHub Data API commits.
  */
 
@@ -7,9 +7,6 @@ export const DEFAULT_REPO = 'nadynasser/hurghada-sea-tours';
 export const DEFAULT_BRANCH = 'main';
 export const SESSION_COOKIE_NAME = 'hst_session';
 
-/**
- * Returns a JSON HTTP response with strict no-store cache headers.
- */
 export function jsonResponse(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
     status,
@@ -21,9 +18,6 @@ export function jsonResponse(data, status = 200, extraHeaders = {}) {
   });
 }
 
-/**
- * Escapes HTML/XML special characters safely.
- */
 export function escapeHtml(str) {
   return String(str || '')
     .replace(/&/g, '&amp;')
@@ -33,9 +27,6 @@ export function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
-/**
- * Normalizes a URL slug to lowercase ASCII kebab-case and prevents path traversal.
- */
 export function safeSlug(raw) {
   return String(raw || '')
     .toLowerCase()
@@ -46,9 +37,6 @@ export function safeSlug(raw) {
     .slice(0, 90);
 }
 
-/**
- * Encodes a UTF-8 string into standard Base64 safely across multi-byte scripts (Arabic, Cyrillic, emojis).
- */
 export function utf8ToBase64(str) {
   const bytes = new TextEncoder().encode(String(str || ''));
   let binary = '';
@@ -59,9 +47,6 @@ export function utf8ToBase64(str) {
   return btoa(binary);
 }
 
-/**
- * Decodes Base64 GitHub content into a UTF-8 string cleanly.
- */
 export function base64ToUtf8(b64) {
   const clean = String(b64 || '').replace(/\s+/g, '');
   const binary = atob(clean);
@@ -92,9 +77,6 @@ function fromBase64Url(str) {
   return bytes;
 }
 
-/**
- * Constant-time string comparison via SHA-256 digests so secret lengths/prefixes never leak.
- */
 export async function constantTimeEqual(a, b) {
   const enc = new TextEncoder();
   const [hashA, hashB] = await Promise.all([
@@ -133,9 +115,6 @@ export function getCookie(request, name) {
   return null;
 }
 
-/**
- * Signs an authenticated dashboard session token.
- */
 export async function createSessionCookieHeader(username, ttlSeconds, env, request) {
   const secret = env.SESSION_SECRET || env.ADMIN_PASSWORD;
   const payloadBytes = new TextEncoder().encode(
@@ -157,9 +136,6 @@ export function clearSessionCookieHeader(request) {
   return `${SESSION_COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${secureFlag}`;
 }
 
-/**
- * Verifies the dashboard session cookie and returns { u, exp } or null.
- */
 export async function verifySession(request, env) {
   const secret = env && (env.SESSION_SECRET || env.ADMIN_PASSWORD);
   if (!secret) return null;
@@ -191,9 +167,6 @@ export async function verifySession(request, env) {
   }
 }
 
-/**
- * Enforces server-side authentication for protected admin endpoints.
- */
 export async function requireAuth(context) {
   const { request, env } = context;
   if (!env || !env.ADMIN_PASSWORD) {
@@ -203,7 +176,7 @@ export async function requireAuth(context) {
         {
           ok: false,
           configured: false,
-          error: 'ADMIN_PASSWORD is not set in Cloudflare Pages Settings -> Variables and Secrets.'
+          error: 'ADMIN_PASSWORD is not set in Cloudflare Worker Settings -> Variables and Secrets.'
         },
         503
       )
@@ -220,48 +193,24 @@ export async function requireAuth(context) {
   return { ok: true, user: session.u };
 }
 
-/**
- * Ensures Cloudflare KV binding HST_KV exists cleanly.
- */
-export function requireKv(context) {
-  if (!context.env || !context.env.HST_KV) {
-    return {
-      ok: false,
-      response: jsonResponse(
-        {
-          ok: false,
-          configured: false,
-          error: 'Cloudflare KV binding HST_KV is not connected yet.'
-        },
-        503
-      )
-    };
-  }
-  return { ok: true, kv: context.env.HST_KV };
-}
-
 async function githubFetch(env, path, init = {}) {
   const token = env && env.GITHUB_TOKEN;
   if (!token) {
-    throw new Error('GITHUB_TOKEN is not set in Cloudflare Pages Secrets.');
+    throw new Error('GITHUB_TOKEN is not set in Cloudflare Worker Variables and Secrets.');
   }
   const repo = (env && env.GITHUB_REPO) || DEFAULT_REPO;
-  const res = await fetch(`https://api.github.com/repos/${repo}${path}`, {
+  return fetch(`https://api.github.com/repos/${repo}${path}`, {
     ...init,
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/vnd.github+json',
-      'User-Agent': 'HurghadaSeaTours-Pages-Functions/1.0',
+      'User-Agent': 'HurghadaSeaTours-CloudflareWorker/1.0',
       'X-GitHub-Api-Version': '2022-11-28',
       ...(init.headers || {})
     }
   });
-  return res;
 }
 
-/**
- * Reads a UTF-8 text file from GitHub at the configured branch, or returns null on 404.
- */
 export async function githubGetTextFile(env, filePath) {
   const branch = (env && env.GITHUB_BRANCH) || DEFAULT_BRANCH;
   const encodedPath = filePath.split('/').map(encodeURIComponent).join('/');
@@ -278,10 +227,6 @@ export async function githubGetTextFile(env, filePath) {
   };
 }
 
-/**
- * Commits multiple text/binary files in ONE atomic Git commit using Git Data API.
- * Prevents multiple Cloudflare Pages rebuilds when publishing articles + images + sitemap.
- */
 export async function commitGitHubFiles(env, { message, files }) {
   const branch = (env && env.GITHUB_BRANCH) || DEFAULT_BRANCH;
 

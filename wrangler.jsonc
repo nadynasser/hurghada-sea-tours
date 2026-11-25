@@ -1,0 +1,13 @@
+{
+  "name": "hurghada-sea-tours",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-11-25",
+  "keep_vars": true,
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none",
+    "run_worker_first": ["/api/*"]
+  }
+}

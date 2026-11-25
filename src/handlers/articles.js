@@ -5,9 +5,57 @@ import {
   jsonResponse,
   requireAuth,
   safeSlug
-} from '../_shared/utils.js';
+} from '../utils.js';
 
 const SITE_ORIGIN = 'https://hurghadaseatours.com';
+
+export async function handleGetArticles(context) {
+  const auth = await requireAuth(context);
+  if (!auth.ok) return auth.response;
+
+  const { env } = context;
+  if (!env || !env.HST_KV) {
+    return jsonResponse({ ok: true, source: 'static', articles: null });
+  }
+
+  try {
+    const articles = await env.HST_KV.get('articles', 'json');
+    if (!Array.isArray(articles)) {
+      return jsonResponse({ ok: true, source: 'static', articles: null });
+    }
+    return jsonResponse({ ok: true, source: 'kv', articles });
+  } catch (err) {
+    return jsonResponse({ ok: false, error: err.message }, 500);
+  }
+}
+
+export async function handleSaveArticles(context) {
+  const auth = await requireAuth(context);
+  if (!auth.ok) return auth.response;
+
+  const { request, env } = context;
+  let articles;
+  try {
+    articles = await request.json();
+  } catch {
+    return jsonResponse({ ok: false, error: 'Invalid JSON payload.' }, 400);
+  }
+
+  if (!Array.isArray(articles)) {
+    return jsonResponse({ ok: false, error: 'Expected an array of articles.' }, 400);
+  }
+
+  if (env && env.HST_KV) {
+    await env.HST_KV.put('articles', JSON.stringify(articles));
+    return jsonResponse({ ok: true, status: 'success', source: 'kv', count: articles.length });
+  }
+
+  return jsonResponse({
+    ok: false,
+    configured: false,
+    error: 'HST_KV binding is not connected yet.'
+  }, 503);
+}
 
 function upsertArticlesHubCard(hubHtml, article, slug, relativeImgSrc) {
   const en = (article.translations && article.translations.en) || {};
@@ -113,15 +161,7 @@ function upsertArticlesJson(existingJsonText, publishedArticle) {
   return JSON.stringify(list, null, 2);
 }
 
-/**
- * Publishes an article cleanly into GitHub in ONE atomic commit:
- * - Optional uploaded cover image -> assets/images/articles/<slug>.<ext>
- * - Static SEO/GEO/AEO HTML -> articles/<slug>.html
- * - Articles hub card -> articles/index.html
- * - Articles data index -> assets/data/articles.json
- * - XML sitemap -> sitemap.xml
- */
-export async function onRequestPost(context) {
+export async function handlePublishArticle(context) {
   const auth = await requireAuth(context);
   if (!auth.ok) return auth.response;
 
@@ -131,7 +171,7 @@ export async function onRequestPost(context) {
       {
         ok: false,
         configured: false,
-        error: 'GITHUB_TOKEN is not configured in Cloudflare Pages Settings -> Variables and Secrets.'
+        error: 'GITHUB_TOKEN is not configured in Cloudflare Worker Variables and Secrets.'
       },
       503
     );
@@ -187,7 +227,6 @@ export async function onRequestPost(context) {
     relativeImgSrc = `../${repoImagePath}`;
     absoluteImgUrl = `${SITE_ORIGIN}${uploadedImagePath}`;
 
-    // Rewrite inline data URI in generated HTML so published pages stay lightweight and cacheable
     htmlContent = htmlContent
       .replaceAll(coverRaw, relativeImgSrc)
       .replaceAll(`${SITE_ORIGIN}/assets/images/tours/tour-snorkeling.jpg`, absoluteImgUrl);
@@ -246,12 +285,11 @@ export async function onRequestPost(context) {
       files: filesToCommit
     });
 
-    // Sync published status & hosted cover path back into KV if bound
     if (env.HST_KV) {
       try {
         await env.HST_KV.put('articles', updatedArticlesJson);
       } catch {
-        // Non-fatal if KV sync fails after Git commit
+        // Non-fatal
       }
     }
 

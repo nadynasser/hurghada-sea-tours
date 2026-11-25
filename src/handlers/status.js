@@ -1,9 +1,6 @@
-import { DEFAULT_REPO, jsonResponse, verifySession } from '../_shared/utils.js';
+import { DEFAULT_REPO, jsonResponse, verifySession } from '../utils.js';
 
-/**
- * Reports public-safe server capabilities and current authenticated session user.
- */
-export async function onRequestGet(context) {
+export async function handleStatus(context) {
   const { request, env } = context;
   const session = await verifySession(request, env);
 

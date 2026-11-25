@@ -1,13 +1,13 @@
-import { jsonResponse, requireAuth } from '../_shared/utils.js';
+import { jsonResponse, requireAuth } from '../utils.js';
 
 const SEO_ARTICLE_SCHEMA = {
   type: 'object',
   properties: {
-    title: { type: 'string', description: 'Compelling H1 article headline (English).' },
-    slug: { type: 'string', description: 'Short lowercase hyphenated URL slug (e.g. best-dolphin-tours-hurghada).' },
+    title: { type: 'string', description: 'Compelling H1 article headline.' },
+    slug: { type: 'string', description: 'Short lowercase hyphenated URL slug.' },
     excerpt: { type: 'string', description: 'Concise 1-2 sentence article summary.' },
-    seoTitle: { type: 'string', description: 'Google title tag (strictly 50-60 characters including Hurghada).' },
-    metaDesc: { type: 'string', description: 'Google meta description (strictly 140-155 characters with booking CTA).' },
+    seoTitle: { type: 'string', description: 'Google title tag (50-60 characters including Hurghada).' },
+    metaDesc: { type: 'string', description: 'Google meta description (140-155 characters with booking CTA).' },
     keywords: { type: 'string', description: '5-8 comma-separated SEO focus keywords.' },
     coverAlt: { type: 'string', description: 'Descriptive image alt text with Hurghada Red Sea context.' },
     geoArea: {
@@ -26,8 +26,7 @@ const SEO_ARTICLE_SCHEMA = {
       items: {
         type: 'string',
         enum: ['orange-bay', 'hula-hula', 'dolphin-house', 'coral-reef', 'semi-submarine']
-      },
-      description: '1-3 matching tour IDs to link via :::trip-cta shortcodes.'
+      }
     },
     takeaways: {
       type: 'array',
@@ -43,34 +42,20 @@ const SEO_ARTICLE_SCHEMA = {
           a: { type: 'string' }
         },
         required: ['q', 'a']
-      },
-      description: '4 practical tourist FAQ Q&As formatted for Schema.org FAQPage.'
+      }
     },
     content: {
       type: 'string',
-      description: 'Full Markdown article with direct answer intro, ## H2 question headings, bullet tips, and 1-2 :::trip-cta id="tour-id"\n::: blocks.'
+      description: 'Full Markdown article with direct answer intro, ## H2 headings, tips, and 1-2 :::trip-cta shortcodes.'
     }
   },
   required: [
-    'title',
-    'slug',
-    'excerpt',
-    'seoTitle',
-    'metaDesc',
-    'keywords',
-    'coverAlt',
-    'geoArea',
-    'relatedTrips',
-    'takeaways',
-    'faqs',
-    'content'
+    'title', 'slug', 'excerpt', 'seoTitle', 'metaDesc',
+    'keywords', 'coverAlt', 'geoArea', 'relatedTrips', 'takeaways', 'faqs', 'content'
   ]
 };
 
-/**
- * Generates SEO + GEO + AEO article fields server-side via Gemini Interactions API.
- */
-export async function onRequestPost(context) {
+export async function handleAiSeo(context) {
   const auth = await requireAuth(context);
   if (!auth.ok) return auth.response;
 
@@ -80,7 +65,7 @@ export async function onRequestPost(context) {
       {
         ok: false,
         configured: false,
-        error: 'GEMINI_API_KEY is not set in Cloudflare Pages Settings -> Variables and Secrets.'
+        error: 'GEMINI_API_KEY is not set in Cloudflare Worker Variables and Secrets.'
       },
       503
     );
@@ -119,7 +104,7 @@ export async function onRequestPost(context) {
     `- dolphin-house (€25, Shaab El Erg wild dolphin sanctuary + 2 snorkeling stops + water sports)`,
     `- coral-reef (€35, Living Coral Reef small-group snorkeling & marine sanctuary)`,
     `- semi-submarine (€20, Panoramic underwater coral viewing at 3m depth, ideal for families & non-swimmers)`,
-    `All tours include free air-conditioned Hurghada hotel pickup, pay on arrival, and fresh buffet lunch (except semi-submarine drinks/transfer details).`,
+    `All tours include free air-conditioned Hurghada hotel pickup and pay on arrival.`,
     `Structure content with: a direct answer in the first 50 words, clear ## H2 question headings, practical local Red Sea captain tips, and 1-2 embedded :::trip-cta shortcodes.`
   ].join('\n');
 
