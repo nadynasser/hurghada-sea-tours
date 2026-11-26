@@ -54,8 +54,14 @@
   <link rel="apple-touch-icon" href="assets/images/logo-icon.svg">
   <meta name="theme-color" content="#085EA8">
 
+  <!-- Preconnect & Preload Critical Assets -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="assets/images/hero/hero-hurghada-yacht.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap">
+
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="assets/css/main.css?v=6">
+  <link rel="stylesheet" href="assets/css/main.css?v=7">
 
   <!-- ======================================================================
        2. GEO & AEO: Schema.org JSON-LD Structured Data
@@ -304,28 +310,28 @@
         <a href="#tours" class="category-card" data-category-link="all">
           <div class="cat-icon">🚤</div>
           <div class="cat-info">
-            <h3>Sea Trips</h3>
+            <p class="cat-title">Sea Trips</p>
             <p>Discover the open Red Sea</p>
           </div>
         </a>
         <a href="#tours" class="category-card" data-category-link="island">
           <div class="cat-icon">🏝️</div>
           <div class="cat-info">
-            <h3>Island Tours</h3>
+            <p class="cat-title">Island Tours</p>
             <p>Orange Bay &amp; Giftun</p>
           </div>
         </a>
         <a href="#tours" class="category-card" data-category-link="snorkeling">
           <div class="cat-icon">🤿</div>
           <div class="cat-info">
-            <h3>Snorkeling</h3>
+            <p class="cat-title">Snorkeling</p>
             <p>Living coral reef gardens</p>
           </div>
         </a>
         <a href="#tours" class="category-card" data-category-link="dolphin">
           <div class="cat-icon">🐬</div>
           <div class="cat-info">
-            <h3>Dolphin Tours</h3>
+            <p class="cat-title">Dolphin Tours</p>
             <p>Swim with wild dolphins</p>
           </div>
         </a>
@@ -342,28 +348,28 @@
         <div class="trust-item">
           <div class="icon">🔄</div>
           <div>
-            <h4>Free Cancellation</h4>
+            <p class="trust-title">Free Cancellation</p>
             <p>Cancel or reschedule up to 24h before sailing with zero fees.</p>
           </div>
         </div>
         <div class="trust-item">
           <div class="icon">🚐</div>
           <div>
-            <h4>Hotel Pickup Included</h4>
+            <p class="trust-title">Hotel Pickup Included</p>
             <p>Air-conditioned round-trip transfer from your Hurghada hotel.</p>
           </div>
         </div>
         <div class="trust-item">
           <div class="icon">🤿</div>
           <div>
-            <h4>Snorkel Gear Included</h4>
+            <p class="trust-title">Snorkel Gear Included</p>
             <p>Sanitized masks, fins, and life jackets for adults and kids.</p>
           </div>
         </div>
         <div class="trust-item">
           <div class="icon">💶</div>
           <div>
-            <h4>Pay on Arrival</h4>
+            <p class="trust-title">Pay on Arrival</p>
             <p>No credit card required upfront. Pay in EUR, USD, GBP or EGP.</p>
           </div>
         </div>
@@ -386,12 +392,12 @@
 
       <!-- Filter Pills -->
       <div class="filter-pills" role="tablist" aria-label="Tour Filters">
-        <button class="pill-btn active" data-filter="all">All Adventures</button>
-        <button class="pill-btn" data-filter="island">🏝️ Island Trips</button>
-        <button class="pill-btn" data-filter="dolphin">🐬 Dolphin Tours</button>
-        <button class="pill-btn" data-filter="snorkeling">🤿 Snorkeling &amp; Diving</button>
-        <button class="pill-btn" data-filter="submarine">🚢 Semi-Submarine</button>
-        <button class="pill-btn" data-filter="private">🚤 Private Charters</button>
+        <button class="pill-btn active" data-filter="all" role="tab" aria-selected="true">All Adventures</button>
+        <button class="pill-btn" data-filter="island" role="tab" aria-selected="false">🏝️ Island Trips</button>
+        <button class="pill-btn" data-filter="dolphin" role="tab" aria-selected="false">🐬 Dolphin Tours</button>
+        <button class="pill-btn" data-filter="snorkeling" role="tab" aria-selected="false">🤿 Snorkeling &amp; Diving</button>
+        <button class="pill-btn" data-filter="submarine" role="tab" aria-selected="false">🚢 Semi-Submarine</button>
+        <button class="pill-btn" data-filter="private" role="tab" aria-selected="false">🚤 Private Charters</button>
       </div>
 
       <!-- Tours Grid -->
@@ -400,7 +406,7 @@
         <!-- Tour Card 1: Orange Bay Island -->
         <article class="tour-card" data-category="island">
           <div class="tour-card-media">
-            <img src="assets/images/tours/tour-orange-bay.jpg" alt="Orange Bay Island wooden walkway and crystal turquoise water in Hurghada" width="800" height="600" loading="lazy">
+            <img src="assets/images/tours/tour-orange-bay.jpg" alt="Orange Bay Island wooden walkway and crystal turquoise water in Hurghada" width="800" height="600" loading="lazy" decoding="async">
             <span class="card-badge-cat">Island Trip</span>
             <span class="card-badge-pickup">🚐 Pickup Included</span>
           </div>
@@ -433,7 +439,7 @@
         <!-- Tour Card: Hula Hula Island -->
         <article class="tour-card" data-category="island">
           <div class="tour-card-media">
-            <img src="assets/images/tours/tour-hula-hula.jpg" alt="Hula Hula Island tropical beach with water swings in Hurghada" width="800" height="600" loading="lazy">
+            <img src="assets/images/tours/tour-hula-hula.jpg" alt="Hula Hula Island tropical beach with water swings in Hurghada" width="800" height="600" loading="lazy" decoding="async">
             <span class="card-badge-cat" style="background:#FFD166; color:#052646;">Trending New 🔥</span>
             <span class="card-badge-pickup">🚐 Pickup Included</span>
           </div>
@@ -466,7 +472,7 @@
         <!-- Tour Card 2: Dolphin House Adventure -->
         <article class="tour-card" data-category="dolphin">
           <div class="tour-card-media">
-            <img src="assets/images/tours/tour-dolphin-house.jpg" alt="Two wild dolphins jumping in turquoise Red Sea water near Hurghada Dolphin House" width="800" height="600" loading="lazy">
+            <img src="assets/images/tours/tour-dolphin-house.jpg" alt="Two wild dolphins jumping in turquoise Red Sea water near Hurghada Dolphin House" width="800" height="600" loading="lazy" decoding="async">
             <span class="card-badge-cat" style="background:#00B4DB; color:#fff;">Dolphin Tour</span>
             <span class="card-badge-pickup">🚐 Pickup Included</span>
           </div>
@@ -499,7 +505,7 @@
         <!-- Tour Card 3: Snorkeling & Coral Reef -->
         <article class="tour-card" data-category="snorkeling">
           <div class="tour-card-media">
-            <img src="assets/images/tours/tour-snorkeling.jpg" alt="Snorkeler swimming above living colorful coral reef garden in Red Sea Hurghada" width="800" height="600" loading="lazy">
+            <img src="assets/images/tours/tour-snorkeling.jpg" alt="Snorkeler swimming above living colorful coral reef garden in Red Sea Hurghada" width="800" height="600" loading="lazy" decoding="async">
             <span class="card-badge-cat" style="background:#085EA8; color:#fff;">Snorkeling</span>
             <span class="card-badge-pickup">🚐 Pickup Included</span>
           </div>
@@ -532,7 +538,7 @@
         <!-- Tour Card 4: Semi-Submarine -->
         <article class="tour-card" data-category="submarine">
           <div class="tour-card-media">
-            <img src="assets/images/tours/tour-semi-submarine.jpg" alt="Family looking through underwater observation windows in Hurghada semi-submarine" width="800" height="600" loading="lazy">
+            <img src="assets/images/tours/tour-semi-submarine.jpg" alt="Family looking through underwater observation windows in Hurghada semi-submarine" width="800" height="600" loading="lazy" decoding="async">
             <span class="card-badge-cat">Family Favorite</span>
             <span class="card-badge-pickup">🚐 Pickup Included</span>
           </div>
@@ -565,7 +571,7 @@
         <!-- Tour Card 5: Paradise Island -->
         <article class="tour-card" data-category="island">
           <div class="tour-card-media">
-            <img src="assets/images/tours/tour-orange-bay.jpg" alt="Paradise Island white sand beach and beach lounge in Hurghada" width="800" height="600" loading="lazy">
+            <img src="assets/images/tours/tour-orange-bay.jpg" alt="Paradise Island white sand beach and beach lounge in Hurghada" width="800" height="600" loading="lazy" decoding="async">
             <span class="card-badge-cat">Island Trip</span>
             <span class="card-badge-pickup">🚐 Pickup Included</span>
           </div>
@@ -597,7 +603,7 @@
         <!-- Tour Card 6: Private Speedboat & Yacht -->
         <article class="tour-card" data-category="private">
           <div class="tour-card-media">
-            <img src="assets/images/banners/banner-private-charter.jpg" alt="Private luxury speedboat cruising in Red Sea Hurghada" width="800" height="600" loading="lazy">
+            <img src="assets/images/banners/banner-private-charter.jpg" alt="Private luxury speedboat cruising in Red Sea Hurghada" width="800" height="600" loading="lazy" decoding="async">
             <span class="card-badge-cat" style="background:#052646; color:#FFD166;">VIP Exclusive</span>
             <span class="card-badge-pickup">🚐 VIP Transfer</span>
           </div>
@@ -671,7 +677,7 @@
           </ul>
         </div>
         <div class="features-media">
-          <img src="assets/images/features/detail-buffet-lunch.jpg" alt="Fresh open buffet seafood lunch served on board Hurghada cruise yacht" width="800" height="600" loading="lazy">
+          <img src="assets/images/features/detail-buffet-lunch.jpg" alt="Fresh open buffet seafood lunch served on board Hurghada cruise yacht" width="800" height="600" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -800,7 +806,7 @@
         </div>
 
         <div class="footer-col">
-          <h4>Popular Tours</h4>
+          <h3>Popular Tours</h3>
           <ul class="footer-links">
             <li><a href="tours/orange-bay-island">Orange Bay Island Cruise</a></li>
             <li><a href="tours/hula-hula-island">Hula Hula Island Cruise</a></li>
@@ -812,7 +818,7 @@
         </div>
 
         <div class="footer-col">
-          <h4>Explore Hurghada</h4>
+          <h3>Explore Hurghada</h3>
           <ul class="footer-links">
             <li><a href="articles/">Snorkeling &amp; Island Guides</a></li>
             <li><a href="#features">What's Always Included</a></li>
@@ -823,7 +829,7 @@
         </div>
 
         <div class="footer-col">
-          <h4>Direct WhatsApp Support</h4>
+          <h3>Direct WhatsApp Support</h3>
           <p style="font-size:0.9rem; margin-bottom:8px;">📍 Red Sea Governorate, Hurghada, Egypt</p>
           <p style="font-size:0.9rem; margin-bottom:16px;">💬 WhatsApp: <a href="#whatsapp-inquiry" style="color:var(--wa-green); font-weight:700;" data-wa-general="true">+20 109 170 5805</a></p>
           <a href="#whatsapp-inquiry" class="btn btn-whatsapp btn-sm" data-wa-general="true">
@@ -853,7 +859,7 @@
   </div>
 
   <!-- JavaScript -->
-  <script src="assets/js/whatsapp-router.js?v=7"></script>
-  <script src="assets/js/main.js?v=6"></script>
+  <script src="assets/js/whatsapp-router.js?v=7" defer></script>
+  <script src="assets/js/main.js?v=7" defer></script>
 </body>
 </html>

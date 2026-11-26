@@ -95,8 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   filterPills.forEach(pill => {
     pill.addEventListener('click', () => {
-      filterPills.forEach(p => p.classList.remove('active'));
+      filterPills.forEach(p => {
+        p.classList.remove('active');
+        p.setAttribute('aria-selected', 'false');
+      });
       pill.classList.add('active');
+      pill.setAttribute('aria-selected', 'true');
 
       const filterValue = pill.getAttribute('data-filter');
       trackAnalyticsEvent('tour_filter', {

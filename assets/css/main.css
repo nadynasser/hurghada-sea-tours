@@ -3,8 +3,6 @@
    Modern Responsive Red Sea Marine Aesthetic (UI/UX Specification)
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
-
 :root {
   /* Core Brand Colors */
   --primary-navy: #085EA8;
@@ -21,7 +19,7 @@
   --bg-card: #FFFFFF;
   --bg-tint: #F0FDF4;
   --text-main: #1E293B;
-  --text-muted: #64748B;
+  --text-muted: #475569;
   --border-light: #E2E8F0;
   --border-card: #E0EFFE;
   
@@ -140,6 +138,16 @@ button {
   background: rgba(255, 255, 255, 0.12);
   padding: 2px 8px;
   border-radius: var(--radius-pill);
+  align-items: center;
+}
+
+.lang-switch a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  min-width: 28px;
+  padding: 4px 6px;
 }
 
 .lang-switch a.active {
@@ -452,7 +460,8 @@ button {
   color: #FFFFFF;
 }
 
-.cat-info h3 {
+.cat-info h3,
+.cat-info .cat-title {
   font-family: var(--ff-headings);
   font-size: 1.05rem;
   font-weight: 700;
@@ -494,7 +503,8 @@ button {
   line-height: 1;
 }
 
-.trust-item h4 {
+.trust-item h4,
+.trust-item .trust-title {
   font-family: var(--ff-headings);
   font-size: 0.95rem;
   font-weight: 700;
@@ -527,7 +537,7 @@ button {
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--cyan-turquoise);
+  color: #0284C7;
   letter-spacing: 0.1em;
   margin-bottom: 6px;
 }
@@ -554,7 +564,11 @@ button {
 }
 
 .pill-btn {
-  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 22px;
   border-radius: var(--radius-pill);
   background: #FFFFFF;
   border: 1.5px solid var(--border-light);
@@ -938,7 +952,9 @@ button {
   margin-bottom: 50px;
 }
 
-.footer-col h4 {
+.footer-col h4,
+.footer-col h3,
+.footer-col .footer-title {
   font-family: var(--ff-headings);
   color: #FFFFFF;
   font-size: 1.1rem;
@@ -1188,7 +1204,8 @@ button {
     height: 40px;
     font-size: 1.25rem;
   }
-  .cat-info h3 {
+  .cat-info h3,
+.cat-info .cat-title {
     font-size: 0.88rem;
   }
   .cat-info p {
