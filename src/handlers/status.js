@@ -11,6 +11,7 @@ export async function handleStatus(context) {
     githubPublish: Boolean(env && env.GITHUB_TOKEN),
     aiSeo: Boolean(env && env.GEMINI_API_KEY),
     repo: (env && env.GITHUB_REPO) || DEFAULT_REPO,
-    loggedInUser: session ? session.u : null
+    loggedInUser: session ? session.u : null,
+    loggedInRole: session ? session.r : null
   });
 }

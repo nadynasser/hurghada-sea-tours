@@ -18,7 +18,7 @@ export async function handleGetWhatsAppSettings(context) {
 }
 
 export async function handleSaveWhatsAppSettings(context) {
-  const auth = await requireAuth(context);
+  const auth = await requireAuth(context, ['super_admin', 'operations']);
   if (!auth.ok) return auth.response;
 
   const { request, env } = context;
@@ -79,7 +79,7 @@ export async function handleGetTranslations(context) {
 }
 
 export async function handleSaveTranslations(context) {
-  const auth = await requireAuth(context);
+  const auth = await requireAuth(context, ['super_admin', 'operations']);
   if (!auth.ok) return auth.response;
 
   const { request, env } = context;

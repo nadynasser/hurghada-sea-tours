@@ -30,7 +30,7 @@ export async function handleGetArticles(context) {
 }
 
 export async function handleSaveArticles(context) {
-  const auth = await requireAuth(context);
+  const auth = await requireAuth(context, ['super_admin', 'operations']);
   if (!auth.ok) return auth.response;
 
   const { request, env } = context;
@@ -162,7 +162,7 @@ function upsertArticlesJson(existingJsonText, publishedArticle) {
 }
 
 export async function handlePublishArticle(context) {
-  const auth = await requireAuth(context);
+  const auth = await requireAuth(context, ['super_admin']);
   if (!auth.ok) return auth.response;
 
   const { request, env } = context;

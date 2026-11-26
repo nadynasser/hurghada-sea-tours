@@ -75,5 +75,97 @@
       "general": "مرحباً Hurghada Sea Tours! أود الاستفسار عن حجز رحلة بحرية في الغردقة.",
       "product": "مرحباً Hurghada Sea Tours! أود حجز رحلة \"{productName}\" ({productPrice}). يرجى تأكيد الإتاحة لموعدنا مع خدمة التوصيل من الفندق."
     }
+  },
+  "transferRates": {
+    "defaultCurrency": "EUR",
+    "childRateRatio": 0.5,
+    "infantRateRatio": 0,
+    "childMaxAge": 5,
+    "zones": [
+      {
+        "id": "hurghada_city",
+        "name": {
+          "en": "Hurghada City & El Mamsha",
+          "de": "Hurghada Stadt & El Mamsha",
+          "ru": "Город Хургада и Эль-Мамша",
+          "pl": "Hurghada Miasto & El Mamsha",
+          "ar": "مدينة الغردقة والممشى السياحي"
+        },
+        "rate": 0,
+        "keywords": ["mamsha", "downtown", "dahar", "sheraton", "marina", "center", "الممشى", "الدهار", "مارينا", "شيراتون", "القرى", "hurghada", "الغردقة"],
+        "lat": 27.185,
+        "lng": 33.825
+      },
+      {
+        "id": "al_ahyaa",
+        "name": {
+          "en": "Al Ahyaa & Northern Resorts",
+          "de": "Al Ahyaa & Nördliche Resorts",
+          "ru": "Аль-Ахья и северные курорты",
+          "pl": "Al Ahyaa & Północne Hotele",
+          "ar": "الأحياء وريزورتس شمال الغردقة"
+        },
+        "rate": 2,
+        "keywords": ["ahyaa", "ahya", "hawaii", "الأحياء", "هاواي"],
+        "lat": 27.310,
+        "lng": 33.740
+      },
+      {
+        "id": "sahl_hasheesh",
+        "name": {
+          "en": "Sahl Hasheesh Bay",
+          "de": "Sahl Hasheesh Bucht",
+          "ru": "Залив Сахл Хашиш",
+          "pl": "Zatoka Sahl Hasheesh",
+          "ar": "خليج سهل حشيش"
+        },
+        "rate": 5,
+        "keywords": ["sahl", "hasheesh", "سهل حشيش"],
+        "lat": 27.050,
+        "lng": 33.890
+      },
+      {
+        "id": "makadi_bay",
+        "name": {
+          "en": "Makadi Bay Resorts",
+          "de": "Makadi Bay Resorts",
+          "ru": "Бухта Макади Бей",
+          "pl": "Zatoka Makadi Bay",
+          "ar": "منتجعات مكادي باي"
+        },
+        "rate": 5,
+        "keywords": ["makadi", "مكادي"],
+        "lat": 26.985,
+        "lng": 33.900
+      },
+      {
+        "id": "el_gouna",
+        "name": {
+          "en": "El Gouna Resort",
+          "de": "El Gouna Resort",
+          "ru": "Курорт Эль-Гуна",
+          "pl": "Kurort El Gouna",
+          "ar": "منتجع الجونة"
+        },
+        "rate": 5,
+        "keywords": ["gouna", "el gouna", "الجونة"],
+        "lat": 27.395,
+        "lng": 33.680
+      },
+      {
+        "id": "soma_bay",
+        "name": {
+          "en": "Soma Bay & Safaga Port",
+          "de": "Soma Bay & Safaga Hafen",
+          "ru": "Сома Бей и порт Сафага",
+          "pl": "Soma Bay & Port Safaga",
+          "ar": "سوما باي وميناء سفاجا"
+        },
+        "rate": 7,
+        "keywords": ["soma", "safaga", "سوما", "سفاجا"],
+        "lat": 26.850,
+        "lng": 33.990
+      }
+    ]
   }
 }

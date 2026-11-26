@@ -56,7 +56,7 @@ const SEO_ARTICLE_SCHEMA = {
 };
 
 export async function handleAiSeo(context) {
-  const auth = await requireAuth(context);
+  const auth = await requireAuth(context, ['super_admin']);
   if (!auth.ok) return auth.response;
 
   const { request, env } = context;

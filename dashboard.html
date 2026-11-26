@@ -1903,12 +1903,27 @@ function isLocalDevEnvironment() {
   return ['localhost', '127.0.0.1'].includes(window.location.hostname) || window.location.protocol === 'file:';
 }
 
-function showAuthenticatedDashboard(username) {
+function showAuthenticatedDashboard(username, role = null) {
   document.getElementById('dashLoginGate').style.display = 'none';
   document.getElementById('dashLayout').style.display = 'grid';
   const userBadge = document.getElementById('dashCurrentUserName');
   if (userBadge) {
-    userBadge.textContent = '👤 ' + username;
+    const userRole = role || (username === 'nadynasser' ? 'super_admin' : 'operations');
+    let roleLabel = '👑 Super Admin';
+    let badgeBg = '#E0F2FE';
+    let badgeColor = '#0369A1';
+    if (userRole === 'operations') {
+      roleLabel = '💼 Operations';
+      badgeBg = '#FEF3C7';
+      badgeColor = '#92400E';
+    } else if (userRole === 'support') {
+      roleLabel = '🎧 Support Desk';
+      badgeBg = '#F1F5F9';
+      badgeColor = '#475569';
+    }
+    userBadge.innerHTML = `👤 <strong>${username}</strong> <span style="margin-left:6px; font-size:0.75rem; opacity:0.9;">(${roleLabel})</span>`;
+    userBadge.style.background = badgeBg;
+    userBadge.style.color = badgeColor;
   }
   updateCloudStatusBadge();
 }
@@ -1958,6 +1973,7 @@ async function fetchServerStatus() {
       SERVER_STATUS.githubPublish = Boolean(data.githubPublish);
       SERVER_STATUS.aiSeo = Boolean(data.aiSeo);
       SERVER_STATUS.loggedInUser = data.loggedInUser || null;
+      SERVER_STATUS.loggedInRole = data.loggedInRole || null;
     }
   } catch (e) {
     SERVER_STATUS.available = false;
@@ -1981,7 +1997,7 @@ async function checkAuthStatus() {
   if (SERVER_STATUS.available && SERVER_STATUS.authConfigured) {
     if (notice) notice.style.display = 'none';
     if (SERVER_STATUS.loggedInUser) {
-      showAuthenticatedDashboard(SERVER_STATUS.loggedInUser);
+      showAuthenticatedDashboard(SERVER_STATUS.loggedInUser, SERVER_STATUS.loggedInRole);
       initDashboard();
     } else {
       document.getElementById('dashLoginGate').style.display = 'flex';
@@ -2027,8 +2043,9 @@ async function handleDashboardLogin(e) {
       const data = await res.json();
       if (res.ok && data.authenticated) {
         SERVER_STATUS.loggedInUser = data.user;
+        SERVER_STATUS.loggedInRole = data.role;
         errBox.style.display = 'none';
-        showAuthenticatedDashboard(data.user);
+        showAuthenticatedDashboard(data.user, data.role);
         initDashboard();
       } else {
         errBox.textContent = '⚠️ ' + (data.error || 'اسم المستخدم أو كلمة المرور غير صحيحة.');

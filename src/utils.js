@@ -115,10 +115,16 @@ export function getCookie(request, name) {
   return null;
 }
 
-export async function createSessionCookieHeader(username, ttlSeconds, env, request) {
+export async function createSessionCookieHeader(username, role, ttlSeconds, env, request) {
   const secret = env.SESSION_SECRET || env.ADMIN_PASSWORD;
+  const normalizedRole = username === 'nadynasser' ? 'super_admin' : (role || 'support');
   const payloadBytes = new TextEncoder().encode(
-    JSON.stringify({ u: username, exp: Date.now() + ttlSeconds * 1000 })
+    JSON.stringify({
+      u: username,
+      r: normalizedRole,
+      exp: Date.now() + ttlSeconds * 1000,
+      iat: Date.now()
+    })
   );
   const payloadPart = toBase64Url(payloadBytes);
   const key = await getHmacKey(secret);
@@ -161,13 +167,19 @@ export async function verifySession(request, env) {
     if (!payload || !payload.u || !payload.exp || Date.now() > payload.exp) {
       return null;
     }
-    return payload;
+    // Strict username mapping: nadynasser is always super_admin
+    const userRole = payload.u === 'nadynasser' ? 'super_admin' : (payload.r || 'support');
+    return {
+      u: payload.u,
+      r: userRole,
+      exp: payload.exp
+    };
   } catch {
     return null;
   }
 }
 
-export async function requireAuth(context) {
+export async function requireAuth(context, allowedRoles = null) {
   const { request, env } = context;
   if (!env || !env.ADMIN_PASSWORD) {
     return {
@@ -184,13 +196,30 @@ export async function requireAuth(context) {
   }
 
   const session = await verifySession(request, env);
-  if (!session) {
+  if (!session || !session.u) {
     return {
       ok: false,
       response: jsonResponse({ ok: false, error: 'Unauthorized. Please log in.' }, 401)
     };
   }
-  return { ok: true, user: session.u };
+
+  const username = session.u;
+  const role = session.r;
+
+  if (allowedRoles) {
+    const rolesList = Array.isArray(allowedRoles) ? allowedRoles : [allowedRoles];
+    if (!rolesList.includes(role) && role !== 'super_admin') {
+      return {
+        ok: false,
+        response: jsonResponse({
+          ok: false,
+          error: `Forbidden: User "${username}" with role "${role}" is not authorized for this operation.`
+        }, 403)
+      };
+    }
+  }
+
+  return { ok: true, user: username, role };
 }
 
 async function githubFetch(env, path, init = {}) {

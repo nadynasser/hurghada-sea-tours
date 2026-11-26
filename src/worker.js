@@ -55,8 +55,32 @@ function getCanonicalRedirectUrl(requestUrl) {
   return `${targetOrigin}${targetPath}${requestUrl.search}`;
 }
 
+function withSecurityHeaders(response) {
+  if (!response) return response;
+
+  const headers = new Headers(response.headers);
+  headers.set('X-Content-Type-Options', 'nosniff');
+  headers.set('X-Frame-Options', 'SAMEORIGIN');
+  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(self)');
+  headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+
+  const status = response.status;
+  const isNoBody = status === 204 || status === 205 || status === 304;
+  return new Response(isNoBody ? null : response.body, {
+    status,
+    statusText: response.statusText,
+    headers
+  });
+}
+
 export default {
   async fetch(request, env, ctx) {
+    const response = await this.handleRequest(request, env, ctx);
+    return withSecurityHeaders(response);
+  },
+
+  async handleRequest(request, env, ctx) {
     const url = new URL(request.url);
     const method = request.method.toUpperCase();
 
