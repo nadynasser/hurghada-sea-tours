@@ -459,5 +459,25 @@
       <image:title>Dolphin House Hurghada Wild Swimming Guide</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://hurghadaseatours.com/articles/semi-submarine-hurghada-family-guide</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://hurghadaseatours.com/assets/images/tours/tour-semi-submarine.jpg</image:loc>
+      <image:title>Semi Submarine Hurghada Family Underwater Guide</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://hurghadaseatours.com/articles/private-speedboat-vs-yacht-charter-hurghada</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://hurghadaseatours.com/assets/images/banners/banner-private-charter.jpg</image:loc>
+      <image:title>Private Speedboat vs Yacht Charter Hurghada Guide</image:title>
+    </image:image>
+  </url>
 
 </urlset>
