@@ -57,11 +57,14 @@
   <!-- Preconnect & Preload Critical Assets -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="assets/images/hero/hero-hurghada-yacht.jpg" fetchpriority="high">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap">
+  <link rel="preload" as="image" href="assets/images/hero/hero-hurghada-yacht-mobile.jpg" media="(max-width: 768px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/images/hero/hero-hurghada-yacht.jpg" media="(min-width: 769px)" fetchpriority="high">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap"></noscript>
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="assets/css/main.css?v=7">
+  <link rel="stylesheet" href="assets/css/main.css?v=8">
 
   <!-- ======================================================================
        2. GEO & AEO: Schema.org JSON-LD Structured Data
@@ -473,7 +476,7 @@
         <article class="tour-card" data-category="dolphin">
           <div class="tour-card-media">
             <img src="assets/images/tours/tour-dolphin-house.jpg" alt="Two wild dolphins jumping in turquoise Red Sea water near Hurghada Dolphin House" width="800" height="600" loading="lazy" decoding="async">
-            <span class="card-badge-cat" style="background:#00B4DB; color:#fff;">Dolphin Tour</span>
+            <span class="card-badge-cat" style="background:#0284C7; color:#FFFFFF;">Dolphin Tour</span>
             <span class="card-badge-pickup">🚐 Pickup Included</span>
           </div>
           <div class="tour-card-body">
@@ -796,13 +799,13 @@
             <div class="brand-logo-icon">⛵</div>
             <div class="brand-logo-text">
               <span class="brand-logo-title" style="color:#FFFFFF;">HURGHADA <span style="color:var(--cyan-turquoise);">SEA TOURS</span></span>
-              <span class="brand-logo-sub" style="color:#94A3B8;">Your Sea, Your Adventure</span>
+              <span class="brand-logo-sub" style="color:#CBD5E1;">Your Sea, Your Adventure</span>
             </div>
           </div>
           <p style="font-size:0.9rem; line-height:1.6; margin-bottom:16px;">
             Licensed Egyptian travel operator specializing in premium Red Sea boat trips, island getaways, dolphin encounters, and private yacht charters in Hurghada.
           </p>
-          <p style="font-size:0.8rem; color:#64748B;">Ministry of Tourism License No. 2344</p>
+          <p style="font-size:0.8rem; color:#CBD5E1;">Ministry of Tourism License No. 2344</p>
         </div>
 
         <div class="footer-col">
