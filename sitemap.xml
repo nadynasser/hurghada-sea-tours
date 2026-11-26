@@ -449,5 +449,15 @@
       <image:title>Orange Bay vs Hula Hula Island Hurghada Guide</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://hurghadaseatours.com/articles/dolphin-house-hurghada-guide</loc>
+    <lastmod>2026-11-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://hurghadaseatours.com/assets/images/tours/tour-dolphin-house.jpg</image:loc>
+      <image:title>Dolphin House Hurghada Wild Swimming Guide</image:title>
+    </image:image>
+  </url>
 
 </urlset>
