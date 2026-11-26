@@ -7,6 +7,10 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+/
+  Content-Type: text/html; charset=utf-8
 
 # Cache static assets (images, css, js, fonts) for 1 year
 /assets/*

@@ -65,9 +65,9 @@ function withSecurityHeaders(response) {
   headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(self)');
   headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
 
-  const ct = headers.get('Content-Type');
-  if (ct && ct.includes('text/html') && !ct.includes('charset')) {
-    headers.set('Content-Type', `${ct}; charset=utf-8`);
+  const ct = headers.get('Content-Type') || '';
+  if (ct.includes('text/html')) {
+    headers.set('Content-Type', 'text/html; charset=utf-8');
   }
 
   const status = response.status;
